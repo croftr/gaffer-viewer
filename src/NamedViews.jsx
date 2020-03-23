@@ -17,12 +17,14 @@ export default function NamedViews() {
 
     React.useEffect(() => {
         const fetchData = async () => {
-            const ops = await execute(
+            const views = await execute(
                 {
                     "class": "uk.gov.gchq.gaffer.named.view.GetAllNamedViews"
                 }
             );
-            setNamedViews(ops);
+            console.log(views);
+            
+            setNamedViews(views);
         }
 
         fetchData();
@@ -40,12 +42,12 @@ export default function NamedViews() {
                                 <NamedViewIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={view} />
+                        <ListItemText primary={view.name} secondary={view.description} />
                     </ListItem>
                 ))}
             </List>
             <div style={{}}>
-                {selectedView && <Typography variant="h5">{selectedView}</Typography>}
+                {selectedView && <Typography variant="h5">{selectedView.name}</Typography>}
                 {selectedView && <JSONPretty id="json-pretty" data={selectedView} theme={JSONPrettyMon}></JSONPretty>}
 
             </div>

@@ -52,7 +52,7 @@ export default function Graphs() {
         <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320,  marginRight: 8 }}>
                 {graphs.map(graph => (
-                    <ListItem button onClick={() => loadGraph(graph)}>
+                    <ListItem button onClick={() => loadGraph(graph)} key={graph}>
                         <ListItemAvatar>
                             <Avatar>
                                 <GraphIcon />

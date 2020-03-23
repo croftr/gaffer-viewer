@@ -106,6 +106,7 @@ export default function AppNavBar() {
                 {navItem === 0 && <Graphs /> }
                 {navItem === 1 && <Operations /> }
                 {navItem === 2 && <NamedOperations /> }
+                {navItem === 3 && <NamedViews /> }
                 
             </main>
         </div>
