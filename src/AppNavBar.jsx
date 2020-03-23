@@ -19,6 +19,8 @@ import Graphs from "./Graphs";
 import Operations from "./Operations";
 import NamedOperations from "./NamedOperations";
 
+import Arrow from "@material-ui/icons/ArrowRight"
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -56,6 +58,7 @@ export default function AppNavBar() {
     const classes = useStyles();
 
     const [navItem, setNavItem] = React.useState(0);
+    
 
     return (
         <div className={classes.root}>
@@ -64,6 +67,10 @@ export default function AppNavBar() {
                 <Toolbar>
                     <Typography variant="h6" noWrap>
                         Gaffer Viewer
+                    </Typography>                    
+                    <Arrow />
+                    <Typography variant="h6" noWrap>
+                        {items[navItem]}
                     </Typography>
                 </Toolbar>
             </AppBar>
