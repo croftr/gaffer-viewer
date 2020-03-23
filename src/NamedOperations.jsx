@@ -33,7 +33,7 @@ export default function NamedOperations() {
 
     return (
         <div style={{ display: "flex" }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 300, marginRight: 8 }}>
+            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {namedOperations.map(op => (
                     <ListItem button onClick={() => setSelectedOperation(op)} alignItems="flex-start">
                         <ListItemAvatar>

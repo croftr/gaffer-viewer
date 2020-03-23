@@ -36,7 +36,7 @@ export default function Operations() {
 
     return (
         <div style={{ display: "flex" }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 300, marginRight: 8 }}>
+            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {operations.map(op => (
                     <ListItem button onClick={() => loadOperation(op)} alignItems="flex-start">
                         <ListItemAvatar>

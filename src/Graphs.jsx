@@ -50,7 +50,7 @@ export default function Graphs() {
 
     return (
         <div style={{ display: "flex" }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 300,  marginRight: 8 }}>
+            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320,  marginRight: 8 }}>
                 {graphs.map(graph => (
                     <ListItem button onClick={() => loadGraph(graph)}>
                         <ListItemAvatar>
