@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { getOperations, getOperationDetails } from "./actions/GafferActions"
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -38,7 +37,7 @@ export default function Operations() {
         <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {operations.map(op => (
-                    <ListItem button onClick={() => loadOperation(op)} alignItems="flex-start">
+                    <ListItem button onClick={() => loadOperation(op)} alignItems="flex-start" key={op}>
                         <ListItemAvatar>
                             <Avatar>
                                 <OperationIcon />

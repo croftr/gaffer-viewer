@@ -21,9 +21,7 @@ export default function NamedViews() {
                 {
                     "class": "uk.gov.gchq.gaffer.named.view.GetAllNamedViews"
                 }
-            );
-            console.log(views);
-            
+            );                        
             setNamedViews(views);
         }
 
@@ -36,7 +34,7 @@ export default function NamedViews() {
         <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {namedViews.map(view => (
-                    <ListItem button onClick={() => setSelectedView(view)} alignItems="flex-start">
+                    <ListItem button onClick={() => setSelectedView(view)} alignItems="flex-start" key={view.name}>
                         <ListItemAvatar>
                             <Avatar>
                                 <NamedViewIcon />

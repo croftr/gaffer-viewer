@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -20,7 +19,6 @@ import Graphs from "./Graphs";
 import Operations from "./Operations";
 import NamedOperations from "./NamedOperations";
 import NamedViews from "./NamedViews";
-
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
@@ -62,6 +60,15 @@ export default function AppNavBar() {
     const classes = useStyles();
 
     const [navItem, setNavItem] = React.useState(0);
+
+    const listItem = (index) => {
+        switch (index) {
+            case 0 : return <GraphIcon />
+            case 1 : return <OperationIcon />
+            case 2 : return <NamedOperationIcon />
+            case 3 : return <NamedViewIcon />
+        }
+    }
     
 
     return (
@@ -90,10 +97,7 @@ export default function AppNavBar() {
                     {items.map((text, index) => (
                         <ListItem button key={text} onClick={() => setNavItem(index)}>
                             <ListItemIcon>
-                                {index === 0 && <GraphIcon /> }
-                                {index === 1 && <OperationIcon /> }
-                                {index === 2 && <NamedOperationIcon /> }
-                                {index === 3 && <NamedViewIcon /> }
+                                {listItem(index)}
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
