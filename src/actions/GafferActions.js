@@ -26,3 +26,15 @@ export const getOperations = async () => {
 
 }
 
+
+export const getOperationDetails = async (name) => {
+    let response = await fetch(`http://localhost:8080/rest/v2/graph/operations/${name}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+    });
+    
+    return response.json();
+
+}

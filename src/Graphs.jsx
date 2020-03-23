@@ -47,9 +47,10 @@ export default function Graphs() {
         setSchema(graphSchema);
     }
 
+
     return (
         <div style={{ display: "flex" }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", flex: 1 }}>
+            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 300,  marginRight: 8 }}>
                 {graphs.map(graph => (
                     <ListItem button onClick={() => loadGraph(graph)}>
                         <ListItemAvatar>
@@ -63,7 +64,7 @@ export default function Graphs() {
             </List>
             <div style={{ flex: 3 }}>
                 {selectedGraph && <Typography variant="h5">{selectedGraph}</Typography>}                  
-                {selectedGraph && <JSONPretty id="json-pretty" data={schema}  theme={JSONPrettyMon}></JSONPretty>  }
+                {selectedGraph && <JSONPretty style={{}} id="json-pretty" data={schema} theme={JSONPrettyMon}></JSONPretty>  }
                 
             </div>
         </div>
