@@ -14,10 +14,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import GraphIcon from '@material-ui/icons/Storage';
 import OperationIcon from '@material-ui/icons/Search';
 import NamedOperationIcon from '@material-ui/icons/Group';
+import NamedViewIcon from '@material-ui/icons/RemoveRedEye';
 
 import Graphs from "./Graphs";
 import Operations from "./Operations";
 import NamedOperations from "./NamedOperations";
+import NamedViews from "./NamedViews";
+
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
@@ -50,9 +53,10 @@ const useStyles = makeStyles(theme => ({
 const items = [
     "Graphs",
     "Operations",
-    "Named Operations"
+    "Named Operations",
+    "Named Views"
 ]
-    
+
 export default function AppNavBar() {
 
     const classes = useStyles();
@@ -89,6 +93,7 @@ export default function AppNavBar() {
                                 {index === 0 && <GraphIcon /> }
                                 {index === 1 && <OperationIcon /> }
                                 {index === 2 && <NamedOperationIcon /> }
+                                {index === 3 && <NamedViewIcon /> }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
