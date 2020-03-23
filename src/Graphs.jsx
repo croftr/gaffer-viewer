@@ -62,7 +62,7 @@ export default function Graphs() {
                     </ListItem>
                 ))}
             </List>
-            <div style={{ flex: 3 }}>
+            <div style={{ }}>
                 {selectedGraph && <Typography variant="h5">{selectedGraph}</Typography>}                  
                 {selectedGraph && <JSONPretty style={{}} id="json-pretty" data={schema} theme={JSONPrettyMon}></JSONPretty>  }
                 

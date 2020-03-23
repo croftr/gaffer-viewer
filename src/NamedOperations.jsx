@@ -45,7 +45,7 @@ export default function NamedOperations() {
                     </ListItem>
                 ))}
             </List>
-            <div style={{ flex: 3 }}>
+            <div style={{ }}>
                 {selectedOperation && <Typography variant="h5">{selectedOperation.operationName}</Typography>}
                 {selectedOperation && <JSONPretty id="json-pretty" data={selectedOperation} theme={JSONPrettyMon}></JSONPretty>}
 
