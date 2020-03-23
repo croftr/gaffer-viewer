@@ -6,12 +6,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import GraphIcon from '@material-ui/icons/Storage';
-
-
+import { Typography } from '@material-ui/core';
+import JSONPretty from 'react-json-pretty';
+import JSONPrettyMon from 'react-json-pretty/dist/monikai'
 
 export default function Graphs() {
 
+    // const JSONPrettyMon = require('react-json-pretty/dist/monikai');
     const [graphs, setGraphs] = React.useState([]);
+    const [selectedGraph, setSelectedGraph] = React.useState();
+    const [schema, setSchema] = React.useState();
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -21,18 +25,33 @@ export default function Graphs() {
                 }
             );
             setGraphs(ops);
-            console.log("got ops ", ops);
         }
-        
+
         fetchData();
-        
+
     }, []);
-    
+
+    const loadGraph = async (graph) => {
+        setSelectedGraph(graph);
+
+        const body = {
+            "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
+            "compact": true,
+          "options" : {
+             "gaffer.federatedstore.operation.graphIds" : graph
+           }
+         }
+
+        const graphSchema = await execute(body);
+
+        setSchema(graphSchema);
+    }
+
     return (
-        <div>                        
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "scroll" }}>
+        <div style={{ display: "flex" }}>
+            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", flex: 1 }}>
                 {graphs.map(graph => (
-                    <ListItem>
+                    <ListItem button onClick={() => loadGraph(graph)}>
                         <ListItemAvatar>
                             <Avatar>
                                 <GraphIcon />
@@ -42,6 +61,11 @@ export default function Graphs() {
                     </ListItem>
                 ))}
             </List>
+            <div style={{ flex: 3 }}>
+                {selectedGraph && <Typography variant="h5">{selectedGraph}</Typography>}                  
+                {selectedGraph && <JSONPretty id="json-pretty" data={schema}  theme={JSONPrettyMon}></JSONPretty>  }
+                
+            </div>
         </div>
     );
 }
