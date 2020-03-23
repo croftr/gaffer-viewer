@@ -7,8 +7,7 @@ export const execute = async (body) => {
         },
         body: JSON.stringify(body)
     });
-
-    console.log("response ", response);
+    
     return response.json();
 
 }
@@ -21,7 +20,6 @@ export const getOperations = async () => {
         },
     });
 
-    console.log("response ", response);
     return response.json();
 
 }

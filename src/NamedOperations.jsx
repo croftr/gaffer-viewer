@@ -22,8 +22,6 @@ export default function NamedOperations() {
                     "class": "uk.gov.gchq.gaffer.named.operation.GetAllNamedOperations"
                 }
             );
-
-            console.log("got named ops ", ops);
             setNamedOperations(ops);
 
         }
@@ -48,9 +46,9 @@ export default function NamedOperations() {
                 ))}
             </List>
             <div style={{ flex: 3 }}>
-                {selectedOperation && <Typography variant="h5">{selectedOperation.operationName}</Typography>}                  
-                {selectedOperation && <JSONPretty id="json-pretty" data={selectedOperation}  theme={JSONPrettyMon}></JSONPretty>  }
-                
+                {selectedOperation && <Typography variant="h5">{selectedOperation.operationName}</Typography>}
+                {selectedOperation && <JSONPretty id="json-pretty" data={selectedOperation} theme={JSONPrettyMon}></JSONPretty>}
+
             </div>
 
         </div>

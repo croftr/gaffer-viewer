@@ -21,8 +21,7 @@ export default function Operations() {
     React.useEffect(() => {
         const fetchData = async () => {
             const ops = await getOperations();
-            setOperations(ops);
-            console.log("got ops ", ops);
+            setOperations(ops);            
         }
 
         fetchData();
