@@ -14,11 +14,13 @@ import GraphIcon from '@material-ui/icons/Storage';
 import OperationIcon from '@material-ui/icons/Search';
 import NamedOperationIcon from '@material-ui/icons/Group';
 import NamedViewIcon from '@material-ui/icons/RemoveRedEye';
+import DataIcon from '@material-ui/icons/LineWeight';
 
 import Graphs from "./Graphs";
 import Operations from "./Operations";
 import NamedOperations from "./NamedOperations";
 import NamedViews from "./NamedViews";
+import Data from "./Data";
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
@@ -52,7 +54,8 @@ const items = [
     "Graphs",
     "Operations",
     "Named Operations",
-    "Named Views"
+    "Named Views",
+    "Data"
 ]
 
 export default function AppNavBar() {
@@ -67,6 +70,7 @@ export default function AppNavBar() {
             case 1 : return <OperationIcon />
             case 2 : return <NamedOperationIcon />
             case 3 : return <NamedViewIcon />
+            case 4 : return <DataIcon />
         }
     }
     
@@ -110,6 +114,7 @@ export default function AppNavBar() {
                 {navItem === 1 && <Operations /> }
                 {navItem === 2 && <NamedOperations /> }
                 {navItem === 3 && <NamedViews /> }
+                {navItem === 4 && <Data /> }
                 
             </main>
         </div>
