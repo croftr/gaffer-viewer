@@ -1,12 +1,6 @@
 import React from 'react';
 import { execute } from "./actions/GafferActions"
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import NamedOperationIcon from '@material-ui/icons/Group';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
 import Paper from '@material-ui/core/Paper';
@@ -14,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 export default function Data() {
 
     const [data, setData] = React.useState([]);
+
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -31,9 +26,35 @@ export default function Data() {
 
     }, []);
 
+    const convert = async () => {
+        const data = await execute(
+            {
+                "class": "uk.gov.gchq.gaffer.operation.OperationChain",
+                "operations": [
+                    {
+                        "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
+                    },
+                    {
+                        "class": "uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects",
+                        "elementGenerator": {
+                            "class": "uk.gov.gchq.gaffer.keylines.KeylinesGenerator"
+                        }
+                    }
+                ]
+            }
+        );
+        setData(data);
+
+    }
+
 
     return (
-        <Paper style={{ display: "flex" }}>
+        <Paper>
+            <div style={{ display: "flex", alignItems: "center", padding: 8 }}>
+                <Typography>Convert to: </Typography>
+                <Button style={{ marginLeft: 8 }} variant="contained" onClick={convert}>Keylines</Button>
+            </div>
+            
 
             <div style={{}}>
                 {data && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
