@@ -41,8 +41,8 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        marginTop: 64,
-        height: "calc(100vh - 64px)"
+        marginTop: 48,
+        height: "calc(100vh - 48px)"
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
@@ -70,12 +70,11 @@ export default function AppNavBar() {
         }
     }
     
-
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
+            <AppBar color="primary" position="fixed" className={classes.appBar}>
+                <Toolbar variant="dense">
                     <Typography variant="h6" noWrap>
                         Gaffer Viewer
                     </Typography>                    

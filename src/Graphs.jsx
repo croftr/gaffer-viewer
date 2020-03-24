@@ -9,6 +9,7 @@ import GraphIcon from '@material-ui/icons/Storage';
 import { Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
+import Paper from '@material-ui/core/Paper';
 
 export default function Graphs() {
 
@@ -49,7 +50,7 @@ export default function Graphs() {
 
 
     return (
-        <div style={{ display: "flex" }}>
+        <Paper style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320,  marginRight: 8 }}>
                 {graphs.map(graph => (
                     <ListItem button onClick={() => loadGraph(graph)} key={graph}>
@@ -63,10 +64,10 @@ export default function Graphs() {
                 ))}
             </List>
             <div style={{ }}>
-                {selectedGraph && <Typography variant="h5">{selectedGraph}</Typography>}                  
+                {selectedGraph && <Typography style={{ paddingLeft: 8, paddingTop: 8 }} variant="h6">{selectedGraph}</Typography>}                  
                 {selectedGraph && <JSONPretty style={{}} id="json-pretty" data={schema} theme={JSONPrettyMon}></JSONPretty>  }
                 
             </div>
-        </div>
+        </Paper>
     );
 }

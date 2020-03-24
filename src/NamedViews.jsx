@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import NamedViewIcon from '@material-ui/icons/RemoveRedEye';
 import { Typography } from '@material-ui/core';
@@ -31,7 +32,7 @@ export default function NamedViews() {
 
 
     return (
-        <div style={{ display: "flex" }}>
+        <Paper style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {namedViews.map(view => (
                     <ListItem button onClick={() => setSelectedView(view)} alignItems="flex-start" key={view.name}>
@@ -45,11 +46,11 @@ export default function NamedViews() {
                 ))}
             </List>
             <div style={{}}>
-                {selectedView && <Typography variant="h5">{selectedView.name}</Typography>}
+                {selectedView && <Typography style={{ paddingLeft: 8, paddingTop: 8 }} variant="h6">{selectedView.name}</Typography>}
                 {selectedView && <JSONPretty id="json-pretty" data={selectedView} theme={JSONPrettyMon}></JSONPretty>}
 
             </div>
 
-        </div>
+        </Paper>
     );
 }

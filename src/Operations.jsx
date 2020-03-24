@@ -9,6 +9,7 @@ import OperationIcon from '@material-ui/icons/Search';
 import { Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
+import Paper from '@material-ui/core/Paper';
 
 
 export default function Operations() {
@@ -34,7 +35,7 @@ export default function Operations() {
     }
 
     return (
-        <div style={{ display: "flex" }}>
+        <Paper style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {operations.map(op => (
                     <ListItem button onClick={() => loadOperation(op)} alignItems="flex-start" key={op}>
@@ -48,12 +49,11 @@ export default function Operations() {
                 ))}
             </List>
 
-            <div style={{ }}>
-                {selectedOperation && <Typography variant="h5">{selectedOperation}</Typography>}                  
-                {selectedOperation && <JSONPretty id="json-pretty" data={operationDetails}  theme={JSONPrettyMon}></JSONPretty>  }
-                
+            <div>
+                {selectedOperation && <Typography style={{ paddingLeft: 8, paddingTop: 8 }} variant="h6">{selectedOperation}</Typography>}                  
+                {selectedOperation && <JSONPretty id="json-pretty" data={operationDetails}  theme={JSONPrettyMon}></JSONPretty>  }                
             </div>
 
-        </div >
+        </Paper>
     );
 }
