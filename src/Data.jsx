@@ -9,24 +9,27 @@ export default function Data() {
 
     const [data, setData] = React.useState([]);
 
+    const standard = async () => {
+
+        const data = await execute(
+            {
+                "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
+                "limit": 1000
+            }
+        );
+        setData(data);
+
+    }
+
+
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            const data = await execute(
-                {
-                    "class": "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
-                    "limit": 1000
-                }
-            );
-            setData(data);
 
-        }
-
-        fetchData();
+        standard();
 
     }, []);
 
-    const convert = async () => {
+    const keylines = async () => {
         const data = await execute(
             {
                 "class": "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -52,9 +55,10 @@ export default function Data() {
         <Paper>
             <div style={{ display: "flex", alignItems: "center", padding: 8 }}>
                 <Typography>Convert to: </Typography>
-                <Button style={{ marginLeft: 8 }} variant="contained" onClick={convert}>Keylines</Button>
+                <Button style={{ marginLeft: 16 }} variant="contained" onClick={standard}>Default</Button>
+                <Button style={{ marginLeft: 16 }} variant="contained" onClick={keylines}>Keylines</Button>
             </div>
-            
+
 
             <div style={{}}>
                 {data && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
