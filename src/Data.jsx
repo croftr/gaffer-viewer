@@ -4,7 +4,12 @@ import { Typography, Button } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
 import Paper from '@material-ui/core/Paper';
-// import vis from "vis-network";
+import bus1 from "./images/bus1.png";
+import bus2 from "./images/bus2.png";
+import bus3 from "./images/bus3.png";
+import busCompany from "./images/busCompany.png";
+
+
 
 export default function Data() {
 
@@ -75,14 +80,40 @@ export default function Data() {
                 ]
             }
         );
+        
 
-        console.log("got data", responseData);
+        const nodes = responseData.filter(element => element.id).map(node => {    
+                        
+            const group = node.group.split("|")[0];
+            const subType = node.group.split("|")[1];
 
-        const nodes = responseData.filter(element => element.id);
+            let image;
+
+            if (group === "company") {
+                image = busCompany;
+            } else {
+                if (subType === "big_bus") {
+                    image = bus2;
+                } else {
+                    image = bus1;
+                }
+            }
+            
+
+            return {
+                chosen: {
+                    color: "yellow"
+                },
+                shape: "image",
+                image,
+                ...node
+            }
+        });
+
         const edges = responseData.filter(element => element.from);
 
-        // console.log("got nodes", nodes);
-        // console.log("got edges", edges);
+        console.log("got nodes", nodes);
+        console.log("got edges", edges);
 
         var visNodes = new vis.DataSet(nodes);
         var visEdges = new vis.DataSet(edges);
@@ -93,14 +124,14 @@ export default function Data() {
             nodes: visNodes,
             edges: visEdges
         };
-        
+
         var options = {
             autoResize: true,
             height: '100%',
             width: '100%',
-            locale: 'en',            
+            locale: 'en',
             clickToUse: false,
-          }
+        }
 
         var network = new vis.Network(container, data, options);
 
@@ -111,11 +142,9 @@ export default function Data() {
 
     return (
         <Paper>
-            <div style={{ display: "flex", alignItems: "center", padding: 8 }}>
-                <Typography>Convert to: </Typography>
-                <Button style={{ marginLeft: 16 }} variant="contained" onClick={standard}>Default</Button>
-                <Button style={{ marginLeft: 16 }} variant="contained" onClick={keylines}>Keylines</Button>
-                <Button style={{ marginLeft: 16 }} variant="contained" onClick={visGraph}>Graph</Button>
+            <div style={{ display: "flex", alignItems: "center", padding: 8 }}>                
+                <Button style={{ marginLeft: 16, width: 200 }} variant="contained" onClick={standard}>Raw</Button>                
+                <Button style={{ marginLeft: 16, width: 200 }} variant="contained" onClick={visGraph}>Graph</Button>
             </div>
 
 
@@ -124,7 +153,7 @@ export default function Data() {
             </div>
             }
 
-            {isShowGraph && <div id="mynetwork" style={{  width: "100%", height: "calc(100vh - 140px)", border: "1px solid lightgray" }}></div>}
+            {isShowGraph && <div id="mynetwork" style={{ width: "100%", height: "calc(100vh - 140px)", border: "1px solid lightgray" }}></div>}
 
         </Paper>
     );
