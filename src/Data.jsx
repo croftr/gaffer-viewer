@@ -93,7 +93,15 @@ export default function Data() {
             nodes: visNodes,
             edges: visEdges
         };
-        var options = {};
+        
+        var options = {
+            autoResize: true,
+            height: '100%',
+            width: '100%',
+            locale: 'en',            
+            clickToUse: false,
+          }
+
         var network = new vis.Network(container, data, options);
 
         setData(edges);
