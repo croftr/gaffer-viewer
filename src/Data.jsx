@@ -157,6 +157,9 @@ export default function Data() {
         } else if (node.subType === "small_bus") {
             image = bus1;
             shape = "image";
+        } else if (node.type === "bus") {
+            image = bus1;
+            shape = "image";                
         } else {
             shape = "ellipse";
         }
