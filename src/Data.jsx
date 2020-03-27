@@ -47,12 +47,13 @@ export default function Data({ edgeTypes }) {
         <Paper style={{ padding: 8 }}>
 
             <Tabs value={tabPage} onChange={handleTabChange} aria-label="simple tabs example">
-                {views.map(view => <Tab label={view} />)}
+                {views.map(view => <Tab label={view} key={view} />)}
             </Tabs>
 
             <div id="dataFilters" style={{ padding: 8 }} >
                 {edgeTypes.map(edgeType => (
                     <Button
+                        key={edgeType}
                         color="primary"
                         variant="contained"
                         onClick={() => getData(edgeType)} style={{ marginRight: 8, backgroundColor: getEdgeColor(edgeType) }}
@@ -61,20 +62,20 @@ export default function Data({ edgeTypes }) {
                     </Button>
                 ))}
                 <Button
+                    key="all"
                     color="primary"
                     variant="contained"
                     onClick={() => getData()} style={{ marginRight: 8 }}
                 >
                     All
-                    </Button>
+                </Button>
             </div>
 
 
             <div style={{}}>
                 {tabPage === 0 && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
                 <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}></div> 
-                {tabPage === 2 && <JSONPretty id="json-pretty" data={payload}></JSONPretty>}
-                
+                {tabPage === 2 && <JSONPretty id="json-pretty" data={payload}></JSONPretty>}                
             </div>
         </Paper>
     );

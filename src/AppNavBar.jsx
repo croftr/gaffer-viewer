@@ -120,8 +120,7 @@ export default function AppNavBar() {
         
         setNavItem(index);
 
-        if (index === 4 && !schema) {
-            console.log("load schema!!!");
+        if (index === 4 && !schema) {            
             loadGraph();
         }
         
