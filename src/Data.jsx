@@ -12,10 +12,14 @@ export default function Data({ edgeTypes }) {
 
     const [data, setData] = React.useState([]);
     const [isShowGraph, setIsShowGraph] = React.useState(false);
+    const [payload, setPayload] = React.useState({});
+    const [showPayload, setShowPayload] = React.useState(false);
+    
 
     const getData = async (edgeType) => {
-        const rawData = await convertRaw(edgeType);
+        const { rawData, payload } = await convertRaw(edgeType);
         setData(rawData);
+        setPayload(payload);
         convertVis(rawData);
     }
 
@@ -31,8 +35,9 @@ export default function Data({ edgeTypes }) {
         <Paper>
             <div style={{ display: "flex", alignItems: "center", padding: 8, justifyContent: "space-between" }}>
                 <div id="dataViews">
-                    <Button style={{ marginLeft: 0, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(false) }}>Raw</Button>
-                    <Button style={{ marginLeft: 16, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(true); visGraph() }}>Graph</Button>
+                    <Button style={{ marginLeft: 0, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(false); setShowPayload(false) }}>Raw</Button>
+                    <Button style={{ marginLeft: 16, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(true); setShowPayload(false); visGraph() }}>Graph</Button>
+                    <Button style={{ marginLeft: 16, width: 100 }} variant="contained" onClick={() => {setIsShowGraph(false); setShowPayload(true); }}>Payload</Button>
                 </div>
 
                 <div id="dataFilters" style={{}} >
@@ -56,8 +61,9 @@ export default function Data({ edgeTypes }) {
             </div>
 
             <div style={{}}>
-                {!isShowGraph && data && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
-                <div id="mynetwork" style={{ width: "100%", height: !isShowGraph ? 0 : "calc(100vh - 140px)", border: "1px solid lightgray" }}></div>
+                {!isShowGraph && !showPayload && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
+                {showPayload && <JSONPretty id="json-pretty" data={payload}></JSONPretty> }
+                <div id="mynetwork" style={{ width: "100%", height: !isShowGraph && !showPayload ? 0 : "calc(100vh - 140px)", border: "1px solid lightgray" }}></div>
             </div>
         </Paper>
     );

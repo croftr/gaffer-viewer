@@ -58,7 +58,7 @@ const items = [
     "Operations",
     "Named Operations",
     "Named Views",
-    "Data"
+    "Data",
 ]
 
 export default function AppNavBar() {
@@ -112,7 +112,7 @@ export default function AppNavBar() {
             case 1: return <OperationIcon />
             case 2: return <NamedOperationIcon />
             case 3: return <NamedViewIcon />
-            case 4: return <DataIcon />
+            case 4: return <DataIcon />            
         }
     }
 
@@ -167,7 +167,7 @@ export default function AppNavBar() {
                 {navItem === 1 && <Operations />}
                 {navItem === 2 && <NamedOperations />}
                 {navItem === 3 && <NamedViews />}
-                {navItem === 4 && <Data edgeTypes={edgeTypes}/>}
+                {navItem === 4 && <Data edgeTypes={edgeTypes}/>}                
 
             </main>
         </div>

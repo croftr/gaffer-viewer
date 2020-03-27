@@ -15,5 +15,8 @@ export const convertRaw = async (edgeType) => {
         }        
     }
 
-    return await execute(payload);
+    const rawData = await execute(payload);
+
+    return { rawData, payload }
+
 }
