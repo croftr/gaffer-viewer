@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { execute } from "./actions/GafferActions"
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -63,17 +64,67 @@ export default function AppNavBar() {
     const classes = useStyles();
 
     const [navItem, setNavItem] = React.useState(0);
+    const [graphs, setGraphs] = React.useState([]);
+    const [schema, setSchema] = React.useState();
+    const [edgeTypes, setEdgeTypes] = React.useState([]);
+
+    const loadGraph = async (graph) => {
+
+        const body = {
+            "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
+            "compact": true,            
+        }
+
+        if (graph) {
+            body.options = {
+                "gaffer.federatedstore.operation.graphIds": graph
+            }
+        }
+
+        const graphSchema = await execute(body);
+
+        console.log("aa ", graphSchema);
+
+        setSchema(graphSchema);
+        setEdgeTypes(Object.keys(graphSchema.edges))
+    }
+
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            const ops = await execute(
+                {
+                    class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
+                }
+            );
+            setGraphs(ops);
+        }
+
+        fetchData();
+
+    }, []);
 
     const listItem = (index) => {
         switch (index) {
-            case 0 : return <GraphIcon />
-            case 1 : return <OperationIcon />
-            case 2 : return <NamedOperationIcon />
-            case 3 : return <NamedViewIcon />
-            case 4 : return <DataIcon />
+            case 0: return <GraphIcon />
+            case 1: return <OperationIcon />
+            case 2: return <NamedOperationIcon />
+            case 3: return <NamedViewIcon />
+            case 4: return <DataIcon />
         }
     }
-    
+
+    const loadPage = (index) => {
+        
+        setNavItem(index);
+
+        if (index === 4 && !schema) {
+            console.log("load schema!!!");
+            loadGraph();
+        }
+        
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -81,7 +132,7 @@ export default function AppNavBar() {
                 <Toolbar variant="dense">
                     <Typography variant="h6" noWrap>
                         Gaffer Viewer
-                    </Typography>                    
+                    </Typography>
                     <Arrow />
                     <Typography variant="h6" noWrap>
                         {items[navItem]}
@@ -98,24 +149,24 @@ export default function AppNavBar() {
                 <div className={classes.toolbar} />
                 <List>
                     {items.map((text, index) => (
-                        <ListItem button key={text} onClick={() => setNavItem(index)}>
+                        <ListItem button key={text} onClick={() => loadPage(index)}>
                             <ListItemIcon>
                                 {listItem(index)}
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
                     ))}
-                </List>                
+                </List>
             </Drawer>
 
             <main className={classes.content}>
 
-                {navItem === 0 && <Graphs /> }
-                {navItem === 1 && <Operations /> }
-                {navItem === 2 && <NamedOperations /> }
-                {navItem === 3 && <NamedViews /> }
-                {navItem === 4 && <Data /> }
-                
+                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} />}
+                {navItem === 1 && <Operations />}
+                {navItem === 2 && <NamedOperations />}
+                {navItem === 3 && <NamedViews />}
+                {navItem === 4 && <Data edgeTypes={edgeTypes}/>}
+
             </main>
         </div>
     );

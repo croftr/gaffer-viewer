@@ -1,5 +1,4 @@
 import React from 'react';
-import { execute } from "./actions/GafferActions"
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -11,49 +10,20 @@ import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
 import Paper from '@material-ui/core/Paper';
 
-export default function Graphs() {
-
-    // const JSONPrettyMon = require('react-json-pretty/dist/monikai');
-    const [graphs, setGraphs] = React.useState([]);
+export default function Graphs({ graphs, loadGraph, schema }) {
+    
     const [selectedGraph, setSelectedGraph] = React.useState();
-    const [schema, setSchema] = React.useState();
-
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const ops = await execute(
-                {
-                    class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
-                }
-            );
-            setGraphs(ops);
-        }
-
-        fetchData();
-
-    }, []);
-
-    const loadGraph = async (graph) => {
+    
+    const loadSelectedGraph = (graph) => {
         setSelectedGraph(graph);
-
-        const body = {
-            "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
-            "compact": true,
-          "options" : {
-             "gaffer.federatedstore.operation.graphIds" : graph
-           }
-         }
-
-        const graphSchema = await execute(body);
-
-        setSchema(graphSchema);
+        loadGraph(graph);        
     }
-
-
+    
     return (
         <Paper style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320,  marginRight: 8 }}>
                 {graphs.map(graph => (
-                    <ListItem button onClick={() => loadGraph(graph)} key={graph}>
+                    <ListItem button onClick={() => loadSelectedGraph(graph)} key={graph}>
                         <ListItemAvatar>
                             <Avatar>
                                 <GraphIcon />
