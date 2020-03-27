@@ -35,9 +35,25 @@ export default function Data({ edgeTypes }) {
                     <Button style={{ marginLeft: 16, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(true); visGraph() }}>Graph</Button>
                 </div>
 
-                <div id="dataFilters" style={{}} >{edgeTypes.map(edgeType => <Button color="primary" variant="contained" onClick={() => getData(edgeType)} style={{ marginRight: 8, backgroundColor: getEdgeColor(edgeType) }}>{edgeType}</Button>)}</div>
+                <div id="dataFilters" style={{}} >
+                    {edgeTypes.map(edgeType => (
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={() => getData(edgeType)} style={{ marginRight: 8, backgroundColor: getEdgeColor(edgeType) }}
+                        >
+                            {edgeType}
+                        </Button>
+                    ))}
+                    <Button
+                        color="primary"
+                        variant="contained" 
+                        onClick={() => getData()} style={{ marginRight: 8 }}
+                    >
+                        All
+                    </Button>
+                </div>
             </div>
-
 
             <div style={{}}>
                 {!isShowGraph && data && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
