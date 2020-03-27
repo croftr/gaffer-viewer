@@ -1,12 +1,7 @@
 import React from 'react';
-import { Typography, Button } from '@material-ui/core';
+import { Paper, Button, Tab, Tabs } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
-import Paper from '@material-ui/core/Paper';
-
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
 import { convertRaw } from "./queries/raw.js"
 import { convertVis } from "./queries/visGraph.js"
 import { getEdgeColor } from "./utils/schamUtils"

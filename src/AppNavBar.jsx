@@ -113,6 +113,7 @@ export default function AppNavBar() {
             case 2: return <NamedOperationIcon />
             case 3: return <NamedViewIcon />
             case 4: return <DataIcon />            
+            default: 
         }
     }
 
