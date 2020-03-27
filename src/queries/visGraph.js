@@ -28,7 +28,7 @@ const mapVisNode = (node) => {
         group: node.type,
         subType: node.subType,
         id: node.type + node.subType + node.value,
-        label: node.value,        
+        label: node.value,
         title: node.subType,
         shape,
         image,
@@ -64,23 +64,26 @@ export const convertVis = async (data) => {
     const nodes = [];
     const edges = [];
 
-    data && data.forEach(edge => {
+    if (data && Array.isArray(data)) {
+        data.forEach(edge => {
 
-        const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
-        const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
-        const visEdge = mapVisEdge(edge);
+            const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
+            const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
+            const visEdge = mapVisEdge(edge);
 
-        if (!nodes.find(i => i.id === sourceNode.id)) {
-            nodes.push(sourceNode);
-        }
+            if (!nodes.find(i => i.id === sourceNode.id)) {
+                nodes.push(sourceNode);
+            }
 
-        if (!nodes.find(i => i.id === destNode.id)) {
-            nodes.push(destNode);
-        }
+            if (!nodes.find(i => i.id === destNode.id)) {
+                nodes.push(destNode);
+            }
 
-        edges.push(visEdge)
+            edges.push(visEdge)
 
-    });
+        });
+    }
+
 
     var visNodes = new vis.DataSet(nodes);
     var visEdges = new vis.DataSet(edges);

@@ -50,7 +50,7 @@ export default function Data({ edgeTypes }) {
             setData(rawData);
             setPayload(payloadText);
             convertVis(rawData);
-            setResponseStatus({ error: false, message: "Success" });
+            setResponseStatus({ error: false, message: "Success", count: rawData ? rawData.length : 0 });
         } catch (e) {
             console.log("oops", e);
             setResponseStatus({ error: true, message: e.message });
@@ -110,15 +110,22 @@ export default function Data({ edgeTypes }) {
                         />
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <Button onClick={submitPayload} style={{ marginTop: 16, marginRight: 16 }} color="primary" variant="contained">Submit</Button>
-                            {responseStatus && responseStatus.error && <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}><ErrorIcon style={{ color: "red", marginRight: 8 }} /> {responseStatus.message}</span>}
-                            {responseStatus && !responseStatus.error && <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}><SuccessIcon style={{ color: "green", marginRight: 8 }} /> {responseStatus.message}</span>}
+                            {responseStatus && responseStatus.error && (
+                                <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
+                                    <ErrorIcon style={{ color: "red", marginRight: 8 }} />
+                                    {responseStatus.message}
+                                </span>)}
+                            {responseStatus && !responseStatus.error && (
+                                <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
+                                    <SuccessIcon style={{ color: "green", marginRight: 8 }} />
+                                    {`${responseStatus.message} ${responseStatus.count} rows returned`}
+                                </span>
+                            )}
                         </div>
                     </div>
                 )}
                 {tabPage === 3 && (
-                    
-                        <JSONPretty id="json-pretty" data={payload}></JSONPretty>
-                    
+                    <JSONPretty id="json-pretty" data={payload}></JSONPretty>
                 )}
             </div>
         </Paper>
