@@ -2,5 +2,5 @@ div#json-pretty {
     overflow-x: auto;
     overflow-y: auto;
     width: calc(100vw - 620px);
-    height: calc(100vh - 140px);
+    height: calc(100vh - 200px);
 }
