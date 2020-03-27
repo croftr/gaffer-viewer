@@ -2,6 +2,8 @@ import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
 
+import { getEdgeColor } from "../utils/schamUtils";
+
 const mapVisNode = (node) => {
 
     let image, shape;
@@ -44,19 +46,7 @@ const mapVisEdge = (edge) => {
     const source = edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
     const dest = edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
-    let color = "grey";
-
-    switch (edge.group) {
-        case "crossesPaths":
-            color = "red";
-            break;
-        case "isPartOfThisCompany":
-            color = "purple";
-            break;
-        case "inTheSameBusCompany":
-            color = "lightBlue";
-            break;
-    }
+    const color = getEdgeColor(edge.group);
 
     const visEdge = {
         from: source.type + source.subType + source.value,

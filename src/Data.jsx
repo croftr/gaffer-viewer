@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 
 import { convertRaw } from "./queries/raw.js"
 import { convertVis } from "./queries/visGraph.js"
+import { getEdgeColor } from "./utils/schamUtils"
 
 export default function Data({ edgeTypes }) {
 
@@ -34,7 +35,7 @@ export default function Data({ edgeTypes }) {
                     <Button style={{ marginLeft: 16, width: 100 }} variant="contained" onClick={() => { setIsShowGraph(true); visGraph() }}>Graph</Button>
                 </div>
 
-                <div id="dataFilters" style={{}} >{edgeTypes.map(edgeType => <Button onClick={() => getData(edgeType)} style={{ marginRight: 8 }}>{edgeType}</Button>)}</div>
+                <div id="dataFilters" style={{}} >{edgeTypes.map(edgeType => <Button color="primary" variant="contained" onClick={() => getData(edgeType)} style={{ marginRight: 8, backgroundColor: getEdgeColor(edgeType) }}>{edgeType}</Button>)}</div>
             </div>
 
 

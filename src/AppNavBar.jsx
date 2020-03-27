@@ -25,6 +25,8 @@ import Data from "./Data";
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
+import { generateEdgeTypes, setEdgeColours } from "./utils/schamUtils"
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -83,14 +85,14 @@ export default function AppNavBar() {
 
         const graphSchema = await execute(body);
 
-        console.log("aa ", graphSchema);
-
-        setSchema(graphSchema);
-        setEdgeTypes(Object.keys(graphSchema.edges))
+        setEdgeColours(Object.keys(graphSchema.edges))
+        setSchema(graphSchema);        
+        setEdgeTypes(generateEdgeTypes(graphSchema));        
     }
 
 
     React.useEffect(() => {
+        
         const fetchData = async () => {
             const ops = await execute(
                 {
