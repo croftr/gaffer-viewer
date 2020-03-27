@@ -74,7 +74,7 @@ export default function AppNavBar() {
 
         const body = {
             "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
-            "compact": true,            
+            "compact": true,
         }
 
         if (graph) {
@@ -85,14 +85,14 @@ export default function AppNavBar() {
 
         const graphSchema = await execute(body);
 
-        setEdgeColours(Object.keys(graphSchema.edges))
-        setSchema(graphSchema);        
-        setEdgeTypes(generateEdgeTypes(graphSchema));        
+        setEdgeColours(Object.keys(graphSchema.edges || {}))
+        setSchema(graphSchema);
+        setEdgeTypes(generateEdgeTypes(graphSchema));
     }
 
 
     React.useEffect(() => {
-        
+
         const fetchData = async () => {
             const ops = await execute(
                 {
@@ -112,19 +112,33 @@ export default function AppNavBar() {
             case 1: return <OperationIcon />
             case 2: return <NamedOperationIcon />
             case 3: return <NamedViewIcon />
-            case 4: return <DataIcon />            
-            default: 
+            case 4: return <DataIcon />
+            default:
         }
     }
 
     const loadPage = (index) => {
-        
+
         setNavItem(index);
 
-        if (index === 4 && !schema) {            
+        if (index === 4 && !schema) {
             loadGraph();
         }
-        
+    }
+
+    const onDeleteGraph = async (graphId) => {
+        await execute(
+            {
+                class: "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
+                graphId
+            }
+        );
+        const ops = await execute(
+            {
+                class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
+            }
+        );
+        setGraphs(ops);
     }
 
     return (
@@ -163,11 +177,11 @@ export default function AppNavBar() {
 
             <main className={classes.content}>
 
-                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} />}
+                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
                 {navItem === 1 && <Operations />}
                 {navItem === 2 && <NamedOperations />}
                 {navItem === 3 && <NamedViews />}
-                {navItem === 4 && <Data edgeTypes={edgeTypes}/>}                
+                {navItem === 4 && <Data edgeTypes={edgeTypes} />}
 
             </main>
         </div>

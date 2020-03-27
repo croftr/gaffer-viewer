@@ -39,8 +39,12 @@ export const setEdgeColours = (edges) => {
 
 }
 
-export const generateEdgeTypes = (schema) => {
+export const generateEdgeTypes = (schema ={}) => {
     const edgeTypes = [];
+
+    if (!schema.edges) {
+        return edgeTypes;
+    }
 
     Object.keys(schema.edges).forEach(edge => {
         edgeTypes.push(edge);
