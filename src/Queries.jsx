@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
+import { Paper, Tab, Tabs } from '@material-ui/core';
 import Operations from "./Operations";
 import NamedOperations from "./NamedOperations";
 import NamedViews from "./NamedViews";
@@ -10,7 +10,7 @@ const views = [
     "Named Views",
 ]
 
-export default function Queries({ }) {
+export default function Queries() {
 
     const [tabPage, setTabPage] = React.useState(0);
 

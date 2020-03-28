@@ -1,7 +1,6 @@
 import React from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
-import JSONPrettyMon from 'react-json-pretty/dist/monikai'
 import { convertRaw } from "./queries/raw.js"
 import { convertVis } from "./queries/visGraph.js"
 import { getEdgeColor } from "./utils/schamUtils"
@@ -102,7 +101,7 @@ export default function Data({ edgeTypes }) {
                             value={payloadText}
                             onChange={onChangeText}
                             id="standard-textarea"
-                            label="Submit payload"
+                            label="Submit payload to /rest/v2/graph/operations/execute"
                             variant="outlined"
                             multiline
                             fullWidth

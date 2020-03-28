@@ -115,7 +115,9 @@ export default function AppNavBar() {
 
         setNavItem(index);
 
-        if (index === 4 && !schema) {
+        if (index === 1 && !schema) {
+            console.log("go");
+
             loadGraph();
         }
     }
@@ -178,11 +180,9 @@ export default function AppNavBar() {
             </Drawer>
 
             <main className={classes.content}>
-
                 {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
                 {navItem === 1 && <Data edgeTypes={edgeTypes} />}
                 {navItem === 2 && <Queries />}
-
             </main>
         </div>
     );

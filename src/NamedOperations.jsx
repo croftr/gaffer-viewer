@@ -9,7 +9,6 @@ import NamedOperationIcon from '@material-ui/icons/Group';
 import { Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import JSONPrettyMon from 'react-json-pretty/dist/monikai'
-import Paper from '@material-ui/core/Paper';
 
 export default function NamedOperations() {
 
