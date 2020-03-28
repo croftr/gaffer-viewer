@@ -29,7 +29,6 @@ export default function NamedViews() {
 
     }, []);
 
-
     return (
         <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
@@ -47,9 +46,7 @@ export default function NamedViews() {
             <div style={{}}>
                 {selectedView && <Typography style={{ paddingLeft: 8, paddingTop: 8 }} variant="h6">{selectedView.name}</Typography>}
                 {selectedView && <JSONPretty id="json-pretty" data={selectedView} theme={JSONPrettyMon}></JSONPretty>}
-
             </div>
-
         </div>
     );
 }
