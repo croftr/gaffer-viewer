@@ -32,7 +32,7 @@ export default function NamedViews() {
 
 
     return (
-        <Paper style={{ display: "flex" }}>
+        <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {namedViews.map(view => (
                     <ListItem button onClick={() => setSelectedView(view)} alignItems="flex-start" key={view.name}>
@@ -51,6 +51,6 @@ export default function NamedViews() {
 
             </div>
 
-        </Paper>
+        </div>
     );
 }

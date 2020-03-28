@@ -21,7 +21,7 @@ export default function Operations() {
     React.useEffect(() => {
         const fetchData = async () => {
             const ops = await getOperations();
-            setOperations(ops);            
+            setOperations(ops);
         }
 
         fetchData();
@@ -35,8 +35,8 @@ export default function Operations() {
     }
 
     return (
-        <Paper style={{ display: "flex" }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
+        <div id="operationsTab" style={{ display: "flex", height: "calc(100% - 48px)" }}>
+            <List style={{ height: "100%", overflowY: "auto", width: 320 }}>
                 {operations.map(op => (
                     <ListItem button onClick={() => loadOperation(op)} alignItems="flex-start" key={op}>
                         <ListItemAvatar>
@@ -50,10 +50,15 @@ export default function Operations() {
             </List>
 
             <div>
-                {selectedOperation && <Typography style={{ paddingLeft: 8, paddingTop: 8 }} variant="h6">{selectedOperation}</Typography>}                  
-                {selectedOperation && <JSONPretty id="json-pretty" data={operationDetails}  theme={JSONPrettyMon}></JSONPretty>  }                
+                {selectedOperation && (
+                    <span style={{ display: "flex", alignItems: "center", padding: 8 }}>
+                        <Avatar style={{ marginYop: 8, marginRight: 8 }}><OperationIcon /></Avatar>
+                        <Typography style={{ paddingLeft: 8, paddingTop: 8 }}>{selectedOperation}</Typography>
+                    </span>
+                )}
+                {selectedOperation && <JSONPretty style={{ marginLeft: 8, border: "1px solid lightGrey"}}  id="json-pretty" data={operationDetails} ></JSONPretty>}
             </div>
 
-        </Paper>
+        </div>
     );
 }

@@ -3,12 +3,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import GraphIcon from '@material-ui/icons/Storage';
-import { Typography, Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/HighlightOff';
 import JSONPretty from 'react-json-pretty';
-import JSONPrettyMon from 'react-json-pretty/dist/monikai'
-import Paper from '@material-ui/core/Paper';
+import { Paper, IconButton, Typography, Avatar } from '@material-ui/core';
+
 
 export default function Graphs({ graphs, loadGraph, schema, onDeleteGraph }) {
 
@@ -19,9 +18,14 @@ export default function Graphs({ graphs, loadGraph, schema, onDeleteGraph }) {
         loadGraph(graph);
     }
 
+    const deleteGraph = (selectedGraph) => {
+        setSelectedGraph(undefined)
+        onDeleteGraph(selectedGraph);
+    }
+
     return (
         <Paper style={{ display: "flex", padding: 16 }}>
-            <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
+            <List style={{ height: "calc(100vh - 130px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {graphs.map(graph => (
                     <ListItem button onClick={() => loadSelectedGraph(graph)} key={graph}>
                         <ListItemAvatar>
@@ -34,12 +38,16 @@ export default function Graphs({ graphs, loadGraph, schema, onDeleteGraph }) {
                 ))}
             </List>
             <div style={{}}>
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center"}}>
                     {selectedGraph && <Typography variant="h6">{selectedGraph}</Typography>}
-                    {selectedGraph && <Button variant="contained" color="primary" onClick={() => onDeleteGraph(selectedGraph)} style={{ marginLeft: 16, background: "red" }}>Delete</Button>}
+                    {selectedGraph && (
+                        <IconButton title="Delete schema" color="secondary" onClick={() => deleteGraph(selectedGraph)} style={{ marginLeft: 0 }}>
+                            <DeleteIcon />
+                        </IconButton>)}
+                    
                 </div>
 
-                {selectedGraph && <JSONPretty style={{}} id="json-pretty" data={schema} theme={JSONPrettyMon}></JSONPretty>}
+                {selectedGraph && <JSONPretty style={{ border: "1px solid lightGrey"}} id="json-pretty" data={schema} ></JSONPretty>}
 
             </div>
         </Paper>

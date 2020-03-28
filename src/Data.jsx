@@ -65,7 +65,7 @@ export default function Data({ edgeTypes }) {
     }, []);
 
     return (
-        <Paper style={{ padding: 8 }}>
+        <Paper id="data" style={{ padding: 8 }}>
 
             <Tabs value={tabPage} onChange={handleTabChange} aria-label="simple tabs example">
                 {views.map(view => <Tab label={view} key={view} />)}
@@ -92,48 +92,47 @@ export default function Data({ edgeTypes }) {
                 </Button>
             </div>
 
-            <div style={{}}>
-                {tabPage === 0 && <JSONPretty id="json-pretty" data={data} theme={JSONPrettyMon}></JSONPretty>}
-                <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}></div>
-                {tabPage === 2 && (
-                    <div style={{ padding: 16, display: "flex" }}>
+            {tabPage === 0 && <JSONPretty style={{ border: "1px solid lightGrey" }} id="json-pretty" data={data} ></JSONPretty>}
+            <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}></div>
+            {tabPage === 2 && (
+                <div style={{ padding: 16, display: "flex" }}>
 
-                        <div id="submitPayload" style={{ flex: 2, padding: 16  }}>
-                            <TextField
-                                value={payloadText}
-                                onChange={onChangeText}
-                                id="standard-textarea"
-                                label="Submit payload"
-                                variant="outlined"
-                                multiline
-                                fullWidth
-                                rows={20}
-                            />
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                                <Button onClick={submitPayload} style={{ marginTop: 16, marginRight: 16 }} color="primary" variant="contained">Submit</Button>
-                                {responseStatus && responseStatus.error && (
-                                    <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
-                                        <ErrorIcon style={{ color: "red", marginRight: 8 }} />
-                                        {responseStatus.message}
-                                    </span>)}
-                                {responseStatus && !responseStatus.error && (
-                                    <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
-                                        <SuccessIcon style={{ color: "green", marginRight: 8 }} />
-                                        {`${responseStatus.message} ${responseStatus.count} rows returned`}
-                                    </span>
-                                )}
-                            </div>
+                    <div id="submitPayload" style={{ flex: 2, padding: 16 }}>
+                        <TextField
+                            value={payloadText}
+                            onChange={onChangeText}
+                            id="standard-textarea"
+                            label="Submit payload"
+                            variant="outlined"
+                            multiline
+                            fullWidth
+                            rows={20}
+                        />
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <Button onClick={submitPayload} style={{ marginTop: 16, marginRight: 16 }} color="primary" variant="contained">Submit</Button>
+                            {responseStatus && responseStatus.error && (
+                                <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
+                                    <ErrorIcon style={{ color: "red", marginRight: 8 }} />
+                                    {responseStatus.message}
+                                </span>)}
+                            {responseStatus && !responseStatus.error && (
+                                <span style={{ display: "flex", alignItems: "center", marginTop: 16 }}>
+                                    <SuccessIcon style={{ color: "green", marginRight: 8 }} />
+                                    {`${responseStatus.message} ${responseStatus.count} rows returned`}
+                                </span>
+                            )}
                         </div>
-
-                        <div id="displayPayload" style={{ flex: 1, padding: 16, height: "calc(100vh - 250px)" }}>
-                            <Typography>Last successfully submitted payload</Typography>
-                            <JSONPretty id="json-payload" data={payload}></JSONPretty>
-                        </div>
-
                     </div>
-                )}
 
-            </div>
+                    <div id="displayPayload" style={{ flex: 1, padding: 16, height: "calc(100vh - 250px)" }}>
+                        <Typography>Last successfully submitted payload</Typography>
+                        <JSONPretty id="json-payload" data={payload}></JSONPretty>
+                    </div>
+
+                </div>
+            )}
+
+
         </Paper>
     );
 }

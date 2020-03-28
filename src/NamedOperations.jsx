@@ -33,7 +33,7 @@ export default function NamedOperations() {
 
 
     return (
-        <Paper style={{ display: "flex" }}>
+        <div style={{ display: "flex" }}>
             <List style={{ height: "calc(100vh - 104px)", overflowY: "auto", width: 320, marginRight: 8 }}>
                 {namedOperations.map(op => (
                     <ListItem button onClick={() => setSelectedOperation(op)} alignItems="flex-start" key={op.operationName}>
@@ -52,6 +52,6 @@ export default function NamedOperations() {
 
             </div>
 
-        </Paper>
+        </div>
     );
 }

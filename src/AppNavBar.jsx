@@ -11,17 +11,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import GraphIcon from '@material-ui/icons/Storage';
-import OperationIcon from '@material-ui/icons/Search';
-import NamedOperationIcon from '@material-ui/icons/Group';
-import NamedViewIcon from '@material-ui/icons/RemoveRedEye';
-import DataIcon from '@material-ui/icons/LineWeight';
+import GraphIcon from '@material-ui/icons/DeviceHub';
+import QueriesIcon from '@material-ui/icons/Search';
+import DataIcon from '@material-ui/icons/Storage';
 
 import Graphs from "./Graphs";
-import Operations from "./Operations";
-import NamedOperations from "./NamedOperations";
-import NamedViews from "./NamedViews";
 import Data from "./Data";
+import Queries from "./Queries";
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
@@ -38,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawer: {
         width: drawerWidth,
-        flexShrink: 0,
+    flexShrink: 0,
     },
     drawerPaper: {
         width: drawerWidth,
@@ -54,11 +50,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const items = [
-    "Graphs",
-    "Operations",
-    "Named Operations",
-    "Named Views",
+    "Schemas",    
     "Data",
+    "Operations"
 ]
 
 export default function AppNavBar() {
@@ -108,11 +102,9 @@ export default function AppNavBar() {
 
     const listItem = (index) => {
         switch (index) {
-            case 0: return <GraphIcon />
-            case 1: return <OperationIcon />
-            case 2: return <NamedOperationIcon />
-            case 3: return <NamedViewIcon />
-            case 4: return <DataIcon />
+            case 0: return <GraphIcon />            
+            case 1: return <DataIcon />
+            case 2: return <QueriesIcon />
             default:
         }
     }
@@ -177,11 +169,9 @@ export default function AppNavBar() {
 
             <main className={classes.content}>
 
-                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
-                {navItem === 1 && <Operations />}
-                {navItem === 2 && <NamedOperations />}
-                {navItem === 3 && <NamedViews />}
-                {navItem === 4 && <Data edgeTypes={edgeTypes} />}
+                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}                
+                {navItem === 1 && <Data edgeTypes={edgeTypes} />}
+                {navItem === 2 && <Queries  />}
 
             </main>
         </div>
