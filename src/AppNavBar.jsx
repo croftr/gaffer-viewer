@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     },
     drawer: {
         width: drawerWidth,
-    flexShrink: 0,
+        flexShrink: 0,
     },
     drawerPaper: {
         width: drawerWidth,
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const items = [
-    "Schemas",    
+    "Schemas",
     "Data",
     "Operations"
 ]
@@ -63,15 +63,16 @@ export default function AppNavBar() {
     const [graphs, setGraphs] = React.useState([]);
     const [schema, setSchema] = React.useState();
     const [edgeTypes, setEdgeTypes] = React.useState([]);
+    const [selectedSchemaName, setSelectedSchemaName] = React.useState();
 
-    const loadGraph = async (graph) => {
+    const loadGraph = async (graph = "All") => {
 
         const body = {
             "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
             "compact": true,
         }
 
-        if (graph) {
+        if (graph !== "All") {
             body.options = {
                 "gaffer.federatedstore.operation.graphIds": graph
             }
@@ -79,6 +80,7 @@ export default function AppNavBar() {
 
         const graphSchema = await execute(body);
 
+        setSelectedSchemaName(graph);
         setEdgeColours(Object.keys(graphSchema.edges || {}))
         setSchema(graphSchema);
         setEdgeTypes(generateEdgeTypes(graphSchema));
@@ -102,7 +104,7 @@ export default function AppNavBar() {
 
     const listItem = (index) => {
         switch (index) {
-            case 0: return <GraphIcon />            
+            case 0: return <GraphIcon />
             case 1: return <DataIcon />
             case 2: return <QueriesIcon />
             default:
@@ -145,6 +147,14 @@ export default function AppNavBar() {
                     <Typography variant="h6" noWrap>
                         {items[navItem]}
                     </Typography>
+                    {navItem !== 2 && (
+                        <React.Fragment>
+                            <Arrow />
+                            <Typography variant="h6" noWrap>
+                                {selectedSchemaName || "All Schemas"}
+                            </Typography>
+                        </React.Fragment>
+                    )}
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -169,9 +179,9 @@ export default function AppNavBar() {
 
             <main className={classes.content}>
 
-                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}                
+                {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
                 {navItem === 1 && <Data edgeTypes={edgeTypes} />}
-                {navItem === 2 && <Queries  />}
+                {navItem === 2 && <Queries />}
 
             </main>
         </div>

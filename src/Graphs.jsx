@@ -26,7 +26,7 @@ export default function Graphs({ graphs, loadGraph, schema, onDeleteGraph }) {
     return (
         <Paper style={{ display: "flex", padding: 16 }}>
             <List style={{ height: "calc(100vh - 130px)", overflowY: "auto", width: 320, marginRight: 8 }}>
-                {graphs.map(graph => (
+                {["All"].concat(graphs).map(graph => (
                     <ListItem button onClick={() => loadSelectedGraph(graph)} key={graph}>
                         <ListItemAvatar>
                             <Avatar>
@@ -38,9 +38,9 @@ export default function Graphs({ graphs, loadGraph, schema, onDeleteGraph }) {
                 ))}
             </List>
             <div style={{}}>
-                <div style={{ display: "flex", alignItems: "center"}}>
+                <div style={{ display: "flex", alignItems: "center", height: 48 }}>
                     {selectedGraph && <Typography variant="h6">{selectedGraph}</Typography>}
-                    {selectedGraph && (
+                    {selectedGraph && selectedGraph !== "All" && (
                         <IconButton title="Delete schema" color="secondary" onClick={() => deleteGraph(selectedGraph)} style={{ marginLeft: 0 }}>
                             <DeleteIcon />
                         </IconButton>)}
