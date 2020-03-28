@@ -8,9 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import OperationIcon from '@material-ui/icons/Search';
 import { Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
-import JSONPrettyMon from 'react-json-pretty/dist/monikai'
-import Paper from '@material-ui/core/Paper';
-
 
 export default function Operations() {
 
