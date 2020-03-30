@@ -1,6 +1,7 @@
 import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
+import kangaroo from "../images/kanga.png";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
@@ -19,6 +20,9 @@ const mapVisNode = (node) => {
         shape = "image";
     } else if (node.type === "bus") {
         image = bus1;
+        shape = "image";
+    } else if (node.type == "kangaroo") {
+        image = kangaroo;
         shape = "image";
     } else {
         shape = "ellipse";
@@ -42,6 +46,8 @@ const mapVisNode = (node) => {
 
 const mapVisEdge = (edge) => {
 
+    console.log("edge ", edge );
+    
     const source = edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
     const dest = edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
@@ -52,7 +58,11 @@ const mapVisEdge = (edge) => {
         to: dest.type + dest.subType + dest.value,
         title: edge.group,
         color,
-        arrows: edge.directed ? "to" : undefined
+        arrows: edge.directed ? "to" : undefined,
+        width: edge.properties.count / 5,
+        widthConstraint: 10, 
+
+
     };
 
     return visEdge;
