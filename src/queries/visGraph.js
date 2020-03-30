@@ -64,8 +64,11 @@ export const convertVis = async (data) => {
     const nodes = [];
     const edges = [];
 
+    console.log("data ", data);
+    
+
     if (data && Array.isArray(data)) {
-        data.forEach(edge => {
+        data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
 
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
