@@ -64,9 +64,6 @@ export const convertVis = async (data) => {
     const nodes = [];
     const edges = [];
 
-    console.log("data ", data);
-    
-
     if (data && Array.isArray(data)) {
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
 
