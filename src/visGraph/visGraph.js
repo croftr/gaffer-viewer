@@ -111,7 +111,7 @@ const createGraph = (visData, options) => {
     // add event listeners
     network.on("select", function (params) {
         const selectedNode = params.nodes[0];        
-        document.getElementById("graphInfo").innerHTML = selectedNode
+        document.getElementById("graphInfo").innerHTML = selectedNode || ""
     });
 }
 
