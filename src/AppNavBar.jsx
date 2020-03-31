@@ -115,9 +115,7 @@ export default function AppNavBar() {
 
         setNavItem(index);
 
-        if (index === 1 && !schema) {
-            console.log("go");
-
+        if (index === 1 && !schema) {            
             loadGraph();
         }
     }

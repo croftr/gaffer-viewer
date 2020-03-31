@@ -2,8 +2,9 @@ import React from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import { convertRaw } from "./queries/raw.js"
-import { convertVis } from "./queries/visGraph.js"
+import { convertVis, changeLayout } from "./visGraph/visGraph.js"
 import { getEdgeColor } from "./utils/schamUtils"
+import VisGraph from "./visGraph/VisGraphViewer.jsx"
 
 import ErrorIcon from '@material-ui/icons/Error';
 import SuccessIcon from '@material-ui/icons/CheckCircle';
@@ -19,10 +20,12 @@ const views = [
 export default function Data({ edgeTypes }) {
 
     const [data, setData] = React.useState([]);
+    const [graphData, setGraphData] = React.useState([]);
     const [payload, setPayload] = React.useState({});
     const [tabPage, setTabPage] = React.useState(0);
     const [payloadText, setPayloadText] = React.useState();
     const [responseStatus, setResponseStatus] = React.useState();
+    const network = React.useRef();
 
     const handleTabChange = (event, value) => {
         value === 1 && visGraph();
@@ -37,7 +40,7 @@ export default function Data({ edgeTypes }) {
     }
 
     const visGraph = () => {
-        convertVis(data);
+        setGraphData(convertVis(data));
     }
 
     const submitPayload = async () => {
@@ -49,8 +52,7 @@ export default function Data({ edgeTypes }) {
             setPayload(payloadText);
             convertVis(rawData);
             setResponseStatus({ error: false, message: "Success", count: rawData ? rawData.length : 0 });
-        } catch (e) {
-            console.log("oops", e);
+        } catch (e) {            
             setResponseStatus({ error: true, message: e.message });
         }
     }
@@ -92,7 +94,10 @@ export default function Data({ edgeTypes }) {
             </div>
 
             {tabPage === 0 && <JSONPretty style={{ border: "1px solid lightGrey" }} id="json-pretty" data={data} ></JSONPretty>}
-            <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}></div>
+                
+            {tabPage === 1 && <VisGraph graphData={graphData} network={network.current}/>}
+                <div id="mynetwork" ref={network} style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}>                
+            </div>
             {tabPage === 2 && (
                 <div style={{ padding: 16, display: "flex" }}>
 

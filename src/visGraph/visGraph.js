@@ -5,6 +5,42 @@ import kangaroo from "../images/kanga.png";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
+const vis = window.vis;
+let network;
+
+const layouts = [
+    {
+        improvedLayout: true,
+        clusterThreshold: 150
+    },
+    {
+        hierarchical: {
+            enabled: true,
+            shakeTowards: 'roots'  // roots, leaves
+        }
+    }
+]
+
+const changeChosenNodeColor = function (values, id, selected, hovering) {
+    values.shadow = true;
+};
+
+export const changeLayout = (visData) => {
+    
+    let options = network.options;
+    options.layout = layouts[0];
+
+    network.destroy();
+    network = null;
+    
+    createGraph(visData, options)
+
+}
+
+const visId = (node) => {
+    return `${node.type} ${node.subType} ${node.value}`
+}
+
 const mapVisNode = (node) => {
 
     let image, shape;
@@ -31,12 +67,15 @@ const mapVisNode = (node) => {
     const visNode = {
         group: node.type,
         subType: node.subType,
-        id: node.type + node.subType + node.value,
+        id: visId(node),
         label: node.value,
         title: node.subType,
         shape,
         image,
         physics: false,
+        chosen: {
+            node: changeChosenNodeColor
+        }
     }
 
     visNode.image = image;
@@ -46,31 +85,38 @@ const mapVisNode = (node) => {
 
 const mapVisEdge = (edge) => {
 
-    console.log("edge ", edge );
-    
     const source = edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
     const dest = edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
     const color = getEdgeColor(edge.group);
 
     const visEdge = {
-        from: source.type + source.subType + source.value,
-        to: dest.type + dest.subType + dest.value,
+        from: visId(source),
+        to: visId(dest),
         title: edge.group,
         color,
         arrows: edge.directed ? "to" : undefined,
         width: edge.properties.count / 5,
-        widthConstraint: 10, 
-
-
+        widthConstraint: 10,
     };
 
     return visEdge;
 }
 
-export const convertVis = async (data) => {
+const createGraph = (visData, options) => {
 
-    const vis = window.vis;
+    var container = document.getElementById("mynetwork");
+    network = new vis.Network(container, visData, options);
+
+    // add event listeners
+    network.on("select", function (params) {
+        const selectedNode = params.nodes[0];        
+        document.getElementById("graphInfo").innerHTML = selectedNode
+    });
+}
+
+export const convertVis = (data) => {
+
     const nodes = [];
     const edges = [];
 
@@ -98,14 +144,11 @@ export const convertVis = async (data) => {
     var visNodes = new vis.DataSet(nodes);
     var visEdges = new vis.DataSet(edges);
 
-    // create a network
-    var container = document.getElementById("mynetwork");
-
     var visData = {
         nodes: visNodes,
         edges: visEdges
     };
-
+        
     var options = {
         autoResize: true,
         height: '100%',
@@ -113,10 +156,12 @@ export const convertVis = async (data) => {
         locale: 'en',
         clickToUse: false,
         interaction: {
-            navigationButtons: true,
+            navigationButtons: false,
         }
     }
 
-    const network = new vis.Network(container, visData, options);
+    createGraph(visData, options)
+
+    return visData;
 
 }
