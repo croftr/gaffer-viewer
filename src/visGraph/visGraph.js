@@ -2,6 +2,10 @@ import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
 import kangaroo from "../images/kanga.png";
+import customer from "../images/customer.png";
+import productId from "../images/productId.png";
+import email from "../images/email.png";
+import productName from "../images/productName.png";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
@@ -22,17 +26,17 @@ const layouts = [
 ]
 
 const changeChosenNodeColor = function (values, id, selected, hovering) {
-    values.shadow = true;    
+    values.shadow = true;
 };
 
 export const changeLayout = (visData) => {
-    
+
     let options = network.options;
     options.layout = layouts[0];
 
     network.destroy();
     network = null;
-    
+
     createGraph(visData, options)
 
 }
@@ -43,23 +47,29 @@ const visId = (node) => {
 
 const mapVisNode = (node) => {
 
-    let image, shape;
+    let image, shape = "image";
+
+    console.log("node.type ", node.type);
+    
 
     if (node.type === "company") {
-        image = busCompany;
-        shape = "image";
+        image = busCompany;        
     } else if (node.subType === "big_bus") {
-        image = bus2;
-        shape = "image";
+        image = bus2;        
     } else if (node.subType === "small_bus") {
-        image = bus1;
-        shape = "image";
+        image = bus1;        
     } else if (node.type === "bus") {
-        image = bus1;
-        shape = "image";
+        image = bus1;        
     } else if (node.type == "kangaroo") {
-        image = kangaroo;
-        shape = "image";
+        image = kangaroo;        
+    } else if (node.type.toLowerCase().startsWith("customer")) {            
+        image = customer;        
+    } else if (node.type === "email")     {
+        image = email;        
+    } else if (node.type.toLowerCase() === "productid") {
+        image = productId;        
+    } else if (node.type.toLowerCase() === "productname") {
+        image = productName;        
     } else {
         shape = "ellipse";
     }
@@ -69,10 +79,10 @@ const mapVisNode = (node) => {
         subType: node.subType,
         id: visId(node),
         label: node.value,
-        title: node.subType,
+        title: node.type + " " + node.subType,
         shape,
-        image,        
-        size: 25,        
+        image,
+        size: 25,
         physics: false,
         chosen: {
             node: changeChosenNodeColor
@@ -96,10 +106,10 @@ const mapVisEdge = (edge) => {
         to: visId(dest),
         title: edge.group,
         color,
-        arrows: edge.directed ? "to" : undefined,        
+        arrows: edge.directed ? "to" : undefined,
         value: edge.properties.count,
         scaling: {
-            max: 10,            
+            max: 10,
         }
     };
 
@@ -113,7 +123,7 @@ const createGraph = (visData, options) => {
 
     // add event listeners
     network.on("select", function (params) {
-        const selectedNode = params.nodes[0];        
+        const selectedNode = params.nodes[0];
         document.getElementById("graphInfo").innerHTML = selectedNode || ""
     });
 }
@@ -151,7 +161,7 @@ export const convertVis = (data) => {
         nodes: visNodes,
         edges: visEdges
     };
-        
+
     var options = {
         autoResize: true,
         height: '100%',

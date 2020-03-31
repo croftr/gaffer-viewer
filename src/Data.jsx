@@ -78,7 +78,7 @@ export default function Data({ edgeTypes }) {
                         key={edgeType}
                         color="primary"
                         variant="contained"
-                        onClick={() => getData(edgeType)} style={{ marginRight: 8,  marginBottom: 8, backgroundColor: getEdgeColor(edgeType) }}
+                        onClick={() => getData(edgeType)} style={{ marginRight: 8,  marginBottom: 8, npm backgroundColor: getEdgeColor(edgeType) }}
                     >
                         {edgeType}
                     </Button>
