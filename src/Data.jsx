@@ -36,8 +36,14 @@ export default function Data({ edgeTypes }) {
         const { rawData, payload } = await convertRaw(edgeType);
         setData(rawData);
         setPayload(payload);
-        convertVis(rawData);
-    }
+        
+        const visData = convertVis(rawData);
+        
+        if (visData) {
+            setGraphData(visData);
+        }
+        
+   }
 
     const visGraph = () => {
         setGraphData(convertVis(data));
