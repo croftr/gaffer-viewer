@@ -6,6 +6,7 @@ import customer from "../images/customer.png";
 import productId from "../images/productId.png";
 import email from "../images/email.png";
 import productName from "../images/productName.png";
+import book from "../images/book.png";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
@@ -67,9 +68,11 @@ const mapVisNode = (node) => {
     } else if (node.type === "email")     {
         image = email;        
     } else if (node.type.toLowerCase() === "productid") {
-        image = productId;        
-    } else if (node.type.toLowerCase() === "productname") {
-        image = productName;        
+        image = productId;                
+    } else if (node.subType === "book") {
+        image = book;        
+    } else if (node.type.toLowerCase() === "productname") {                       
+        image = book;        
     } else {
         shape = "ellipse";
     }
