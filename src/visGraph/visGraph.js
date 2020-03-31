@@ -22,7 +22,7 @@ const layouts = [
 ]
 
 const changeChosenNodeColor = function (values, id, selected, hovering) {
-    values.shadow = true;
+    values.shadow = true;    
 };
 
 export const changeLayout = (visData) => {
@@ -71,7 +71,8 @@ const mapVisNode = (node) => {
         label: node.value,
         title: node.subType,
         shape,
-        image,
+        image,        
+        size: 25,        
         physics: false,
         chosen: {
             node: changeChosenNodeColor
@@ -95,9 +96,11 @@ const mapVisEdge = (edge) => {
         to: visId(dest),
         title: edge.group,
         color,
-        arrows: edge.directed ? "to" : undefined,
-        width: edge.properties.count / 5,
-        widthConstraint: 10,
+        arrows: edge.directed ? "to" : undefined,        
+        value: edge.properties.count,
+        scaling: {
+            max: 10,            
+        }
     };
 
     return visEdge;
