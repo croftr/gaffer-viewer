@@ -71,8 +71,8 @@ const mapVisNode = (node) => {
         image = productId;                
     } else if (node.subType === "book") {
         image = book;        
-    } else if (node.type.toLowerCase() === "productname") {                       
-        image = book;        
+    } else if (node.type.toLowerCase() === "productname") {        
+        image = productName; 
     } else {
         shape = "ellipse";
     }
