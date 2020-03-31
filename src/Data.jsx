@@ -78,7 +78,7 @@ export default function Data({ edgeTypes }) {
                 {views.map(view => <Tab label={view} key={view} />)}
             </Tabs>
 
-            <div id="dataFilters" style={{ padding: 8 }} >
+            <div id="dataFilters" ref={network} style={{ padding: 8 }} >
                 {edgeTypes.map(edgeType => (
                     <Button
                         key={edgeType}
@@ -102,7 +102,7 @@ export default function Data({ edgeTypes }) {
             {tabPage === 0 && <JSONPretty style={{ border: "1px solid lightGrey" }} id="json-pretty" data={data} ></JSONPretty>}
                 
             {tabPage === 1 && <VisGraph graphData={graphData} network={network.current}/>}
-                <div id="mynetwork" ref={network} style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}>                
+                <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}>                
             </div>
             {tabPage === 2 && (
                 <div style={{ padding: 16, display: "flex" }}>

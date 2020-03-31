@@ -50,31 +50,49 @@ const mapVisNode = (node) => {
 
     let image, shape = "image";
 
-    console.log("node.type ", node.type);
-    
-
-    if (node.type === "company") {
-        image = busCompany;        
-    } else if (node.subType === "big_bus") {
-        image = bus2;        
-    } else if (node.subType === "small_bus") {
-        image = bus1;        
-    } else if (node.type === "bus") {
-        image = bus1;        
-    } else if (node.type == "kangaroo") {
-        image = kangaroo;        
-    } else if (node.type.toLowerCase().startsWith("customer")) {            
-        image = customer;        
-    } else if (node.type === "email")     {
-        image = email;        
-    } else if (node.type.toLowerCase() === "productid") {
-        image = productId;                
-    } else if (node.subType === "book") {
-        image = book;        
-    } else if (node.type.toLowerCase() === "productname") {        
-        image = productName; 
-    } else {
-        shape = "ellipse";
+    switch (node.subType.toLowerCase()) {
+        case "big_bus" : 
+            image = bus2;
+            break;
+        case "small_bus" : 
+            image = bus1;
+            break;            
+        case "book" : 
+            image = book;
+            break;            
+        default: {
+            switch (node.type.toLowerCase()) {
+                case "company" : {
+                    image = busCompany;
+                    break;
+                }
+                case "bus" : {
+                    image = bus1;
+                    break;
+                }
+                case "kangaroo" : {
+                    image = kangaroo;
+                    break;
+                }
+                case "customerid" : {
+                    image = customer;
+                    break;
+                }
+                case "email" : {
+                    image = email;
+                    break;
+                }
+                case "productname" : {
+                    image = productName;
+                    break;
+                }
+                case "productid" : {
+                    image = productId;
+                    break;
+                }
+                default: shape = "ellipse";
+            }
+        }
     }
 
     const visNode = {

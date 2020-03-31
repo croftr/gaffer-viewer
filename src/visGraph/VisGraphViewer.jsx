@@ -7,12 +7,12 @@ export default function VisGraph({ graphData, network }) {
 
     const arrange = () => {
         changeLayout(graphData)
-        console.log(network.offsetWidth);
+        console.log(network.offsetHeight);
     }
 
     return (
         <React.Fragment>
-            <div style={{ position: "absolute", top: 0, marginTop: 190, marginLeft: 4, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "space-between" }} id="graphTools">
+            <div style={{ position: "absolute", top: 0, marginTop: 134 + network.offsetHeight, marginLeft: 4, zIndex: 999, display: "flex", alignItems: "center", justifyContent: "space-between" }} id="graphTools">
 
                 <div id="tools" style={{ display: "flex", alignItems: "center" }}>
                     <Tooltip title="re-arrange">
