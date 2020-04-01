@@ -5,6 +5,13 @@ import { changeLayout } from "./visGraph.js"
 
 export default function VisGraph({ graphData, network, height }) {
 
+    React.useEffect(() => {
+
+        console.log("use effect go ");
+        
+
+    }, []);
+
     const arrange = () => {
         changeLayout(graphData)        
     }

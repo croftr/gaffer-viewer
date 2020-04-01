@@ -7,6 +7,8 @@ import productId from "../images/productId.png";
 import email from "../images/email.png";
 import productName from "../images/productName.png";
 import book from "../images/book.png";
+import hen from "../images/hen.png";
+import dolphin from "../images/dolphin.png";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
@@ -51,6 +53,14 @@ const mapVisNode = (node) => {
     let image, shape = "image";
 
     switch (node.subType.toLowerCase()) {
+        case "dolphin" : 
+            image = dolphin;
+            break;         
+        case "kangaroo" : 
+            image = kangaroo;
+            break;         
+        case "hen" : 
+            image = hen;            
         case "big_bus" : 
             image = bus2;
             break;
@@ -69,11 +79,7 @@ const mapVisNode = (node) => {
                 case "bus" : {
                     image = bus1;
                     break;
-                }
-                case "kangaroo" : {
-                    image = kangaroo;
-                    break;
-                }
+                }                
                 case "customerid" : {
                     image = customer;
                     break;
@@ -174,7 +180,6 @@ export const convertVis = (data) => {
         });
     }
 
-
     var visNodes = new vis.DataSet(nodes);
     var visEdges = new vis.DataSet(edges);
 
@@ -188,7 +193,7 @@ export const convertVis = (data) => {
         height: '100%',
         width: '100%',
         locale: 'en',
-        clickToUse: false,
+        clickToUse: false,        
         interaction: {
             navigationButtons: false,
         }
