@@ -33,7 +33,6 @@ const changeChosenNodeColor = function (values, id, selected, hovering) {
 };
 
 export const changeLayout = (visData) => {
-
     let options = network.options;
     options.layout = layouts[0];
 
@@ -41,7 +40,6 @@ export const changeLayout = (visData) => {
     network = null;
 
     createGraph(visData, options)
-
 }
 
 const visId = (node) => {
@@ -106,7 +104,7 @@ const mapVisNode = (node) => {
         subType: node.subType,
         id: visId(node),
         label: node.value,
-        title: node.type + " " + node.subType + " " + node.value,
+        title: node.type + " " + node.subType,
         shape,
         image,
         physics: false,
@@ -149,15 +147,20 @@ const createGraph = (visData, options) => {
 
     // add event listeners
     network.on("select", function (params) {
-        const selectedNode = params.nodes[0];
-        document.getElementById("graphInfo").innerHTML = selectedNode || ""
+
+        const selectedNodeId = params.nodes[0];                        
+        const nodeDetails = selectedNodeId ? `${selectedNodeId}` : "";
+        document.getElementById("graphInfo").innerHTML = nodeDetails;
+        // var node = document.createElement("h2");  
+        // node.innerHTML = selectedNode  || "";
+        // document.getElementById("graphInfo").appendChild(node)
     });
 }
 
 export const convertVis = (data) => {
 
-    const nodes = [];
-    const edges = [];
+    const graphNodes = []
+    const graphEdges = []
 
     if (data && Array.isArray(data)) {
 
@@ -167,15 +170,15 @@ export const convertVis = (data) => {
             const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const visEdge = mapVisEdge(edge);
 
-            if (!nodes.find(i => i.id === sourceNode.id)) {
-                nodes.push(sourceNode);
+            if (!graphNodes.find(i => i.id === sourceNode.id)) {
+                graphNodes.push(sourceNode);
             }
 
-            if (!nodes.find(i => i.id === destNode.id)) {
-                nodes.push(destNode);
+            if (!graphNodes.find(i => i.id === destNode.id)) {
+                graphNodes.push(destNode);
             }
 
-            edges.push(visEdge)
+            graphEdges.push(visEdge)
 
         });
 
@@ -192,15 +195,15 @@ export const convertVis = (data) => {
                 if (cardinality) {
                     const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
                     const id = visId(vertex);
-                    const nodeToEnrich = nodes.find(node => node.id === id);
+                    const nodeToEnrich = graphNodes.find(node => node.id === id);
                     nodeToEnrich.value = cardinality;
                 }
             }
         });
     }
 
-    var visNodes = new vis.DataSet(nodes);
-    var visEdges = new vis.DataSet(edges);
+    var visNodes = new vis.DataSet(graphNodes);
+    var visEdges = new vis.DataSet(graphEdges);
 
     var visData = {
         nodes: visNodes,
