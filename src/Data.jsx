@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import { convertRaw } from "./queries/raw.js"
@@ -10,6 +10,8 @@ import ErrorIcon from '@material-ui/icons/Error';
 import SuccessIcon from '@material-ui/icons/CheckCircle';
 
 import { execute } from "./actions/GafferActions"
+
+import { useWindowSize }  from "./customHooks/hooks"
 
 const views = [
     "Raw",
@@ -27,6 +29,8 @@ export default function Data({ edgeTypes }) {
     const [responseStatus, setResponseStatus] = React.useState();
     const network = React.useRef();
 
+    const [width, height] = useWindowSize();
+
     const handleTabChange = (event, value) => {
         value === 1 && visGraph();
         setTabPage(value);
@@ -36,14 +40,14 @@ export default function Data({ edgeTypes }) {
         const { rawData, payload } = await convertRaw(edgeType);
         setData(rawData);
         setPayload(payload);
-        
+
         const visData = convertVis(rawData);
-        
+
         if (visData) {
             setGraphData(visData);
         }
-        
-   }
+
+    }
 
     const visGraph = () => {
         setGraphData(convertVis(data));
@@ -58,7 +62,7 @@ export default function Data({ edgeTypes }) {
             setPayload(payloadText);
             convertVis(rawData);
             setResponseStatus({ error: false, message: "Success", count: rawData ? rawData.length : 0 });
-        } catch (e) {            
+        } catch (e) {
             setResponseStatus({ error: true, message: e.message });
         }
     }
@@ -84,7 +88,7 @@ export default function Data({ edgeTypes }) {
                         key={edgeType}
                         color="primary"
                         variant="contained"
-                        onClick={() => getData(edgeType)} style={{ marginRight: 8,  marginBottom: 8, backgroundColor: getEdgeColor(edgeType) }}
+                        onClick={() => getData(edgeType)} style={{ marginRight: 8, marginBottom: 8, backgroundColor: getEdgeColor(edgeType) }}
                     >
                         {edgeType}
                     </Button>
@@ -100,9 +104,9 @@ export default function Data({ edgeTypes }) {
             </div>
 
             {tabPage === 0 && <JSONPretty style={{ border: "1px solid lightGrey" }} id="json-pretty" data={data} ></JSONPretty>}
-                
-            {tabPage === 1 && <VisGraph graphData={graphData} network={network.current}/>}
-                <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: "1px solid lightgray" }}>                
+
+            {tabPage === 1 && <VisGraph graphData={graphData} network={network.current} height={height} />}
+            <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: tabPage === 1 ? "1px solid lightgray" : "none" }}>
             </div>
             {tabPage === 2 && (
                 <div style={{ padding: 16, display: "flex" }}>
@@ -141,7 +145,6 @@ export default function Data({ edgeTypes }) {
 
                 </div>
             )}
-
 
         </Paper>
     );
