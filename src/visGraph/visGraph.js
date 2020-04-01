@@ -53,46 +53,46 @@ const mapVisNode = (node) => {
     let image, shape = "image";
 
     switch (node.subType.toLowerCase()) {
-        case "dolphin" : 
+        case "dolphin":
             image = dolphin;
-            break;         
-        case "kangaroo" : 
+            break;
+        case "kangaroo":
             image = kangaroo;
-            break;         
-        case "hen" : 
-            image = hen;            
-        case "big_bus" : 
+            break;
+        case "hen":
+            image = hen;
+        case "big_bus":
             image = bus2;
             break;
-        case "small_bus" : 
+        case "small_bus":
             image = bus1;
-            break;            
-        case "book" : 
+            break;
+        case "book":
             image = book;
-            break;            
+            break;
         default: {
             switch (node.type.toLowerCase()) {
-                case "company" : {
+                case "company": {
                     image = busCompany;
                     break;
                 }
-                case "bus" : {
+                case "bus": {
                     image = bus1;
                     break;
-                }                
-                case "customerid" : {
+                }
+                case "customerid": {
                     image = customer;
                     break;
                 }
-                case "email" : {
+                case "email": {
                     image = email;
                     break;
                 }
-                case "productname" : {
+                case "productname": {
                     image = productName;
                     break;
                 }
-                case "productid" : {
+                case "productid": {
                     image = productId;
                     break;
                 }
@@ -106,10 +106,9 @@ const mapVisNode = (node) => {
         subType: node.subType,
         id: visId(node),
         label: node.value,
-        title: node.type + " " + node.subType,
+        title: node.type + " " + node.subType + " " + node.value,
         shape,
         image,
-        size: 25,
         physics: false,
         chosen: {
             node: changeChosenNodeColor
@@ -161,6 +160,7 @@ export const convertVis = (data) => {
     const edges = [];
 
     if (data && Array.isArray(data)) {
+
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
 
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
@@ -178,6 +178,25 @@ export const convertVis = (data) => {
             edges.push(visEdge)
 
         });
+
+        data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Entity").forEach(entity => {
+
+            // if there are entities with a cardinality property then use that to size the nodes 
+            if (entity.properties &&
+                entity.properties.approxCardinality &&
+                entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"] &&
+                entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus) {
+
+                const cardinality = entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus.cardinality;
+
+                if (cardinality) {
+                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
+                    const id = visId(vertex);
+                    const nodeToEnrich = nodes.find(node => node.id === id);
+                    nodeToEnrich.value = cardinality;
+                }
+            }
+        });
     }
 
     var visNodes = new vis.DataSet(nodes);
@@ -193,7 +212,7 @@ export const convertVis = (data) => {
         height: '100%',
         width: '100%',
         locale: 'en',
-        clickToUse: false,        
+        clickToUse: false,
         interaction: {
             navigationButtons: false,
         }
