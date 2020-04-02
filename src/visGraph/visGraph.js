@@ -163,10 +163,7 @@ export const convertVis = (data) => {
     const graphEdges = []
 
     if (data && Array.isArray(data)) {
-
-        console.log("data ", data);
-        
-
+                
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
             
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
@@ -199,19 +196,9 @@ export const convertVis = (data) => {
                     const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];                    
                     
                     const id = visId(vertex);
-
-                    console.log("nodes ", graphNodes);
-                    console.log("vertex ", vertex);                    
-                    console.log("id ", id);
-                    
                     const nodeToEnrich = graphNodes.find(node => node.id === id);
-                    
-                    console.log("nodeToEnrich ", nodeToEnrich);
-                    
-
-                    if (nodeToEnrich) {
-
-                        console.log("set cardinality ", cardinality);
+                        
+                    if (nodeToEnrich) {                        
                         nodeToEnrich.value = cardinality;
                     }
                     
