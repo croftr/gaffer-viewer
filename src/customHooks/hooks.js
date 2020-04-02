@@ -13,3 +13,12 @@ export const useWindowSize = () => {
     }, []);
     return size;
 }
+
+export const usePayloadData = (initialState) => {
+
+    const [data, setData] = useState(initialState);
+    const [graphData, setGraphData] = useState(initialState);
+
+    return [data, setData, graphData, setGraphData]
+
+}

@@ -6,10 +6,7 @@ import { changeLayout } from "./visGraph.js"
 export default function VisGraph({ graphData, network, height }) {
 
     React.useEffect(() => {
-
-        console.log("use effect go ");
-        
-
+        console.log("use effect go ");        
     }, []);
 
     const arrange = () => {
@@ -24,7 +21,7 @@ export default function VisGraph({ graphData, network, height }) {
                         <IconButton onClick={arrange}>
                             <ArrangeIcon />
                         </IconButton>
-                    </Tooltip>
+                    </Tooltip>                    
                 </div>                
             </div>
 
