@@ -106,7 +106,7 @@ export default function Data({ edgeTypes }) {
             {tabPage === 0 && <JSONPretty style={{ border: "1px solid lightGrey" }} id="json-pretty" data={data} ></JSONPretty>}
 
             {tabPage === 1 && <VisGraph graphData={graphData} network={network.current} height={height} />}
-            <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 200px)" : 0, border: tabPage === 1 ? "1px solid lightgray" : "none" }}>
+            <div id="mynetwork" style={{ width: "100%", height: tabPage === 1 ? "calc(100vh - 208px)" : 0, border: tabPage === 1 ? "1px solid lightgray" : "none" }}>
             </div>
             {tabPage === 2 && (
                 <div style={{ padding: 16, display: "flex" }}>
