@@ -94,7 +94,7 @@ const mapVisNode = (node) => {
                     image = productId;
                     break;
                 }
-                default: shape = "ellipse";
+                default: shape = "dot";
             }
         }
     }
@@ -164,8 +164,11 @@ export const convertVis = (data) => {
 
     if (data && Array.isArray(data)) {
 
-        data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
+        console.log("data ", data);
+        
 
+        data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
+            
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const visEdge = mapVisEdge(edge);
@@ -193,10 +196,25 @@ export const convertVis = (data) => {
                 const cardinality = entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus.cardinality;
 
                 if (cardinality) {
-                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
+                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];                    
+                    
                     const id = visId(vertex);
+
+                    console.log("nodes ", graphNodes);
+                    console.log("vertex ", vertex);                    
+                    console.log("id ", id);
+                    
                     const nodeToEnrich = graphNodes.find(node => node.id === id);
-                    nodeToEnrich.value = cardinality;
+                    
+                    console.log("nodeToEnrich ", nodeToEnrich);
+                    
+
+                    if (nodeToEnrich) {
+
+                        console.log("set cardinality ", cardinality);
+                        nodeToEnrich.value = cardinality;
+                    }
+                    
                 }
             }
         });
