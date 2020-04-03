@@ -1,3 +1,5 @@
+import { CircularProgress } from "@material-ui/core";
+
 import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
@@ -43,13 +45,13 @@ export const changeLayout = (visData) => {
 }
 
 const visId = (node) => {
-    
+
     if (node.subType) {
         return `${node.type} ${node.subType} ${node.value}`
     } else {
         return `${node.type} ${node.value}`
     }
-    
+
 }
 
 const mapVisNode = (node) => {
@@ -117,7 +119,7 @@ const mapVisNode = (node) => {
         size: 10,
         chosen: {
             node: changeChosenNodeColor
-        },        
+        },
     }
 
     visNode.image = image;
@@ -146,11 +148,11 @@ const mapVisEdge = (edge) => {
         value: edge.properties.count,
         scaling: {
             max: 15,
-        },        
+        },
         smooth: {
             type: "continuous"
         },
-        physics: true,        
+        physics: true,
     };
 
     return visEdge;
@@ -167,9 +169,20 @@ const createGraph = (visData, options) => {
         const selectedNodeId = params.nodes[0];
         const nodeDetails = selectedNodeId ? `${selectedNodeId}` : "";
         document.getElementById("graphInfo").innerHTML = nodeDetails;
-        // var node = document.createElement("h2");  
-        // node.innerHTML = selectedNode  || "";
-        // document.getElementById("graphInfo").appendChild(node)
+    });
+
+    network.on("stabilizationProgress", function (params) {    
+        const loadingBar = document.getElementById("loadingBar");
+        if (loadingBar) {
+            loadingBar.style.display = "block"
+        }        
+    });
+
+    network.once("stabilizationIterationsDone", function () {        
+        const loadingBar = document.getElementById("loadingBar");
+        if (loadingBar) {                                                        
+            loadingBar.style.display = "none";            
+        }
     });
 }
 
@@ -244,12 +257,12 @@ export const convertVis = (data) => {
         layout: {
             improvedLayout: true,
             clusterThreshold: 150
-        },        
+        },
         interaction: {
-          hover: true,
-          multiselect: false,
-          hideEdgesOnDrag: false,
-          hideEdgesOnZoom: false
+            hover: true,
+            multiselect: false,
+            hideEdgesOnDrag: false,
+            hideEdgesOnZoom: false
         }
     }
     createGraph(visData, options);

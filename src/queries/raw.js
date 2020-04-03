@@ -45,7 +45,7 @@ export const convertRaw = async (edgeType) => {
     //   }
     
     if (edgeType) {
-        payload.view = {
+        payload.operations[0].view = {
             edges: {
                 [edgeType]: {}
             }

@@ -11,7 +11,7 @@ import SuccessIcon from '@material-ui/icons/CheckCircle';
 
 import { execute } from "./actions/GafferActions"
 
-import { useWindowSize, usePayloadData }  from "./customHooks/hooks"
+import { useWindowSize, usePayloadData } from "./customHooks/hooks"
 
 const views = [
     "Raw",
@@ -21,12 +21,12 @@ const views = [
 
 export default function Data({ edgeTypes }) {
 
-    const [data, setData, graphData, setGraphData] = usePayloadData([])    
+    const [data, setData, graphData, setGraphData] = usePayloadData([])
     const [payload, setPayload] = React.useState({});
     const [tabPage, setTabPage] = React.useState(0);
     const [payloadText, setPayloadText] = React.useState();
     const [responseStatus, setResponseStatus] = React.useState();
-    
+
     const network = React.useRef();
 
     const [width, height] = useWindowSize();
