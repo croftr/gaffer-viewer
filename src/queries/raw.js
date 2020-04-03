@@ -8,10 +8,41 @@ export const convertRaw = async (edgeType) => {
             class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
         }, {
             class: "uk.gov.gchq.gaffer.operation.impl.Limit",
-            resultLimit: 500,
+            resultLimit: 1000,
             truncate: true
         }]
     }
+
+    // const payload = {
+    //     "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
+    //     "input": [
+    //       {
+    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
+    //         "type": "country",      
+    //         "value": "Austria"
+    //       },
+    //       {
+    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
+    //         "type": "country",      
+    //         "value": "Russia"
+    //       },
+    //       {
+    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
+    //         "type": "country",      
+    //         "value": "Thailand"
+    //       },
+    //       {
+    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
+    //         "type": "country",      
+    //         "value": "Norway"
+    //       },                    
+    //       {
+    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
+    //         "type": "country",      
+    //         "value": "France"
+    //       },   
+    //     ]
+    //   }
     
     if (edgeType) {
         payload.view = {

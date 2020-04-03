@@ -18,7 +18,7 @@ let network;
 const layouts = [
     {
         improvedLayout: true,
-        clusterThreshold: 100
+        clusterThreshold: 30
     },
     {
         hierarchical: {
@@ -49,7 +49,7 @@ const visId = (node) => {
 const mapVisNode = (node) => {
 
     let image, shape = "image";
-    
+
     switch (node.subType ? node.subType.toLowerCase() : "") {
         case "dolphin":
             image = dolphin;
@@ -132,15 +132,16 @@ const mapVisEdge = (edge) => {
         title: edge.group,
         color,
         arrows: {
-            to: { 
+            to: {
                 enabled: edge.directed ? true : false,
                 scaleFactor: 0.2,
-            },             
+            },
         },
         value: edge.properties.count,
         scaling: {
             max: 15,
-        }
+        },
+        physics: true,
     };
 
     return visEdge;
@@ -154,7 +155,7 @@ const createGraph = (visData, options) => {
     // add event listeners
     network.on("select", function (params) {
 
-        const selectedNodeId = params.nodes[0];                        
+        const selectedNodeId = params.nodes[0];
         const nodeDetails = selectedNodeId ? `${selectedNodeId}` : "";
         document.getElementById("graphInfo").innerHTML = nodeDetails;
         // var node = document.createElement("h2");  
@@ -169,12 +170,12 @@ export const convertVis = (data) => {
     const graphEdges = []
 
     if (data && Array.isArray(data)) {
-                
+
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Edge").forEach(edge => {
-            
+
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
-                        
+
             const visEdge = mapVisEdge(edge);
 
             if (!graphNodes.find(i => i.id === sourceNode.id)) {
@@ -190,7 +191,7 @@ export const convertVis = (data) => {
         });
 
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Entity").forEach(entity => {
-        
+
             // if there are entities with a cardinality property then use that to size the nodes 
             if (entity.properties &&
                 entity.properties.approxCardinality &&
@@ -200,15 +201,15 @@ export const convertVis = (data) => {
                 const cardinality = entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus.cardinality;
 
                 if (cardinality) {
-                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];                    
-                    
+                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
+
                     const id = visId(vertex);
                     const nodeToEnrich = graphNodes.find(node => node.id === id);
-                        
-                    if (nodeToEnrich) {                        
+
+                    if (nodeToEnrich) {
                         nodeToEnrich.value = cardinality;
                     }
-                    
+
                 }
             }
         });
@@ -230,10 +231,13 @@ export const convertVis = (data) => {
         clickToUse: false,
         interaction: {
             navigationButtons: false,
+        },
+        layout: {
+            improvedLayout: true,
+            clusterThreshold: 30
         }
     }
-
-    createGraph(visData, options)
+    createGraph(visData, options);
 
     return visData;
 
