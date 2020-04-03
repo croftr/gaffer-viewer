@@ -18,7 +18,7 @@ let network;
 const layouts = [
     {
         improvedLayout: true,
-        clusterThreshold: 150
+        clusterThreshold: 100
     },
     {
         hierarchical: {
@@ -49,7 +49,7 @@ const visId = (node) => {
 const mapVisNode = (node) => {
 
     let image, shape = "image";
-
+    
     switch (node.subType.toLowerCase()) {
         case "dolphin":
             image = dolphin;
@@ -108,6 +108,7 @@ const mapVisNode = (node) => {
         shape,
         image,
         physics: false,
+        size: 10,
         chosen: {
             node: changeChosenNodeColor
         }
@@ -130,10 +131,15 @@ const mapVisEdge = (edge) => {
         to: visId(dest),
         title: edge.group,
         color,
-        arrows: edge.directed ? "to" : undefined,
+        arrows: {
+            to: { 
+                enabled: edge.directed ? true : false,
+                scaleFactor: 0.2,
+            },             
+        },
         value: edge.properties.count,
         scaling: {
-            max: 10,
+            max: 15,
         }
     };
 
@@ -168,6 +174,7 @@ export const convertVis = (data) => {
             
             const sourceNode = mapVisNode(edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
             const destNode = mapVisNode(edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"]);
+                        
             const visEdge = mapVisEdge(edge);
 
             if (!graphNodes.find(i => i.id === sourceNode.id)) {

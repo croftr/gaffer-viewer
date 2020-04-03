@@ -8,7 +8,7 @@ export const convertRaw = async (edgeType) => {
             class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
         }, {
             class: "uk.gov.gchq.gaffer.operation.impl.Limit",
-            resultLimit: 1100,
+            resultLimit: 1000,
             truncate: true
         }]
     }
