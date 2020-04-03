@@ -18,7 +18,7 @@ let network;
 const layouts = [
     {
         improvedLayout: true,
-        clusterThreshold: 30
+        clusterThreshold: 150
     },
     {
         hierarchical: {
@@ -43,7 +43,13 @@ export const changeLayout = (visData) => {
 }
 
 const visId = (node) => {
-    return `${node.type} ${node.subType} ${node.value}`
+    
+    if (node.subType) {
+        return `${node.type} ${node.subType} ${node.value}`
+    } else {
+        return `${node.type} ${node.value}`
+    }
+    
 }
 
 const mapVisNode = (node) => {
@@ -104,14 +110,14 @@ const mapVisNode = (node) => {
         subType: node.subType,
         id: visId(node),
         label: node.value,
-        title: node.type + " " + node.subType,
+        title: node.subType ? node.type + " " + node.subType : node.type,
         shape,
         image,
         physics: false,
         size: 10,
         chosen: {
             node: changeChosenNodeColor
-        }
+        },        
     }
 
     visNode.image = image;
@@ -140,8 +146,11 @@ const mapVisEdge = (edge) => {
         value: edge.properties.count,
         scaling: {
             max: 15,
+        },        
+        smooth: {
+            type: "continuous"
         },
-        physics: true,
+        physics: true,        
     };
 
     return visEdge;
@@ -234,7 +243,13 @@ export const convertVis = (data) => {
         },
         layout: {
             improvedLayout: true,
-            clusterThreshold: 30
+            clusterThreshold: 150
+        },        
+        interaction: {
+          hover: true,
+          multiselect: false,
+          hideEdgesOnDrag: false,
+          hideEdgesOnZoom: false
         }
     }
     createGraph(visData, options);
