@@ -50,7 +50,7 @@ const mapVisNode = (node) => {
 
     let image, shape = "image";
     
-    switch (node.subType.toLowerCase()) {
+    switch (node.subType ? node.subType.toLowerCase() : "") {
         case "dolphin":
             image = dolphin;
             break;
@@ -190,7 +190,7 @@ export const convertVis = (data) => {
         });
 
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Entity").forEach(entity => {
-
+        
             // if there are entities with a cardinality property then use that to size the nodes 
             if (entity.properties &&
                 entity.properties.approxCardinality &&
