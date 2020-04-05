@@ -171,17 +171,17 @@ const createGraph = (visData, options) => {
         document.getElementById("graphInfo").innerHTML = nodeDetails;
     });
 
-    network.on("stabilizationProgress", function (params) {    
+    network.on("stabilizationProgress", function (params) {
         const loadingBar = document.getElementById("loadingBar");
         if (loadingBar) {
             loadingBar.style.display = "block"
-        }        
+        }
     });
 
-    network.once("stabilizationIterationsDone", function () {        
+    network.once("stabilizationIterationsDone", function () {
         const loadingBar = document.getElementById("loadingBar");
-        if (loadingBar) {                                                        
-            loadingBar.style.display = "none";            
+        if (loadingBar) {
+            loadingBar.style.display = "none";
         }
     });
 }
@@ -214,24 +214,17 @@ export const convertVis = (data) => {
 
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Entity").forEach(entity => {
 
-            // if there are entities with a cardinality property then use that to size the nodes 
-            if (entity.properties &&
-                entity.properties.approxCardinality &&
-                entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"] &&
-                entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus) {
+            //optional chaining 
+            const cardinality = entity.properties?.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"]?.hyperLogLogPlus?.cardinality;
+            
+            if (cardinality) {
+                const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
-                const cardinality = entity.properties.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"].hyperLogLogPlus.cardinality;
+                const id = visId(vertex);
+                const nodeToEnrich = graphNodes.find(node => node.id === id);
 
-                if (cardinality) {
-                    const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
-
-                    const id = visId(vertex);
-                    const nodeToEnrich = graphNodes.find(node => node.id === id);
-
-                    if (nodeToEnrich) {
-                        nodeToEnrich.value = cardinality;
-                    }
-
+                if (nodeToEnrich) {
+                    nodeToEnrich.value = cardinality;
                 }
             }
         });
