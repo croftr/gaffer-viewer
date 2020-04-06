@@ -35,7 +35,27 @@ const changeChosenNodeColor = function (values, id, selected, hovering) {
 };
 
 export const changeLayout = (visData) => {
-    let options = network.options;
+    var options = {
+        autoResize: true,
+        height: '100%',
+        width: '100%',
+        locale: 'en',
+        clickToUse: false,
+        interaction: {
+            navigationButtons: false,
+        },
+        layout: {
+            improvedLayout: true,
+            clusterThreshold: 150
+        },
+        interaction: {
+            hover: true,
+            multiselect: true,
+            hideEdgesOnDrag: false,
+            hideEdgesOnZoom: false
+        }
+    }
+    
     options.layout = layouts[0];
 
     network.destroy();
@@ -166,8 +186,12 @@ const createGraph = (visData, options) => {
     // add event listeners
     network.on("select", function (params) {
 
-        const selectedNodeId = params.nodes[0];
-        const nodeDetails = selectedNodeId ? `${selectedNodeId}` : "";
+        console.log("selected ", params.nodes);
+        
+
+        const selectedNodeIds = params.nodes;
+
+        const nodeDetails = selectedNodeIds ? `${selectedNodeIds.join(" AND ")}` : "";
         document.getElementById("graphInfo").innerHTML = nodeDetails;
     });
 
@@ -253,7 +277,7 @@ export const convertVis = (data) => {
         },
         interaction: {
             hover: true,
-            multiselect: false,
+            multiselect: true,
             hideEdgesOnDrag: false,
             hideEdgesOnZoom: false
         }

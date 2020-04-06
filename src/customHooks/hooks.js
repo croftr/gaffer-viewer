@@ -22,3 +22,8 @@ export const usePayloadData = (initialState) => {
     return [data, setData, graphData, setGraphData]
 
 }
+
+export const useShortestPath = () => {
+    const [shortestPath, setShortestPath] = useState([]);                    
+    return [shortestPath, setShortestPath]
+}

@@ -36,3 +36,12 @@ export const getOperationDetails = async (name) => {
     return response.json();
 
 }
+
+
+export const fetchShortestPath = async (node1, node2) => {
+
+    const response = await fetch(`http://localhost:8080/rest/shortestPath?node1=${node1}&node2=${node2}`);
+
+    return response.json();
+
+}
