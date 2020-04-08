@@ -1,5 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 
+import React from 'react';
 import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
@@ -55,7 +56,7 @@ export const changeLayout = (visData) => {
             hideEdgesOnZoom: false
         }
     }
-    
+
     options.layout = layouts[0];
 
     network.destroy();
@@ -167,7 +168,9 @@ const mapVisEdge = (edge) => {
         },
         value: edge.properties.count,
         scaling: {
-            max: 15,
+            min: 1,
+            max: 3,
+            label: true
         },
         smooth: {
             type: "continuous"
@@ -187,7 +190,7 @@ const createGraph = (visData, options) => {
     network.on("select", function (params) {
 
         console.log("selected ", params.nodes);
-        
+
 
         const selectedNodeIds = params.nodes;
 
@@ -237,11 +240,21 @@ export const convertVis = (data) => {
         });
 
         data.filter(d => d.class === "uk.gov.gchq.gaffer.data.element.Entity").forEach(entity => {
+                                    
+            const cardinalityGroup = entity.properties?.approxCardinality
+            let cardinality;
 
-            //optional chaining 
-            const cardinality = entity.properties?.approxCardinality["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"]?.hyperLogLogPlus?.cardinality;
-            
+            if (cardinalityGroup) {
+                cardinality = cardinalityGroup["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"]?.hyperLogLogPlus?.cardinality;
+            }
+
+            const totalPoints = entity.properties?.totalPoints || 0;
+            const juryPoints = entity.properties?.juryPoints;
+            const telePoints = entity.properties?.telePoints;
+
+            //cardinality Degrees
             if (cardinality) {
+
                 const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
                 const id = visId(vertex);
@@ -249,41 +262,66 @@ export const convertVis = (data) => {
 
                 if (nodeToEnrich) {
                     nodeToEnrich.value = cardinality;
+                    nodeToEnrich.title = `Cardinality ${cardinality}`
                 }
             }
+
+            //total points degrees
+            // if (totalPoints) {
+
+            //     const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
+
+            //     const id = visId(vertex);
+            //     const nodeToEnrich = graphNodes.find(node => node.id === id);
+
+                
+            //     if (nodeToEnrich) {
+            //         nodeToEnrich.value = totalPoints;
+            //         nodeToEnrich.title = `Total Points ${totalPoints}`
+
+            //         nodeToEnrich.properties = {
+            //             totalPoints,
+            //             juryPoints,
+            //             telePoints
+            //         }
+                    
+            //     }
+               
+            // }
+        
         });
+}
+
+var visNodes = new vis.DataSet(graphNodes);
+var visEdges = new vis.DataSet(graphEdges);
+
+var visData = {
+    nodes: visNodes,
+    edges: visEdges
+};
+
+var options = {
+    autoResize: true,
+    height: '100%',
+    width: '100%',
+    locale: 'en',
+    clickToUse: false,
+    interaction: {
+        navigationButtons: false,
+    },
+    layout: {
+        improvedLayout: true,
+        clusterThreshold: 150
+    },
+    interaction: {
+        hover: true,
+        multiselect: true,
+        hideEdgesOnDrag: false,
+        hideEdgesOnZoom: false
     }
+}
+createGraph(visData, options);
 
-    var visNodes = new vis.DataSet(graphNodes);
-    var visEdges = new vis.DataSet(graphEdges);
-
-    var visData = {
-        nodes: visNodes,
-        edges: visEdges
-    };
-
-    var options = {
-        autoResize: true,
-        height: '100%',
-        width: '100%',
-        locale: 'en',
-        clickToUse: false,
-        interaction: {
-            navigationButtons: false,
-        },
-        layout: {
-            improvedLayout: true,
-            clusterThreshold: 150
-        },
-        interaction: {
-            hover: true,
-            multiselect: true,
-            hideEdgesOnDrag: false,
-            hideEdgesOnZoom: false
-        }
-    }
-    createGraph(visData, options);
-
-    return visData;
+return visData;
 
 }

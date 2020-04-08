@@ -8,7 +8,7 @@ export const convertRaw = async (edgeType) => {
             class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
         }, {
             class: "uk.gov.gchq.gaffer.operation.impl.Limit",
-            resultLimit: 1000,
+            resultLimit: 10000,
             truncate: true
         }]
     }
@@ -43,11 +43,15 @@ export const convertRaw = async (edgeType) => {
     //       },   
     //     ]
     //   }
-    
+
     if (edgeType) {
         payload.operations[0].view = {
             edges: {
                 [edgeType]: {}
+            },
+            entities: {
+                cardinality: {},
+                points: {}
             }
         }
     }

@@ -19,6 +19,9 @@ import Graphs from "./Graphs";
 import Data from "./Data";
 import Queries from "./Queries";
 
+import UploadPage from "./upload/UploadPage";
+import UploadIcon from '@material-ui/icons/Backup';
+
 import Arrow from "@material-ui/icons/ArrowRight"
 
 import { generateEdgeTypes, setEdgeColours } from "./utils/schamUtils"
@@ -52,7 +55,8 @@ const useStyles = makeStyles(theme => ({
 const items = [
     "Schemas",
     "Data",
-    "Operations"
+    "Operations",
+    "Upload"
 ]
 
 export default function AppNavBar() {
@@ -107,6 +111,7 @@ export default function AppNavBar() {
             case 0: return <GraphIcon />
             case 1: return <DataIcon />
             case 2: return <QueriesIcon />
+            case 3: return <UploadIcon />
             default:
         }
     }
@@ -181,6 +186,7 @@ export default function AppNavBar() {
                 {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
                 {navItem === 1 && <Data edgeTypes={edgeTypes} />}
                 {navItem === 2 && <Queries />}
+                {navItem === 3 && <UploadPage />}
             </main>
         </div>
     );

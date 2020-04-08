@@ -7,7 +7,7 @@ export const execute = async (body) => {
         },
         body: JSON.stringify(body)
     });
-    
+
     return response.json();
 
 }
@@ -32,7 +32,7 @@ export const getOperationDetails = async (name) => {
             'Accept': 'application/json'
         },
     });
-    
+
     return response.json();
 
 }
@@ -44,4 +44,19 @@ export const fetchShortestPath = async (node1, node2) => {
 
     return response.json();
 
+}
+
+export const fetchUploadGraph = async (data) => {
+
+    console.log("upload ", data);
+    let response = await fetch("http://localhost:8080/rest/v2/graph/operations/execute", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        body: JSON.stringify(data)
+    });
+
+    console.log("response ", response );
+    
 }
