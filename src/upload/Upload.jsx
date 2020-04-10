@@ -14,6 +14,16 @@ const Upload = () => {
     const onChange = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
+
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload =  (e) => {
+            console.log("got ", e.target.result);
+        };
+
+        reader.readAsText(e.target.files[0]);
+
     };
 
     const onSubmit = async e => {
@@ -21,7 +31,7 @@ const Upload = () => {
         e.preventDefault();
         const formData = new FormData();
         console.log("file ", file);
-        
+
         formData.append('file', file);
 
         try {
