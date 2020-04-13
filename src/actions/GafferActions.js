@@ -47,16 +47,14 @@ export const fetchShortestPath = async (node1, node2) => {
 }
 
 export const fetchUploadGraph = async (data) => {
-
-    console.log("upload ", data);
-    let response = await fetch("http://localhost:8080/rest/v2/graph/operations/execute", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        body: JSON.stringify(data)
+    
+    let response = await fetch("http://localhost:8080/rest/loadCsv", {
+        method: "POST",        
+        body: data
     });
 
     console.log("response ", response );
+
+    return response.json();
     
 }
