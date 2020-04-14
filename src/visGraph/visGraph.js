@@ -98,7 +98,7 @@ const mapVisNode = (node) => {
             image = book;
             break;
         default: {
-            switch (node.type.toLowerCase()) {
+            switch (node.type ? node.type.toLowerCase() : "") {
                 case "company": {
                     image = busCompany;
                     break;
