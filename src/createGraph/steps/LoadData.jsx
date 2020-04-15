@@ -6,18 +6,29 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
     return (
         <div>
-            <Typography>Load data</Typography>
-            
+            <Typography>Load data for {schemaName} graph</Typography>
+
             <div className='inputArea' style={{ display: "flex", flexDirection: "column", width: 400 }}>
-                <Input
+
+
+                <Button
+                    variant="contained"
+                    component="label"
+                    style={{ marginBottom: 16 }}
+                >
+                    Upload File {filename}
+                    <Input
                     type='file'
                     className='custom-file-input'
                     id='customFile'
                     onChange={onSelectFile}
-                    label={filename}                                        
-                    style={{ marginBottom: 16 }}
-                />
-            
+                    label={filename}
+                    style={{  display: "none" }}
+                />                    
+                </Button>
+
+
+
                 <Button
                     type='submit'
                     color="secondary"
@@ -26,7 +37,7 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                     value='Upload'
                     disabled={!file || !schemaName}
                     className='btn btn-primary btn-block mt-4'>
-                    Create Schema
+                    Upload Data
                 </Button>
             </div>
         </div>

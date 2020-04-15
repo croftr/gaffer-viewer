@@ -19,7 +19,7 @@ export default function CreateGraphStepper({ }) {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [schemaName, setSchemaName] = useState();
-    const [filename, setFilename] = useState('Choose File');
+    const [filename, setFilename] = useState('');
 
     const onChangeSchemaName = (e) => {                    
         setSchemaName(e.target.value);
@@ -121,7 +121,6 @@ export default function CreateGraphStepper({ }) {
                                 <Button disabled={activeStep === 0} onClick={handleBack} >
                                     Back
                                 </Button>
-
 
                                 <Button
                                     variant="contained"
