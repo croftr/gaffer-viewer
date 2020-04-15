@@ -1,13 +1,13 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
-import Upload from "./Upload";
+import CreateGraph from "./CreateGraph";
 
 export default function Data({ edgeTypes }) {
 
     return (
-        <Paper style={{ height: "100%" }}>
-            <Upload />
+        <Paper style={{ height: "100%", padding: 16 }}>
+            <CreateGraph />
         </Paper>
     )
 

@@ -1,2 +1,5 @@
-1,interaction,2
-1,interaction,3
+1,met,2
+1,met,3
+1,interactedWith,4
+4,met,1
+4,interactedWith,2
