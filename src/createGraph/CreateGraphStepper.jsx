@@ -8,9 +8,10 @@ import { fetchUploadGraph } from "../actions/GafferActions"
 import Step1 from "./steps/ChooseSchemaName";
 import Step2 from "./steps/LoadData";
 import Step3 from "./steps/ReviewSchema";
+import Step4 from "./steps/Confirm";
 import Finished from "./steps/Finished";
 
-const steps = ['Choose your graph name', 'Upload your data', 'Review your schema'];
+const steps = ['Choose your graph name', 'Upload your data', 'Review', "Confirm"];
 
 export default function CreateGraphStepper({ }) {
 
@@ -87,6 +88,10 @@ export default function CreateGraphStepper({ }) {
         }
     };
 
+    const onConfirmCreate = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+
     return (
 
         <div style={{ width: "100%", height: "100%" }} >
@@ -108,6 +113,7 @@ export default function CreateGraphStepper({ }) {
                         {activeStep === 0 && <Step1 schemaName={schemaName} onChangeSchemaName={onChangeSchemaName} />}
                         {activeStep === 1 && <Step2 onSelectFile={onSelectFile} filename={filename} file={file} onUploadFile={onUploadFile} schemaName={schemaName} />}
                         {activeStep === 2 && <Step3 schemaName={schemaName} createdSchema={createdSchema} />}
+                        {activeStep === 3 && <Step4 schemaName={schemaName} onConfirmCreate={onConfirmCreate} handleReset={handleReset} />}
                         {activeStep === steps.length && <Finished handleReset={handleReset} />}
 
                     </div>
