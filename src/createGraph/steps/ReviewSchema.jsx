@@ -8,10 +8,12 @@ export default function ReviewSchema({ schemaName, createdSchema }) {
     return (
         <div style={{ height: "100%" }}>
             <Typography>Review Schema</Typography>
-            <div style={{  }}>
-                <Typography variant="h6">Created {schemaName}</Typography>
-                <JSONPretty id="json-payload" data={createdSchema}></JSONPretty>
-            </div>
+            {createdSchema &&
+                <div style={{}}>
+                    <Typography variant="h6">Created {schemaName}</Typography>
+                    <JSONPretty id="json-payload" data={createdSchema}></JSONPretty>
+                </div>
+            }
         </div>
     )
 

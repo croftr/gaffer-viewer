@@ -91,20 +91,19 @@ export default function AppNavBar() {
     }
 
 
+    const loadSchemas = async () => {
+        const ops = await execute(
+            {
+                class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
+            }
+        );
+        setGraphs(ops);
+    }
+
     React.useEffect(() => {
-
-        const fetchData = async () => {
-            const ops = await execute(
-                {
-                    class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
-                }
-            );
-            setGraphs(ops);
-        }
-
-        fetchData();
-
+        loadSchemas();
     }, []);
+
 
     const listItem = (index) => {
         switch (index) {
@@ -119,8 +118,11 @@ export default function AppNavBar() {
     const loadPage = (index) => {
 
         setNavItem(index);
-
-        if (index === 1 && !schema) {            
+        if (index === 0 ){
+            console.log("goooo");
+            loadSchemas();                        
+        }
+        else if (index === 1 && !schema) {            
             loadGraph();
         }
     }
