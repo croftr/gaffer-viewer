@@ -166,7 +166,7 @@ const mapVisEdge = (edge) => {
                 scaleFactor: 0.2,
             },
         },
-        value: edge.properties.count,
+        value: edge.properties.count || edge.properties.weight,
         scaling: {
             min: 1,
             max: 3,

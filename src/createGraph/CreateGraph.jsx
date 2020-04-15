@@ -100,10 +100,10 @@ const Upload = () => {
             ) : null}
 
             {createdSchema && (
-                <React.Fragment>
+                <div style={{ overflowY: "auto", height: "70%" }}>
                     <Typography variant="h6">Created {schemaName}</Typography>
                     <JSONPretty id="json-payload" data={createdSchema}></JSONPretty>
-                </React.Fragment>
+                </div>
                 
             )}
         </Fragment>
