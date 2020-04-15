@@ -10,7 +10,6 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
             <div className='inputArea' style={{ display: "flex", flexDirection: "column", width: 400 }}>
 
-
                 <Button
                     variant="contained"
                     component="label"
@@ -26,8 +25,6 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                     style={{  display: "none" }}
                 />                    
                 </Button>
-
-
 
                 <Button
                     type='submit'

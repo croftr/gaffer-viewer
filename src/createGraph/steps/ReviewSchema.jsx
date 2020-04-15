@@ -6,9 +6,9 @@ import JSONPretty from 'react-json-pretty';
 export default function ReviewSchema({ schemaName, createdSchema }) {
 
     return (
-        <div>
+        <div style={{ height: "100%" }}>
             <Typography>Review Schema</Typography>
-            <div style={{ overflowY: "auto", height: "70%" }}>
+            <div style={{  }}>
                 <Typography variant="h6">Created {schemaName}</Typography>
                 <JSONPretty id="json-payload" data={createdSchema}></JSONPretty>
             </div>
