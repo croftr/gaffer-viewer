@@ -156,6 +156,17 @@ export default function CreateGraphStepper({ }) {
         setAuths(e.target.value)
     }
 
+    const deleteSchema = () => {
+        handleReset();
+
+        execute(
+            {
+                class: "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
+                graphId: `${schemaName}`
+            }
+        );
+    }
+
     return (
 
         <div style={{ width: "100%", height: "100%" }} >
@@ -207,35 +218,46 @@ export default function CreateGraphStepper({ }) {
                         )}
 
                         {activeStep === 3 && (
-                            <Confirm 
-                                schemaName={schemaName} 
+                            <Confirm
+                                schemaName={schemaName}
                                 createdSchema={createdSchema} />
                         )}
 
                         {activeStep === steps.length && (
-                            <Finished 
-                                handleReset={handleReset} 
-                                schemaName={schemaName} 
+                            <Finished
+                                handleReset={handleReset}
+                                schemaName={schemaName}
                             />
                         )}
 
                     </div>
-                    <div className="stepperFooter" style={{ marginTop: 16 }}>
-                        <Button disabled={activeStep === 0} onClick={handleBack} >
-                            Back
-                        </Button>
 
-                        <Button
-                            variant="contained"
-                            color={activeStep === 3 ? "secondary" : "primary"}
-                            onClick={handleNext}
-                            style={{ marginLeft: 16 }}
-                            disabled={checkNextStepDisabled()}
+                    {activeStep + 1 <= steps.length &&
+                        (
+                            <div className="stepperFooter" style={{ marginTop: 16 }}>
+                                <Button disabled={activeStep === 0} onClick={handleBack} >
+                                    Back
+                                </Button>
 
-                        >
-                            {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
-                        </Button>
-                    </div>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleNext}
+                                    style={{ marginLeft: 16 }}
+                                    disabled={checkNextStepDisabled()}
+                                >
+                                    {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
+                                </Button>
+
+                                {activeStep === 3 && (
+                                    <Button onClick={deleteSchema} style={{ marginLeft: 16 }} color="secondary" >
+                                        Cancel Creation of {schemaName}
+                                    </Button>
+                                )}
+                            </div>
+                        )
+                    }
+
                 </React.Fragment>
             </div>
         </div>
