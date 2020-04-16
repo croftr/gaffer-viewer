@@ -3,15 +3,16 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import { fetchUploadGraph } from "../actions/GafferActions"
+import { fetchUploadGraph, execute } from "../actions/GafferActions"
 
-import Step1 from "./steps/ChooseSchemaName";
-import Step2 from "./steps/LoadData";
+import ChooseSchemaName from "./steps/ChooseSchemaName";
+import LoadData from "./steps/LoadData";
+import ConfigureGraph from "./steps/ConfigureGraph"
 import Step3 from "./steps/ReviewSchema";
-import Step4 from "./steps/Confirm";
+import Confirm from "./steps/Confirm";
 import Finished from "./steps/Finished";
 
-const steps = ['Choose your graph name', 'Upload your data', 'Review', "Confirm"];
+const steps = ['Choose your graph name', 'Configure Graph', 'Upload your data', "Review & Confirm"];
 
 export default function CreateGraphStepper({ }) {
 
@@ -20,7 +21,11 @@ export default function CreateGraphStepper({ }) {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [schemaName, setSchemaName] = useState();
+    const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
+    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
+    const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
+    const [auths, setAuths] = useState([]);
 
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
@@ -55,17 +60,18 @@ export default function CreateGraphStepper({ }) {
 
         var reader = new FileReader();
 
-        // Closure to capture the file information.
-        reader.onload = (e) => {
-            console.log("got ", e.target.result);
-        };
+        // read csv file as text 
+        // reader.onload = (e) => {
+        //     console.log("got ", e.target.result);
+        // };
 
-        reader.readAsText(e.target.files[0]);
+        // reader.readAsText(e.target.files[0]);
 
     };
 
     const onUploadFile = async e => {
 
+        setSchemaLoadFailed(false);
         e.preventDefault();
         const formData = new FormData();
 
@@ -74,15 +80,16 @@ export default function CreateGraphStepper({ }) {
         try {
 
             const res = await fetchUploadGraph(formData, schemaName);
-            console.log("check me ", res);
 
             if (res) {
-                setCreatedSchema(res)
+                setCreatedSchema(res);
             } else {
+                setSchemaLoadFailed(true);
                 console.log("no response data ");
             }
 
         } catch (err) {
+            setSchemaLoadFailed(true);
             console.error("error loading file ", err);
 
         }
@@ -90,6 +97,63 @@ export default function CreateGraphStepper({ }) {
 
     const onConfirmCreate = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+
+    const onValidateSchemaName = async (name) => {
+
+        let result = /^[a-zA-Z0-9_]*$/.test(name);
+
+        if (!result) {
+            setNameValidationStatus("invalid");
+        } else {
+            const currentNames = await execute(
+                {
+                    class: "uk.gov.gchq.gaffer.federatedstore.operation.GetAllGraphIds"
+                }
+            );
+
+            result = currentNames.includes(name);
+
+            if (result) {
+                setNameValidationStatus("invalid");
+            } else {
+                setNameValidationStatus("valid");
+                setConfirmedSchemaName(name)
+            }
+        }
+    }
+
+    const checkNextStepDisabled = () => {
+
+        console.log("check step ", activeStep);
+        console.log("check createdSchema ", createdSchema);
+
+        let disabled = true;
+
+        if (activeStep === 0) {
+            if (nameValidationStatus === "valid") {
+                disabled = false;
+            }
+        } else if (activeStep === 1) {
+            disabled = !auths.length > 0;
+        } else if (activeStep === 2) {
+            if (createdSchema.loadSuccess) {
+                disabled = false;
+            }
+        } else if (activeStep === 2) {
+            disabled = false;
+        } else if (activeStep === 3) {
+            disabled = false;
+        }
+
+        console.log("disabled is ", disabled);
+
+        return disabled;
+    }
+
+    const onChangeAuths = (e) => {
+        console.log("chhange ", e.target.value);
+        setAuths(e.target.value)
     }
 
     return (
@@ -108,27 +172,68 @@ export default function CreateGraphStepper({ }) {
             </Stepper>
             <div >
                 <React.Fragment>
-                    <div id="stepperContent" style={{ height: "calc(100vh - 260px)", overflowY: "auto", padding: 16 }}>
+                    <div id="stepperContent" style={{ height: "calc(100vh - 260px)", overflowY: "auto", padding: 32 }}>
 
-                        {activeStep === 0 && <Step1 schemaName={schemaName} onChangeSchemaName={onChangeSchemaName} />}
-                        {activeStep === 1 && <Step2 onSelectFile={onSelectFile} filename={filename} file={file} onUploadFile={onUploadFile} schemaName={schemaName} />}
-                        {activeStep === 2 && <Step3 schemaName={schemaName} createdSchema={createdSchema} />}
-                        {activeStep === 3 && <Step4 schemaName={schemaName} onConfirmCreate={onConfirmCreate} handleReset={handleReset} />}
-                        {activeStep === steps.length && <Finished handleReset={handleReset} />}
+                        {activeStep === 0 && (
+                            <ChooseSchemaName
+                                schemaName={schemaName}
+                                onChangeSchemaName={onChangeSchemaName}
+                                nameValidationStatus={nameValidationStatus}
+                                onValidateSchemaName={onValidateSchemaName}
+                                confirmedSchemaName={confirmedSchemaName}
+                            />
+                        )}
+
+                        {activeStep === 1 && (
+                            <ConfigureGraph
+                                schemaName={schemaName}
+                                onChangeAuths={onChangeAuths}
+                                auths={auths}
+                            />
+                        )}
+
+
+                        {activeStep === 2 && (
+                            <LoadData
+                                onSelectFile={onSelectFile}
+                                filename={filename}
+                                file={file}
+                                onUploadFile={onUploadFile}
+                                schemaName={schemaName}
+                                isLoadSuccess={createdSchema.loadSuccess}
+                                elemetsLoaded={createdSchema.edgeLoadCount}
+                                schemaLoadFailed={schemaLoadFailed}
+                            />
+                        )}
+
+                        {activeStep === 3 && (
+                            <Confirm 
+                                schemaName={schemaName} 
+                                createdSchema={createdSchema} />
+                        )}
+
+                        {activeStep === steps.length && (
+                            <Finished 
+                                handleReset={handleReset} 
+                                schemaName={schemaName} 
+                            />
+                        )}
 
                     </div>
                     <div className="stepperFooter" style={{ marginTop: 16 }}>
                         <Button disabled={activeStep === 0} onClick={handleBack} >
                             Back
-                                </Button>
+                        </Button>
 
                         <Button
                             variant="contained"
-                            color="primary"
+                            color={activeStep === 3 ? "secondary" : "primary"}
                             onClick={handleNext}
                             style={{ marginLeft: 16 }}
+                            disabled={checkNextStepDisabled()}
+
                         >
-                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                            {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
                         </Button>
                     </div>
                 </React.Fragment>
