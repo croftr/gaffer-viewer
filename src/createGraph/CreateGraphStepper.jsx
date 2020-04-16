@@ -8,11 +8,10 @@ import { fetchUploadGraph, execute } from "../actions/GafferActions"
 import ChooseSchemaName from "./steps/ChooseSchemaName";
 import LoadData from "./steps/LoadData";
 import ConfigureGraph from "./steps/ConfigureGraph"
-import Step3 from "./steps/ReviewSchema";
 import Confirm from "./steps/Confirm";
 import Finished from "./steps/Finished";
 
-const steps = ['Choose your graph name', 'Configure Graph', 'Upload your data', "Review & Confirm"];
+const steps = ['Choose graph name', 'Configure Graph', 'Upload data', "Review & Confirm"];
 
 export default function CreateGraphStepper({ }) {
 
@@ -23,7 +22,7 @@ export default function CreateGraphStepper({ }) {
     const [schemaName, setSchemaName] = useState();
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
-    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
+    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');    
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [auths, setAuths] = useState([]);
 
@@ -125,9 +124,6 @@ export default function CreateGraphStepper({ }) {
 
     const checkNextStepDisabled = () => {
 
-        console.log("check step ", activeStep);
-        console.log("check createdSchema ", createdSchema);
-
         let disabled = true;
 
         if (activeStep === 0) {
@@ -145,9 +141,7 @@ export default function CreateGraphStepper({ }) {
         } else if (activeStep === 3) {
             disabled = false;
         }
-
-        console.log("disabled is ", disabled);
-
+        
         return disabled;
     }
 
@@ -157,6 +151,14 @@ export default function CreateGraphStepper({ }) {
     }
 
     const deleteSchema = () => {
+        setSchemaName(undefined);
+        setCreatedSchema({});
+        setFile(undefined);        
+        setConfirmedSchemaName(undefined);
+        setAuths([])
+        setNameValidationStatus("unknown")
+        setFilename("")
+
         handleReset();
 
         execute(
