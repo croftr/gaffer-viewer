@@ -24,7 +24,7 @@ export default function Finished({ handleReset, schemaName }) {
 
   return (
     <div>
-      <Typography paragraph>
+      <Typography variant="h6" paragraph>
         Graph {schemaName} has been successfully created!
       </Typography>
 

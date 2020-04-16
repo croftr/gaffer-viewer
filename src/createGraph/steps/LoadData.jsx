@@ -14,7 +14,8 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
     return (
         <div>
-            <Typography>You can now create and laod data into {schemaName} from a CSV file of the required format</Typography>
+            <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>
+            <Typography paragraph>You can upload data from CSV files in different formats.  Click on the tabs below to see the accepted formats. </Typography>
 
             <Tabs style={{ marginTop: 16 }} value={tabPage} onChange={(event, value) => setTabPage(value)} aria-label="simple tabs example">
                 {csvFormats.map(view => <Tab label={view} key={view} />)}
