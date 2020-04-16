@@ -12,6 +12,7 @@ import productName from "../images/productName.png";
 import book from "../images/book.png";
 import hen from "../images/hen.png";
 import dolphin from "../images/dolphin.png";
+import dolphin1 from "../images/d1.gif";
 
 import { getEdgeColor } from "../utils/schamUtils";
 
@@ -81,7 +82,12 @@ const mapVisNode = (node) => {
 
     switch (node.subType ? node.subType.toLowerCase() : "") {
         case "dolphin":
-            image = dolphin;
+            if (node.type === "spotted") {
+                image = dolphin1;
+            } else {
+                image = dolphin;
+            }
+            
             break;
         case "kangaroo":
             image = kangaroo;
@@ -160,12 +166,12 @@ const mapVisEdge = (edge) => {
         to: visId(dest),
         title: edge.group,
         color,
-        arrows: {
-            to: {
-                enabled: edge.directed ? true : false,
-                scaleFactor: 0.2,
-            },
-        },
+        // arrows: {
+        //     to: {
+        //         enabled: edge.directed ? true : false,
+        //         scaleFactor: 0.2,
+        //     },
+        // },
         value: edge.properties.count || edge.properties.weight,
         scaling: {
             min: 1,
@@ -265,29 +271,6 @@ export const convertVis = (data) => {
                     nodeToEnrich.title = `Cardinality ${cardinality}`
                 }
             }
-
-            //total points degrees
-            // if (totalPoints) {
-
-            //     const vertex = entity.vertex["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
-
-            //     const id = visId(vertex);
-            //     const nodeToEnrich = graphNodes.find(node => node.id === id);
-
-                
-            //     if (nodeToEnrich) {
-            //         nodeToEnrich.value = totalPoints;
-            //         nodeToEnrich.title = `Total Points ${totalPoints}`
-
-            //         nodeToEnrich.properties = {
-            //             totalPoints,
-            //             juryPoints,
-            //             telePoints
-            //         }
-                    
-            //     }
-               
-            // }
         
         });
 }
@@ -305,7 +288,7 @@ var options = {
     height: '100%',
     width: '100%',
     locale: 'en',
-    clickToUse: false,
+    clickToUse: false,    
     interaction: {
         navigationButtons: false,
     },
