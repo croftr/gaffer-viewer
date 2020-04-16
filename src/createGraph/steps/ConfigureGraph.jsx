@@ -1,14 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Select, Typography } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
-
 
 const dummyAuths = [
     "Auth1",

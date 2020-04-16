@@ -94,10 +94,6 @@ export default function CreateGraphStepper({ }) {
         }
     };
 
-    const onConfirmCreate = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }
-
     const onValidateSchemaName = async (name) => {
 
         let result = /^[a-zA-Z0-9_]*$/.test(name);
@@ -145,8 +141,7 @@ export default function CreateGraphStepper({ }) {
         return disabled;
     }
 
-    const onChangeAuths = (e) => {
-        console.log("chhange ", e.target.value);
+    const onChangeAuths = (e) => {        
         setAuths(e.target.value)
     }
 

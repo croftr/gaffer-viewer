@@ -1,6 +1,6 @@
 
-import React, { useLayoutEffect, useState } from 'react';
-import { TextField, Typography, Input, Button, Tab, Tabs } from '@material-ui/core';
+import React from 'react';
+import { Typography, Input, Button, Tab, Tabs } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/Done';
 import InvalidIcon from '@material-ui/icons/Clear';
 import simpleCsv from "../images/simpleCsv.jpg";
@@ -96,8 +96,6 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                     )}
 
                 </div>
-
-
             </div>
 
         </div>
