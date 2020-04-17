@@ -1,7 +1,7 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
-import CreateGraphPage from "./createGraph/CreateGraphPage";
+import CreateGraphStepper from "./createGraph/CreateGraphStepper";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Fab from '@material-ui/core/Fab';
@@ -24,7 +24,8 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
     const [graphToDelete, setGraphToDelete] = useState(false);
     const [isDeleteGraphOpen, setIsDeleteGraphOpen] = useState(false);
     const [selectedGraph, setSelectedGraph] = useState();
-
+    const [confirmDeleteText, setConfirmDeleteText] = useState("");
+    
     const loadSelectedGraph = (graph) => {
         setSelectedGraph(graph);
         loadGraph(graph);
@@ -110,28 +111,37 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
                     </IconButton>
                 </div>
 
-                <CreateGraphPage />
+                <CreateGraphStepper onCloseDialog={() => setIsOpen(false)} />
             </Dialog>
 
-            <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} >
+            <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>
 
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div className="deleteHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
                     <DialogTitle id="simple-dialog-title">Delete {graphToDelete}</DialogTitle>
                     <IconButton onClick={() => setIsDeleteGraphOpen(false)}>
                         <CloseIcon />
                     </IconButton>
                 </div>
-                <Typography>Enter name of graph to confirm delete</Typography>
-                <TextField></TextField>
 
-                <Button
-                    color="secondary"
-                    variant="contained"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => deleteGraph(graphToDelete)}
-                    style={{ marginLeft: 16 }}>
-                    Delete
+                <div className="deleteBody" style={{ padding: 32 }}>
+                    <Typography paragraph>Enter name of graph to confirm delete</Typography>
+                    <TextField
+                        value={confirmDeleteText}               
+                        onChange={e => setConfirmDeleteText(e.target.value)}        
+                    />
+
+                    <Button
+                        disabled={!(confirmDeleteText === graphToDelete)}
+                        color="secondary"
+                        variant="contained"
+                        startIcon={<DeleteIcon />}
+                        onClick={() => deleteGraph(graphToDelete)}
+                        style={{ marginLeft: 16 }}>
+                        Delete
                 </Button>
+
+                </div>
+
             </Dialog>
 
         </>

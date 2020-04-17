@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 
-export default function Finished({ handleReset, schemaName }) {
+export default function Finished({ handleReset, schemaName, onCloseDialog }) {
 
   const exampleQuery = {
     class: "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -40,8 +40,8 @@ export default function Finished({ handleReset, schemaName }) {
         Or query some sample data here
       </Typography>
 
-      <Button onClick={handleReset} variant="contained">
-        Query {schemaName}
+      <Button onClick={onCloseDialog} variant="contained">
+        Back to Manage Graphs
       </Button>
     </div>
   )

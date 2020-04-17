@@ -13,7 +13,7 @@ import Finished from "./steps/Finished";
 
 const steps = ['Choose graph name', 'Configure Graph', 'Upload data', "Review & Confirm"];
 
-export default function CreateGraphStepper({ }) {
+export default function CreateGraphStepper({ onCloseDialog }) {
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
@@ -171,7 +171,7 @@ export default function CreateGraphStepper({ }) {
 
     return (
 
-        <div style={{ width: "100%", height: "100%" }} >
+        <div style={{ width: "100%", height: "100%", padding: 32 }} >
             <Stepper activeStep={activeStep}>
                 {steps.map((label, index) => {
                     const stepProps = {};
@@ -229,6 +229,7 @@ export default function CreateGraphStepper({ }) {
                             <Finished
                                 handleReset={handleReset}
                                 schemaName={schemaName}
+                                onCloseDialog={onCloseDialog}
                             />
                         )}
 
