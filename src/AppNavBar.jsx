@@ -73,7 +73,7 @@ export default function AppNavBar() {
 
         const body = {
             "class": "uk.gov.gchq.gaffer.store.operation.GetSchema",
-            "compact": true,
+            "compact": false,
         }
 
         if (graph !== "All") {

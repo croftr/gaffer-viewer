@@ -243,7 +243,7 @@ export default function CreateGraphStepper({ }) {
                                     style={{ marginLeft: 16 }}
                                     disabled={checkNextStepDisabled()}
                                 >
-                                    {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
+                                    {activeStep === steps.length - 1 ? `Finish` : 'Next'}
                                 </Button>
 
                                 {activeStep === 3 && (
