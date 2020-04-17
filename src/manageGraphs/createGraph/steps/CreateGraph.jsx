@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { fetchUploadGraph } from "../actions/GafferActions"
+import { fetchUploadGraph } from "../../../actions/GafferActions"
 import JSONPretty from 'react-json-pretty';
 import { TextField, Input, Button, Typography } from '@material-ui/core';
 

@@ -19,8 +19,8 @@ import Graphs from "./Graphs";
 import Data from "./Data";
 import Queries from "./Queries";
 
-import CreateGraphPage from "./createGraph/CreateGraphPage";
-import CreateGraphIcon from '@material-ui/icons/Add';
+import ManageGraphsPage from "./manageGraphs/ManageGraphsPage";
+import ManageGraphsIcon from '@material-ui/icons/Settings';
 
 import Arrow from "@material-ui/icons/ArrowRight"
 
@@ -56,7 +56,7 @@ const items = [
     "Schemas",
     "Data",
     "Operations",
-    "Add Graph"
+    "Manage Graphs"
 ]
 
 export default function AppNavBar() {
@@ -110,7 +110,7 @@ export default function AppNavBar() {
             case 0: return <GraphIcon />
             case 1: return <DataIcon />
             case 2: return <QueriesIcon />
-            case 3: return <CreateGraphIcon />
+            case 3: return <ManageGraphsIcon />
             default:
         }
     }
@@ -188,7 +188,7 @@ export default function AppNavBar() {
                 {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
                 {navItem === 1 && <Data edgeTypes={edgeTypes} />}
                 {navItem === 2 && <Queries />}
-                {navItem === 3 && <CreateGraphPage />}
+                {navItem === 3 && <ManageGraphsPage graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
             </main>
         </div>
     );

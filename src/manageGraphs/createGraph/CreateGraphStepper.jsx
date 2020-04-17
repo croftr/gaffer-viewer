@@ -3,7 +3,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import { fetchUploadGraph, execute } from "../actions/GafferActions"
+import { fetchUploadGraph, execute } from "../../actions/GafferActions"
 
 import ChooseSchemaName from "./steps/ChooseSchemaName";
 import LoadData from "./steps/LoadData";
@@ -95,6 +95,11 @@ export default function CreateGraphStepper({ }) {
     };
 
     const onValidateSchemaName = async (name) => {
+
+        if (!name || name.length < 1) {
+            setNameValidationStatus("invalid");
+            return;
+        }
 
         let result = /^[a-zA-Z0-9_]*$/.test(name);
 

@@ -3,8 +3,8 @@ import React from 'react';
 import { Typography, Input, Button, Tab, Tabs } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/Done';
 import InvalidIcon from '@material-ui/icons/Clear';
-import simpleCsv from "../images/simpleCsv.jpg";
-import detailCsv from "../images/detailCsv.jpg";
+import simpleCsv from "../../images/simpleCsv.jpg";
+import detailCsv from "../../images/detailCsv.jpg";
 
 const csvFormats = ["Detaied", "Simple"]
 
