@@ -2,7 +2,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
 import CreateGraphStepper from "./createGraph/CreateGraphStepper";
-import CreateGraphPage from "./createGraph/CreateGraphPage";
+import CreateGraphIntroduction from "./createGraph/CreateGraphIntroduction";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Fab from '@material-ui/core/Fab';
@@ -112,7 +112,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
                     </IconButton>
                 </div>
 
-                <CreateGraphPage onCloseDialog={() => setIsOpen(false)} />
+                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} />
             </Dialog>
 
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>
