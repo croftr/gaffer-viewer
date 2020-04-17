@@ -4,11 +4,24 @@ import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/co
 import CreateGraph from "./steps/CreateGraph";
 import CreateGraphStepper from "./CreateGraphStepper";
 
-export default function Data({ edgeTypes }) {
+export default function Data({ edgeTypes, onCloseDialog }) {
+
+    const [isStarted, setisStarted] = useState(false);
 
     return (
-        <Paper style={{ height: "100%", padding: 16 }}>
-            <CreateGraphStepper />
+        <Paper style={{}}>
+
+
+            {!isStarted && (
+                <div>
+                    <Typography>This stepper will walk you through the create graph stage press ok to get started</Typography>
+                    <Button onClick={() => setisStarted(true)}>OK LETS GET STARTED</Button>
+                    <Button onClick={onCloseDialog}>BACK TO MANAGE GRAPHS</Button>
+                </div>
+            )}
+
+            {isStarted && <CreateGraphStepper onCloseDialog={onCloseDialog} />}
+
         </Paper>
     )
 

@@ -25,8 +25,8 @@ export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameV
                 />
 
                 <div className="validationResults" style={{ display: "flex", alignItems: "center", marginTop: 16, marginLeft: 16 }}>
-                    <Button onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
-                    {nameValidationStatus === "valid" && <ValidIcon style={{ color: "green" }} />}
+                    <Button disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
+                    {nameValidationStatus === "valid" && schemaName && <ValidIcon style={{ color: "green" }} />}
                     {nameValidationStatus === "invalid" && <InvalidIcon style={{ color: "red" }} />}
                 </div>
 
