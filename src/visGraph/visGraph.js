@@ -156,6 +156,9 @@ const mapVisNode = (node) => {
 
 const mapVisEdge = (edge) => {
 
+    console.log("edge ", edge);
+    
+
     const source = edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
     const dest = edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
@@ -166,12 +169,12 @@ const mapVisEdge = (edge) => {
         to: visId(dest),
         title: edge.group,
         color,
-        // arrows: {
-        //     to: {
-        //         enabled: edge.directed ? true : false,
-        //         scaleFactor: 0.2,
-        //     },
-        // },
+        arrows: {
+            to: {
+                enabled: edge.directed ? true : false,
+                scaleFactor: 0.5,
+            },
+        },
         value: edge.properties.count || edge.properties.weight,
         scaling: {
             min: 1,

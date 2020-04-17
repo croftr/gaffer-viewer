@@ -36,7 +36,6 @@ export default function Finished({ handleReset, schemaName }) {
         <JSONPretty id="json-payload" data={exampleQuery}></JSONPretty>
       </div>
 
-
       <Typography paragraph>
         Or query some sample data here
       </Typography>
