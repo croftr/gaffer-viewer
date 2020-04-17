@@ -249,7 +249,12 @@ export default function CreateGraphStepper({ }) {
                                 </Button>
 
                                 {activeStep === 3 && (
-                                    <Button onClick={deleteSchema} style={{ marginLeft: 16 }} color="secondary" >
+                                    <Button 
+                                        onClick={deleteSchema} 
+                                        style={{ marginLeft: 16 }} 
+                                        variant="contained"
+                                        color="secondary" 
+                                    >
                                         Cancel Creation of {schemaName}
                                     </Button>
                                 )}

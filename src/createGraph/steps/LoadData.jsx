@@ -69,7 +69,7 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
                 <Button
                     type='submit'
-                    color="secondary"
+                    color="primary"
                     variant="contained"
                     onClick={onUploadFile}
                     value='Upload'
@@ -84,7 +84,7 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                     {isLoadSuccess && (
                         <React.Fragment>
                             <ValidIcon style={{ color: "green", marginRight: 8 }} />
-                            <Typography>Success your schema has been created and {elemetsLoaded} elemets have been loaded</Typography>                            
+                            <Typography>Success your schema has been created and {elemetsLoaded} edges have been loaded</Typography>                            
                         </React.Fragment>
 
                     )}
