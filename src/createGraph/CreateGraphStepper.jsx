@@ -22,7 +22,7 @@ export default function CreateGraphStepper({ }) {
     const [schemaName, setSchemaName] = useState();
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
-    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');    
+    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [auths, setAuths] = useState([]);
 
@@ -137,18 +137,18 @@ export default function CreateGraphStepper({ }) {
         } else if (activeStep === 3) {
             disabled = false;
         }
-        
+
         return disabled;
     }
 
-    const onChangeAuths = (e) => {        
+    const onChangeAuths = (e) => {
         setAuths(e.target.value)
     }
 
     const deleteSchema = () => {
         setSchemaName(undefined);
         setCreatedSchema({});
-        setFile(undefined);        
+        setFile(undefined);
         setConfirmedSchemaName(undefined);
         setAuths([])
         setNameValidationStatus("unknown")
@@ -232,9 +232,11 @@ export default function CreateGraphStepper({ }) {
                     {activeStep + 1 <= steps.length &&
                         (
                             <div className="stepperFooter" style={{ marginTop: 16 }}>
-                                <Button disabled={activeStep === 0} onClick={handleBack} >
-                                    Back
-                                </Button>
+                                {activeStep !== steps.length - 1 && (
+                                    <Button disabled={activeStep === 0} onClick={handleBack} >
+                                        Back
+                                    </Button>
+                                )}
 
                                 <Button
                                     variant="contained"

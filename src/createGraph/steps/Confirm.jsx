@@ -7,9 +7,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
-import EdgeTypeCreatedIcon from '@material-ui/icons/ShowChartOutlined';
-import EdgeCountLoadedIcon from '@material-ui/icons/ExposurePlus1';
+import EdgeTypeCreatedIcon from '@material-ui/icons/ShowChartRounded';
+import EdgeCountLoadedIcon from '@material-ui/icons/ExposurePlus1Rounded';
 
 //todo useLayoutEffect for post render rendering 
 export default function Confirm({ schemaName, createdSchema = {} }) {
@@ -25,9 +27,11 @@ export default function Confirm({ schemaName, createdSchema = {} }) {
                 <Typography variant="h6">Summary</Typography>
                 <List>
                     <ListItem>
-                        <ListItemIcon>
-                            <EdgeCountLoadedIcon />
-                        </ListItemIcon>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <EdgeCountLoadedIcon />
+                            </Avatar>
+                        </ListItemAvatar>
                         <ListItemText
                             primary={createdSchema.edgeLoadCount}
                             secondary='Edges loaded'
@@ -35,9 +39,11 @@ export default function Confirm({ schemaName, createdSchema = {} }) {
                     </ListItem>
                     {createdSchema.edgeTypes.map(edgeType => (
                         <ListItem>
-                            <ListItemIcon>
-                                <EdgeTypeCreatedIcon />
-                            </ListItemIcon>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <EdgeTypeCreatedIcon />
+                                </Avatar>
+                            </ListItemAvatar>
                             <ListItemText
                                 primary={edgeType}
                                 secondary='Edge type created'
