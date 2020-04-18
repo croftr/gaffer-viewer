@@ -18,7 +18,7 @@ import FinishIcon from "@material-ui/icons/Done"
 
 const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 
-export default function CreateGraphStepper({ onCloseDialog }) {
+export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
@@ -40,6 +40,13 @@ export default function CreateGraphStepper({ onCloseDialog }) {
     };
 
     const handleNext = () => {
+
+        console.log("step ", activeStep);
+
+        if (activeStep === 3) {
+            loadSchemas();
+        }
+        
         let newSkipped = skipped;
         if (isStepSkipped(activeStep)) {
             newSkipped = new Set(newSkipped.values());

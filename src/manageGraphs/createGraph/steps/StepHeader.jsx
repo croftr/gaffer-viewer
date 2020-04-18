@@ -17,11 +17,11 @@ const headerContent = {
         icon: <SecureIcon />
     },
     2: {
-        title: "Uplaod data",
+        title: "Choose a CSV file to upload",
         icon: <UploadIcon />
     },
     3: {
-        title: "Review & Confirm",
+        title: "Make sure you are happy with how your graph looks",
         icon: <ConfirmIcon />
     },
     4: {

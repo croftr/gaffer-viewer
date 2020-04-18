@@ -17,7 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import LoadIcon from '@material-ui/icons/Publish';
 import JSONPretty from 'react-json-pretty';
 
-export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph }) {
+export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [graphToDelete, setGraphToDelete] = useState(false);
@@ -43,6 +43,8 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
         setIsDeleteGraphOpen(true);
         setGraphToDelete(selectedGraph)
     }
+    
+
 
     return (
         <>
@@ -111,7 +113,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
                     </IconButton>
                 </div>
 
-                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} />
+                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
             </Dialog>
 
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>

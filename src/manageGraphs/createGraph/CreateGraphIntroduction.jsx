@@ -12,7 +12,7 @@ const csvDescriptions = [
     "You can use the simple upload format to just specify from and to node values. Edge types will be set to the generic type of INTERACTION"
 ]
 
-export default function CreateGraphIntroduction({ onCloseDialog }) {
+export default function CreateGraphIntroduction({ onCloseDialog, loadSchemas }) {
 
     const [isStarted, setisStarted] = useState(false);
     const [tabPage, setTabPage] = useState(0);
@@ -61,7 +61,7 @@ export default function CreateGraphIntroduction({ onCloseDialog }) {
                 </div>
             )}
 
-            {isStarted && <CreateGraphStepper onCloseDialog={onCloseDialog} />}
+            {isStarted && <CreateGraphStepper onCloseDialog={onCloseDialog} loadSchemas={loadSchemas}/>}
 
         </div>
     )
