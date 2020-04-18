@@ -5,13 +5,18 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import { fetchUploadGraph, execute } from "../../actions/GafferActions"
 
-import ChooseSchemaName from "./steps/ChooseSchemaName";
+import StepperHeader from "./steps/StepHeader";
+import Name from "./steps/Name";
 import LoadData from "./steps/LoadData";
-import ConfigureGraph from "./steps/ConfigureGraph"
+import ConfigureGraph from "./steps/Security"
 import Confirm from "./steps/Confirm";
 import Finished from "./steps/Finished";
 
-const steps = ['Choose graph name', 'Configure Graph', 'Upload data', "Review & Confirm"];
+import BackIcon from "@material-ui/icons/NavigateBefore"
+import NextIcon from "@material-ui/icons/NavigateNext"
+import FinishIcon from "@material-ui/icons/Done"
+
+const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 
 export default function CreateGraphStepper({ onCloseDialog }) {
 
@@ -132,7 +137,7 @@ export default function CreateGraphStepper({ onCloseDialog }) {
                 disabled = false;
             }
         } else if (activeStep === 1) {
-            disabled = !auths.length > 0;
+            disabled = false;
         } else if (activeStep === 2) {
             if (createdSchema.loadSuccess) {
                 disabled = false;
@@ -187,8 +192,10 @@ export default function CreateGraphStepper({ onCloseDialog }) {
                 <React.Fragment>
                     <div id="stepperContent" style={{ height: "calc(100vh - 260px)", overflowY: "auto", padding: 32 }}>
 
+                        <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />
+
                         {activeStep === 0 && (
-                            <ChooseSchemaName
+                            <Name
                                 schemaName={schemaName}
                                 onChangeSchemaName={onChangeSchemaName}
                                 nameValidationStatus={nameValidationStatus}
@@ -239,8 +246,23 @@ export default function CreateGraphStepper({ onCloseDialog }) {
                         (
                             <div className="stepperFooter" style={{ marginTop: 16 }}>
                                 {activeStep !== steps.length - 1 && (
-                                    <Button disabled={activeStep === 0} onClick={handleBack} >
+                                    <Button 
+                                        disabled={activeStep === 0} 
+                                        onClick={handleBack} 
+                                        startIcon={<BackIcon />}
+                                        >
                                         Back
+                                    </Button>
+                                )}
+
+                                {activeStep === 3 && (
+                                    <Button
+                                        onClick={deleteSchema}
+                                        style={{ marginLeft: 16 }}
+                                        variant="contained"
+                                        color="secondary"
+                                    >
+                                        Cancel Creation of {schemaName}
                                     </Button>
                                 )}
 
@@ -250,20 +272,11 @@ export default function CreateGraphStepper({ onCloseDialog }) {
                                     onClick={handleNext}
                                     style={{ marginLeft: 16 }}
                                     disabled={checkNextStepDisabled()}
+                                    endIcon={activeStep === steps.length - 1 ? <FinishIcon /> : <NextIcon />}
                                 >
                                     {activeStep === steps.length - 1 ? `Finish` : 'Next'}
                                 </Button>
 
-                                {activeStep === 3 && (
-                                    <Button 
-                                        onClick={deleteSchema} 
-                                        style={{ marginLeft: 16 }} 
-                                        variant="contained"
-                                        color="secondary" 
-                                    >
-                                        Cancel Creation of {schemaName}
-                                    </Button>
-                                )}
                             </div>
                         )
                     }

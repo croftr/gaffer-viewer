@@ -1,7 +1,6 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
-import CreateGraphStepper from "./createGraph/CreateGraphStepper";
 import CreateGraphIntroduction from "./createGraph/CreateGraphIntroduction";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,7 +17,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import LoadIcon from '@material-ui/icons/Publish';
 import JSONPretty from 'react-json-pretty';
 
-
 export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph }) {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +24,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
     const [isDeleteGraphOpen, setIsDeleteGraphOpen] = useState(false);
     const [selectedGraph, setSelectedGraph] = useState();
     const [confirmDeleteText, setConfirmDeleteText] = useState("");
-    
+
     const loadSelectedGraph = (graph) => {
         setSelectedGraph(graph);
         loadGraph(graph);
@@ -107,6 +105,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
                     <DialogTitle id="simple-dialog-title">Add Graph</DialogTitle>
+
                     <IconButton onClick={() => setIsOpen(false)}>
                         <CloseIcon />
                     </IconButton>
@@ -127,8 +126,8 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph 
                 <div className="deleteBody" style={{ padding: 32 }}>
                     <Typography paragraph>Enter name of graph to confirm delete</Typography>
                     <TextField
-                        value={confirmDeleteText}               
-                        onChange={e => setConfirmDeleteText(e.target.value)}        
+                        value={confirmDeleteText}
+                        onChange={e => setConfirmDeleteText(e.target.value)}
                     />
 
                     <Button

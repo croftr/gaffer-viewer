@@ -1,55 +1,19 @@
 
 import React from 'react';
 import { Typography, Input, Button, Tab, Tabs } from '@material-ui/core';
-import ValidIcon from '@material-ui/icons/Done';
+import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
-import simpleCsv from "../../images/simpleCsv.jpg";
-import detailCsv from "../../images/detailCsv.jpg";
-
-const csvFormats = ["Detaied", "Simple"]
+import csvLogo from "../../images/csv4.png";
 
 export default function LoadData({ onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed }) {
-
-    const [tabPage, setTabPage] = React.useState(0);
 
     return (
         <div>
             <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>
-            <Typography paragraph>You can upload data from CSV files in different formats.  Click on the tabs below to see the accepted formats. </Typography>
 
-            <Tabs style={{ marginTop: 16 }} value={tabPage} onChange={(event, value) => setTabPage(value)} aria-label="simple tabs example">
-                {csvFormats.map(view => <Tab label={view} key={view} />)}
-            </Tabs>
-
-            {tabPage === 0 && (
-                <div id="detailCsvPage" style={{ height: 400, padding: 32, display: "flex" }}>
-                    <img src={detailCsv} width="800" />
-                    <div className="csvHelpText" style={{ marginLeft: 32 }}>
-                        <Typography paragraph="true">
-                            Use the detailed upload format if you want to be able to control node and edge types as well as having the option of specifying edge weights
-                        </Typography>
-                    </div>
-                </div>
-            )}
-
-            {tabPage === 1 && (
-                <div id="simpleCsvPage" style={{ height: 400, padding: 32, display: "flex" }}>
-                    <img src={simpleCsv} width="300" />
-                    <div className="csvHelpText" style={{ marginLeft: 32 }}>
-                        <Typography paragraph="true">
-                            You can use the simple upload format to just specify from and to node values.
-                        </Typography>
-                        <Typography paragraph="true">
-                            Edge types will be set to the generic type of "interaction"
-                        </Typography>
-                        <Typography paragraph="true">
-                            This can be useful for quickly creating graphs and visualizing data for which you dont have much information about.
-                        </Typography>
-                    </div>
-                </div>
-            )}
-
-            <div className='inputArea' style={{ display: "flex" }}>
+            {/* <img src={csvLogo} /> */}
+            
+            <div className='inputArea' style={{ display: "flex", alignItems: "center" }}>
 
                 <Button
                     variant="contained"

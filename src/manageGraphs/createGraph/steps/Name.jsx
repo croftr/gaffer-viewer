@@ -9,7 +9,7 @@ export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameV
 
     return (
         <div id="chooseSchemaName" style={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6">What will your graph be called?</Typography>
+            
             <Typography>It must be unique and not contain any spaces</Typography>
 
             <div className="inputWrapper" style={{ display: "flex", alignItems: "center" }}>
@@ -31,13 +31,6 @@ export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameV
                 </div>
 
             </div>
-
-            { nameValidationStatus === "valid" && (
-                <div className="confirmedSchemaName" style={{ display: "flex", alignItems: "center", alignSelf: "center" }}>
-                    <StorageIcon style={{ marginRight: 16 }} />
-                    <Typography variant="h6" align="center">Creating Schema with name {confirmedSchemaName}</Typography>
-                </div>            
-            )}
 
         </div>
     )
