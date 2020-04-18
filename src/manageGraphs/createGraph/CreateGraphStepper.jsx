@@ -40,9 +40,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const handleNext = () => {
-
-        console.log("step ", activeStep);
-
+        
         if (activeStep === 3) {
             loadSchemas();
         }
