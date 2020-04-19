@@ -30,6 +30,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [auths, setAuths] = useState([]);
+    const [fileUploadMessage, setFileUploadMessage] = useState("");
 
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
@@ -68,6 +69,33 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
         setFilename(e.target.files[0].name);
 
         var reader = new FileReader();
+
+        const SIMPLE_COLUMN_COUNT = 2;
+        const DETAIL_COLUMN_COUNT = 9;
+        
+        // read csv file as text 
+        reader.onload = (e) => {
+            const text = e.target.result;
+            if (text) {
+                console.log("result ", text);
+                const firstLine = text.substring(0, e.target.result.indexOf("\n"));
+                console.log("first line ", firstLine);
+                
+                if (firstLine) {
+                    const columnCount = firstLine.split(",").length;
+                    console.log("column count is ", columnCount);                    
+                    if (columnCount === SIMPLE_COLUMN_COUNT) {
+                        setFileUploadMessage("Uploading 2 coulum CSV file")
+                    } else if (columnCount === DETAIL_COLUMN_COUNT) {
+                        setFileUploadMessage("Uploading 9 coulum CSV file")
+                    } else {
+                        setFileUploadMessage(`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`)
+                    }
+                }
+            }                    
+        };
+
+        reader.readAsText(e.target.files[0]);
 
         // read csv file as text 
         // reader.onload = (e) => {
@@ -228,6 +256,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                 isLoadSuccess={createdSchema.loadSuccess}
                                 elemetsLoaded={createdSchema.edgeLoadCount}
                                 schemaLoadFailed={schemaLoadFailed}
+                                fileUploadMessage={fileUploadMessage}
                             />
                         )}
 

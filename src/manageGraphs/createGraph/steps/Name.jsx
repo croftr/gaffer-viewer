@@ -1,7 +1,7 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { TextField, Typography, Button } from '@material-ui/core';
-import ValidIcon from '@material-ui/icons/Done';
+import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 import StorageIcon from '@material-ui/icons/Storage';
 
@@ -25,9 +25,9 @@ export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameV
                 />
 
                 <div className="validationResults" style={{ display: "flex", alignItems: "center", marginTop: 16, marginLeft: 16 }}>
-                    <Button disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
-                    {nameValidationStatus === "valid" && schemaName && <ValidIcon style={{ color: "green" }} />}
-                    {nameValidationStatus === "invalid" && <InvalidIcon style={{ color: "red" }} />}
+                    <Button variant="contained" disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
+                    {nameValidationStatus === "valid" && schemaName && <ValidIcon style={{ color: "green", marginLeft: 16 }} />}
+                    {nameValidationStatus === "invalid" && <InvalidIcon style={{ color: "red" , marginLeft: 16 }} />}
                 </div>
 
             </div>
