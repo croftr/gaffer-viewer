@@ -16,6 +16,8 @@ import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
 import FinishIcon from "@material-ui/icons/Done"
 
+import { validateCsvFile } from "../utils/validateCsv";
+
 const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 
 export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
@@ -69,40 +71,14 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
         setFilename(e.target.files[0].name);
 
         var reader = new FileReader();
-
-        const SIMPLE_COLUMN_COUNT = 2;
-        const DETAIL_COLUMN_COUNT = 9;
-        
+                
         // read csv file as text 
         reader.onload = (e) => {
-            const text = e.target.result;
-            if (text) {
-                console.log("result ", text);
-                const firstLine = text.substring(0, e.target.result.indexOf("\n"));
-                console.log("first line ", firstLine);
-                
-                if (firstLine) {
-                    const columnCount = firstLine.split(",").length;
-                    console.log("column count is ", columnCount);                    
-                    if (columnCount === SIMPLE_COLUMN_COUNT) {
-                        setFileUploadMessage("Uploading 2 coulum CSV file")
-                    } else if (columnCount === DETAIL_COLUMN_COUNT) {
-                        setFileUploadMessage("Uploading 9 coulum CSV file")
-                    } else {
-                        setFileUploadMessage(`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`)
-                    }
-                }
-            }                    
+            const validationResponmse = validateCsvFile(e.target.result);
+            setFileUploadMessage(validationResponmse);                   
         };
 
         reader.readAsText(e.target.files[0]);
-
-        // read csv file as text 
-        // reader.onload = (e) => {
-        //     console.log("got ", e.target.result);
-        // };
-
-        // reader.readAsText(e.target.files[0]);
 
     };
 
