@@ -1,16 +1,17 @@
 
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { Paper, Button, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
-import CreateGraphIntroduction from "./createGraph/CreateGraphIntroduction";
+import CreateGraphIntroduction from "./createGraph/introduction/CreateGraphIntroduction";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
-import PropTypes from 'prop-types';
 
 import List from '@material-ui/core/List';
+import DialogContent from '@material-ui/core/DialogContent';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -58,20 +59,20 @@ const styles = {
         alignItems: "center",
         justifyContent: "space-between",
         borderBottom: "1px solid lightGrey"
-    }, 
-    loadDataHeader: { 
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "space-between", 
-        borderBottom: "1px solid lightGrey" 
+    },
+    loadDataHeader: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottom: "1px solid lightGrey"
     },
     buttonText: {
         padding: 8
     },
     createGraphHeader: {
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "space-between", 
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         borderBottom: "1px solid lightGrey"
     },
     deleteBody: {
@@ -180,10 +181,11 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         <CloseIcon />
                     </IconButton>
                 </div>
+                <DialogContent>
+                    <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
+                </DialogContent>
 
-                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
             </Dialog>
-
 
             <Dialog aria-labelledby="createGraphDialog" open={isOpen} fullScreen>
 
@@ -194,8 +196,10 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         <CloseIcon />
                     </IconButton>
                 </div>
-
-                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
+                <DialogContent>
+                    <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
+                </DialogContent>
+                
             </Dialog>
 
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>
@@ -238,9 +242,9 @@ ManageGraphsPage.propTypes = {
     //get the schema for the selected graph
     loadGraph: PropTypes.func,
     schema: PropTypes.object,
-    onDeleteGraph: PropTypes.func, 
+    onDeleteGraph: PropTypes.func,
     //refresh the list of graphs
-    loadSchemas: PropTypes.func    
+    loadSchemas: PropTypes.func
 };
 
 export default withStyles(styles)(ManageGraphsPage);

@@ -196,7 +196,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
 
     return (
 
-        <div style={{ width: "100%", height: "100%", padding: 32 }} >
+        <div >
             <Stepper activeStep={activeStep}>
                 {steps.map((label, index) => {
                     const stepProps = {};
