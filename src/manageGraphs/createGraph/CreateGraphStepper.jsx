@@ -8,7 +8,7 @@ import { fetchUploadGraph, execute } from "../../actions/GafferActions"
 import StepperHeader from "./steps/StepHeader";
 import Name from "./steps/Name";
 import LoadData from "./steps/LoadData";
-import ConfigureGraph from "./steps/Security"
+import Security from "./steps/Security"
 import Confirm from "./steps/Confirm";
 import Finished from "./steps/Finished";
 
@@ -33,6 +33,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [auths, setAuths] = useState([]);
     const [fileUploadMessage, setFileUploadMessage] = useState("");
+    const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
 
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
@@ -172,6 +173,9 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
         setAuths([])
         setNameValidationStatus("unknown")
         setFilename("")
+        setAuths([])
+        setAuthsRadioValue("justMe")
+        setFileUploadMessage("")
 
         handleReset();
 
@@ -214,10 +218,12 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                         )}
 
                         {activeStep === 1 && (
-                            <ConfigureGraph
+                            <Security
                                 schemaName={schemaName}
                                 onChangeAuths={onChangeAuths}
                                 auths={auths}
+                                authsRadioValue={authsRadioValue}
+                                setAuthsRadioValue={setAuthsRadioValue}
                             />
                         )}
 
@@ -239,7 +245,10 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                         {activeStep === 3 && (
                             <Confirm
                                 schemaName={schemaName}
-                                createdSchema={createdSchema} />
+                                createdSchema={createdSchema}
+                                auths={auths}
+                                authsRadioValue={authsRadioValue}
+                             />
                         )}
 
                         {activeStep === steps.length && (

@@ -32,27 +32,27 @@ const MenuProps = {
     },
 };
 
-export default function Security({ schemaName, onChangeAuths, auths }) {
+export default function Security({ schemaName, onChangeAuths, auths, setAuthsRadioValue, authsRadioValue }) {
 
-    const [radioValue, setRadioValue] = useState('justMe');
+    // const [radioValue, setRadioValue] = useState('justMe');
 
-    const handleChange = (event) => {
-        setRadioValue(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setRadioValue(event.target.value);
+    // };
 
     return (
         <div style={{ }}>
 
             <FormControl component="fieldset">
                 {/* <FormLabel component="legend">Who can access your graph</FormLabel> */}
-                <RadioGroup aria-label="gender" name="gender1" value={radioValue} onChange={handleChange}>                    
+                <RadioGroup aria-label="gender" name="gender1" value={authsRadioValue} onChange={(e) => setAuthsRadioValue(e.target.value)}>                    
                     <FormControlLabel value="justMe" control={<Radio />} label="Just me" />
                     <FormControlLabel value="everyone" control={<Radio />} label="Everyone" />
                     <FormControlLabel value="specifyGroups" control={<Radio />} label="Specify groups" />
                 </RadioGroup>
             </FormControl>
 
-            {radioValue === "specifyGroups" && (
+            {authsRadioValue === "specifyGroups" && (
 
                 <div className="chooseGroups">
 
