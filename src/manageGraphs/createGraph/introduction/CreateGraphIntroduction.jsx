@@ -9,7 +9,6 @@ import simpleCsv from "../../images/simpleCsv.jpg";
 import detailCsv from "../../images/detailCsv.jpg";
 import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateCsv"
 
-
 import CloseIcon from "@material-ui/icons/Close"
 
 const csvFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
@@ -47,7 +46,6 @@ const styles = {
     tabContentWrapper: {
         paddingTop: 16
     }
-
 }
 
 export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
@@ -63,16 +61,21 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
     }
 
     return (
-        <div>
-
+        <div id="createGraphIntoduction">
             {!isStarted && (
                 <div id="intoductionContent" className={classes.marginTop16}>
 
-                    <Typography>You can use this to create a graph and load data into it by uploading a CSV file</Typography>
-                    <Typography paragraph>Various CSV formats are accepted. </Typography>
+                    <Typography>
+                        You can use this to create a graph and load data into it by uploading a CSV file
+                    </Typography>
+                    
+                    <Typography paragraph>
+                        Various CSV formats are accepted. 
+                    </Typography>
 
-                    <Typography paragraph>This stepper will walk you through the create graph stage</Typography>
-
+                    <Typography paragraph>
+                        This stepper will walk you through the create graph stage
+                    </Typography>
 
                     <div className={classes.marginTop32}>
                         <Button variant="contained" color="primary" onClick={() => setisStarted(true)}>OK LETS GET STARTED</Button>
