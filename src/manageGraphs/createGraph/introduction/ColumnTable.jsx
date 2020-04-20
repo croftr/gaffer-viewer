@@ -9,13 +9,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { DETAILED_COLUMNS } from "../../utils/validateCsv"
-
 const styles = {}
 
-export const ColumnTable = ({ classes }) => {
+export const ColumnTable = ({ classes, data }) => {
     return (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
@@ -26,12 +24,12 @@ export const ColumnTable = ({ classes }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(DETAILED_COLUMNS).map((key) => (
+              {Object.keys(data).map((key) => (
                 <TableRow key={key}>
                   <TableCell>{key}</TableCell>
-                  <TableCell>{DETAILED_COLUMNS[key].type}</TableCell>
-                  <TableCell>{DETAILED_COLUMNS[key].mandatory}</TableCell>
-                  <TableCell>{DETAILED_COLUMNS[key].description}</TableCell>                  
+                  <TableCell>{data[key].type}</TableCell>
+                  <TableCell>{data[key].mandatory}</TableCell>
+                  <TableCell>{data[key].description}</TableCell>                  
                 </TableRow>
               ))}
             </TableBody>

@@ -166,7 +166,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                     onClick={() => setIsOpen(true)}
                     className={classes.actionButton}
                 >
-                    <AddIcon classNmae={classes.addIcon} />
+                    <AddIcon className={classes.addIcon} />
                     <span className={classes.buttonText}>Add Graph</span>
                 </Fab>
 

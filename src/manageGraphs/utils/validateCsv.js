@@ -1,6 +1,19 @@
 const SIMPLE_COLUMN_COUNT = 2;
 const DETAIL_COLUMN_COUNT = 9;
 
+export const SIMPLE_COLUMNS = {
+    "From Value": {
+        type: "string",
+        mandatory: "true",
+        description: "The value of the from node"
+    },
+    "To Value": {
+        type: "string",
+        mandatory: "true",
+        description: "The value of the to node"
+    }
+}
+
 export const DETAILED_COLUMNS = {
     "From Type": {
         type: "string",

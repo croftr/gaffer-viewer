@@ -7,13 +7,17 @@ import CreateGraphStepper from "../CreateGraphStepper";
 import ColumnTable from "./ColumnTable";
 import simpleCsv from "../../images/simpleCsv.jpg";
 import detailCsv from "../../images/detailCsv.jpg";
+import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateCsv"
+
 
 import CloseIcon from "@material-ui/icons/Close"
 
 const csvFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
 const csvDescriptions = [
-    "Use the detailed upload format if you want to be able to control node and edge types as well as having the option of specifying edge weights",
-    "You can use the simple upload format to just specify from and to node values. Edge types will be set to the generic type of INTERACTION"
+    "The detailed upload format allows control node and edge types as well as edge weights",
+    "The detailed upload format allows control node and edge types as well as edge weights",
+    "With the simple format you can create a graph just by providing from and to node values",
+    "With the simple format you can create a graph just by providing from and to node values",
 ]
 
 const styles = {
@@ -34,11 +38,14 @@ const styles = {
     helpHeader: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",        
+        justifyContent: "space-between",
     },
     dialogContent: {
         width: 1000,
         height: 500
+    },
+    tabContentWrapper: {
+        paddingTop: 16
     }
 
 }
@@ -65,7 +72,7 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                     <Typography paragraph>Various CSV formats are accepted. </Typography>
 
                     <Typography paragraph>This stepper will walk you through the create graph stage</Typography>
-                    
+
 
                     <div className={classes.marginTop32}>
                         <Button variant="contained" color="primary" onClick={() => setisStarted(true)}>OK LETS GET STARTED</Button>
@@ -90,34 +97,41 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                     </IconButton>
                 </div>
 
-                <DialogContent dividers={true} className={classes.dialogContent}>                    
+                <DialogContent dividers={true} className={classes.dialogContent}>
 
                     <Typography paragraph>{csvFormatText}</Typography>
 
-                    <Tabs className={classes.marginTop16} value={tabPage} onChange={(event, value) => changeTabPage(value)} aria-label="simple tabs example">
+                    <Tabs
+                        className={classes.marginTop16}
+                        value={tabPage}
+                        onChange={(event, value) => changeTabPage(value)}
+                        aria-label="csvFormat">
                         {csvFormats.map(view => <Tab label={view} key={view} />)}
                     </Tabs>
 
-                    {tabPage === 0 && (
-                        <ColumnTable />
-                    )}
+                    <div className={classes.tabContentWrapper}>
+                        {tabPage === 0 && (
+                            <ColumnTable data={DETAILED_COLUMNS} />
+                        )}
 
-                    {tabPage === 1 && (
-                        <div className={classes.imageWrapper}>
-                            <img src={detailCsv} width="800" />
-                        </div>
-                    )}
+                        {tabPage === 1 && (
+                            <div className={classes.imageWrapper}>
+                                <img src={detailCsv} width="800" />
+                            </div>
+                        )}
 
-                    {tabPage === 2 && (
-                        <ColumnTable />
-                    )}
+                        {tabPage === 2 && (
+                            <ColumnTable data={SIMPLE_COLUMNS} />
+                        )}
 
 
-                    {tabPage === 3 && (
-                        <div className={classes.imageWrapper}>
-                            <img src={simpleCsv} width="300" />
-                        </div>
-                    )}
+                        {tabPage === 3 && (
+                            <div className={classes.imageWrapper}>
+                                <img src={simpleCsv} width="300" />
+                            </div>
+                        )}
+                    </div>
+
 
                 </DialogContent>
 
