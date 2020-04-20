@@ -9,7 +9,7 @@ import StepperHeader from "./steps/StepHeader";
 import Name from "./steps/Name";
 import LoadData from "./steps/LoadData";
 import Security from "./steps/Security"
-import Confirm from "./steps/Confirm";
+import Review from "./steps/Review";
 import Finished from "./steps/Finished";
 
 import BackIcon from "@material-ui/icons/NavigateBefore"
@@ -92,8 +92,15 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
         formData.append('file', file);
 
         try {
-
-            const res = await fetchUploadGraph(formData, schemaName);
+            let graphAuths;
+            if (authsRadioValue === "justMe") {
+                graphAuths = "private"
+            } else if (authsRadioValue === "everyone") {
+                graphAuths = "public"
+            } else {
+                graphAuths = auths.join(",")
+            }
+            const res = await fetchUploadGraph(formData, schemaName, graphAuths);
 
             if (res) {
                 setCreatedSchema(res);
@@ -243,7 +250,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                         )}
 
                         {activeStep === 3 && (
-                            <Confirm
+                            <Review
                                 schemaName={schemaName}
                                 createdSchema={createdSchema}
                                 auths={auths}

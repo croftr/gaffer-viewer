@@ -15,7 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import { steps } from "./steps";
 
-export default function Confirm({ schemaName, createdSchema = {}, auths, authsRadioValue }) {
+export default function Review({ schemaName, createdSchema = {}, auths, authsRadioValue }) {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -59,7 +59,7 @@ export default function Confirm({ schemaName, createdSchema = {}, auths, authsRa
                 <List>
                     {Object.keys(steps).filter(step => steps[step].reviewText).map(key =>
                         (
-                            <ListItem>
+                            <ListItem key={key}>
                                 <ListItemAvatar>
                                     <Avatar>
                                         {steps[key].icon}

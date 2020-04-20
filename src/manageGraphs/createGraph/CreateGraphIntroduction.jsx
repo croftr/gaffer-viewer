@@ -1,7 +1,6 @@
 
 import React, { useLayoutEffect, useState } from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
-import CreateGraph from "./steps/CreateGraph";
 import CreateGraphStepper from "./CreateGraphStepper";
 import simpleCsv from "../images/simpleCsv.jpg";
 import detailCsv from "../images/detailCsv.jpg";
@@ -29,8 +28,8 @@ export default function CreateGraphIntroduction({ onCloseDialog, loadSchemas }) 
             {!isStarted && (
                 <div className="intoductionContent" style={{ padding: 32 }}>
 
-                    <Typography>You can use this to create a graph schema and load data into it just from uploading a CSV file</Typography>
-                    <Typography paragraph>This stepper will walk you through the create graph stage press ok to get started</Typography>
+                    <Typography>You can use this to create a graph and load data into it from uploading a CSV file</Typography>
+                    <Typography paragraph>This stepper will walk you through the create graph stage</Typography>
 
                     <Typography paragraph>You can upload data from CSV files in different formats.  Click on the tabs below to see the accepted formats. </Typography>
 
