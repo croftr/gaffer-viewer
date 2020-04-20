@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Button, Tab, Tabs, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
+import { Paper, Button, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
 import CreateGraphIntroduction from "./createGraph/CreateGraphIntroduction";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -79,7 +79,11 @@ const styles = {
     }
 }
 
-export const ManageGraphs = ({ classes, graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) => {
+/**
+ * Top level page that lists all the graphs that the user as admin access to 
+ * delete and maintian 
+ */
+export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isLoadOpen, setIsLoadOpen] = useState(false);
@@ -228,8 +232,15 @@ export const ManageGraphs = ({ classes, graphs, loadGraph, schema, onDeleteGraph
     )
 }
 
-ManageGraphs.propTypes = {
+ManageGraphsPage.propTypes = {
     classes: PropTypes.object.isRequired,
+    graphs: PropTypes.array,
+    //get the schema for the selected graph
+    loadGraph: PropTypes.func,
+    schema: PropTypes.object,
+    onDeleteGraph: PropTypes.func, 
+    //refresh the list of graphs
+    loadSchemas: PropTypes.func    
 };
 
-export default withStyles(styles)(ManageGraphs);
+export default withStyles(styles)(ManageGraphsPage);
