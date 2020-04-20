@@ -1,5 +1,6 @@
 
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import { Paper, Button, Tab, Tabs, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
 import CreateGraphIntroduction from "./createGraph/CreateGraphIntroduction";
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -7,6 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import PropTypes from 'prop-types';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -17,7 +19,67 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import LoadIcon from '@material-ui/icons/Publish';
 import JSONPretty from 'react-json-pretty';
 
-export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) {
+const styles = {
+    paper: {
+        height: "100%",
+        padding: 16,
+        display: "flex"
+    },
+    graphsList: {
+        height: "calc(100vh - 130px)",
+        overflowY: "auto",
+        width: 320,
+        marginRight: 8
+    },
+    manageGraphsHeader: {
+        display: "flex",
+        alignItems: "center",
+        height: 48,
+        justifyContent: "space-between",
+        marginBottom: 8
+    },
+    marginLeft16: {
+        marginLeft: 16
+    },
+    json: {
+        border: "1px solid lightGrey",
+        padding: 8
+    },
+    actionButton: {
+        position: "absolute",
+        bottom: 48,
+        right: 48
+    },
+    addIcon: {
+        marginRight: 8
+    },
+    deleteHeader: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderBottom: "1px solid lightGrey"
+    }, 
+    loadDataHeader: { 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "space-between", 
+        borderBottom: "1px solid lightGrey" 
+    },
+    buttonText: {
+        padding: 8
+    },
+    createGraphHeader: {
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "space-between", 
+        borderBottom: "1px solid lightGrey"
+    },
+    deleteBody: {
+        padding: 32
+    }
+}
+
+export const ManageGraphs = ({ classes, graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isLoadOpen, setIsLoadOpen] = useState(false);
@@ -37,23 +99,21 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
         setIsDeleteGraphOpen(false);
     }
 
-    const loadData = (selectedGraph) => {
-    }
-
     const openDeleteGraph = (selectedGraph) => {
         setIsDeleteGraphOpen(true);
         setGraphToDelete(selectedGraph)
     }
 
-
-
     return (
         <>
-            <Paper style={{ height: "100%", padding: 16, display: "flex" }}>
+            <Paper className={classes.paper}>
 
-                <List style={{ height: "calc(100vh - 130px)", overflowY: "auto", width: 320, marginRight: 8 }}>
+                <List className={classes.graphsList}>
                     {graphs.map(graph => (
-                        <ListItem button onClick={() => loadSelectedGraph(graph)} key={graph}>
+                        <ListItem
+                            button
+                            onClick={() => loadSelectedGraph(graph)}
+                            key={graph}>
                             <ListItemAvatar>
                                 <Avatar>
                                     <GraphIcon />
@@ -66,7 +126,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
 
                 {selectedGraph &&
                     <div id="graphToManage">
-                        <div id="manageGraphsHeader" style={{ display: "flex", alignItems: "center", height: 48, justifyContent: "space-between", marginBottom: 8 }}>
+                        <div className={classes.manageGraphsHeader}>
                             <Typography variant="h6">{selectedGraph}</Typography>
                             <div className="manageGraphButtons">
                                 <Button
@@ -81,32 +141,35 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
                                     variant="contained"
                                     startIcon={<DeleteIcon />}
                                     onClick={() => openDeleteGraph(selectedGraph)}
-                                    style={{ marginLeft: 16 }}>
+                                    className={classes.marginLeft16}>
                                     Delete
                                 </Button>
                             </div>
                         </div>
                         <JSONPretty
-                            style={{
-                                border: "1px solid lightGrey",
-                                padding: 8
-                            }}
+                            className={classes.json}
                             id="json-pretty"
                             data={schema} >
                         </JSONPretty>
                     </div>
                 }
 
-                <Fab variant="extended" color="primary" aria-label="add" onClick={() => setIsOpen(true)} style={{ position: "absolute", bottom: 48, right: 48 }} >
-                    <AddIcon style={{ marginRight: 8 }} />
-                    <span style={{ padding: 8 }}>Add Graph</span>
+                <Fab
+                    variant="extended"
+                    color="primary"
+                    aria-label="add"
+                    onClick={() => setIsOpen(true)}
+                    className={classes.actionButton}
+                >
+                    <AddIcon classNmae={classes.addIcon} />
+                    <span className={classes.buttonText}>Add Graph</span>
                 </Fab>
 
             </Paper>
 
             <Dialog aria-labelledby="loadDatahDialog" open={isLoadOpen} maxWidth="lg">
 
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
+                <div className={classes.loadDataHeader}>
                     <DialogTitle id="simple-dialog-title">Load Data</DialogTitle>
 
                     <IconButton onClick={() => setIsLoadOpen(false)}>
@@ -120,7 +183,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
 
             <Dialog aria-labelledby="createGraphDialog" open={isOpen} fullScreen>
 
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
+                <div className={classes.createGraphHeader}>
                     <DialogTitle id="simple-dialog-title">Add Graph</DialogTitle>
 
                     <IconButton onClick={() => setIsOpen(false)}>
@@ -133,14 +196,14 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
 
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>
 
-                <div className="deleteHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
+                <div className={classes.deleteHeader} >
                     <DialogTitle id="simple-dialog-title">Delete {graphToDelete}</DialogTitle>
                     <IconButton onClick={() => setIsDeleteGraphOpen(false)}>
                         <CloseIcon />
                     </IconButton>
                 </div>
 
-                <div className="deleteBody" style={{ padding: 32 }}>
+                <div className={classes.deleteBody}>
                     <Typography paragraph>Enter name of graph to confirm delete</Typography>
                     <TextField
                         value={confirmDeleteText}
@@ -153,7 +216,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
                         variant="contained"
                         startIcon={<DeleteIcon />}
                         onClick={() => deleteGraph(graphToDelete)}
-                        style={{ marginLeft: 16 }}>
+                        className={classes.marginLeft16}>
                         Delete
                 </Button>
 
@@ -163,5 +226,10 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
 
         </>
     )
-
 }
+
+ManageGraphs.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ManageGraphs);
