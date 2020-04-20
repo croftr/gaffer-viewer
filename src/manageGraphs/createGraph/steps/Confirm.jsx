@@ -87,17 +87,17 @@ export default function Confirm({ schemaName, createdSchema = {}, auths, authsRa
 
             </div>
 
-            <Dialog open={isOpen}>
-                <div className="schemaJson" style={{}}>
-                    <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+            <Dialog open={isOpen} maxWidth="lg">
+                
+                    <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
                         <Typography variant="h6">{schemaName} Schema JSON</Typography>
                         <IconButton onClick={() => setIsOpen(false)}>
                             <CloseIcon />
                         </IconButton>
                     </div>
                     
-                    <JSONPretty id="json-payload" data={createdSchema.schema}></JSONPretty>
-                </div>
+                    <JSONPretty style={{ padding: 16  }} data={createdSchema.schema}></JSONPretty>
+                
             </Dialog>
 
         </div>

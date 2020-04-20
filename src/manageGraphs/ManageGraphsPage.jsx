@@ -20,6 +20,7 @@ import JSONPretty from 'react-json-pretty';
 export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoadOpen, setIsLoadOpen] = useState(false);
     const [graphToDelete, setGraphToDelete] = useState(false);
     const [isDeleteGraphOpen, setIsDeleteGraphOpen] = useState(false);
     const [selectedGraph, setSelectedGraph] = useState();
@@ -43,7 +44,7 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
         setIsDeleteGraphOpen(true);
         setGraphToDelete(selectedGraph)
     }
-    
+
 
 
     return (
@@ -65,14 +66,14 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
 
                 {selectedGraph &&
                     <div id="graphToManage">
-                        <div id="manageGraphsHeader" style={{ display: "flex", alignItems: "center", height: 48, justifyContent: "space-between" }}>
+                        <div id="manageGraphsHeader" style={{ display: "flex", alignItems: "center", height: 48, justifyContent: "space-between", marginBottom: 8 }}>
                             <Typography variant="h6">{selectedGraph}</Typography>
                             <div className="manageGraphButtons">
                                 <Button
                                     color="primary"
                                     variant="contained"
                                     startIcon={<LoadIcon />}
-                                    onClick={() => loadData(selectedGraph)}>
+                                    onClick={() => setIsLoadOpen(true)}>
                                     Load Data
                                 </Button>
                                 <Button
@@ -102,6 +103,20 @@ export default function ManageGraphs({ graphs, loadGraph, schema, onDeleteGraph,
                 </Fab>
 
             </Paper>
+
+            <Dialog aria-labelledby="loadDatahDialog" open={isLoadOpen} maxWidth="lg">
+
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey" }}>
+                    <DialogTitle id="simple-dialog-title">Load Data</DialogTitle>
+
+                    <IconButton onClick={() => setIsLoadOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
+            </Dialog>
+
 
             <Dialog aria-labelledby="createGraphDialog" open={isOpen} fullScreen>
 
