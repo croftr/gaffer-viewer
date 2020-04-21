@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Tooltip, Typography, IconButton, Dialog } from '@material-ui/core';
+import { Tooltip, Typography, IconButton, Dialog, DialogContent } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 
 import List from '@material-ui/core/List';
@@ -88,16 +88,19 @@ export default function Review({ schemaName, createdSchema = {}, auths, authsRad
             </div>
 
             <Dialog open={isOpen} maxWidth="lg">
-                
-                    <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
-                        <Typography variant="h6">{schemaName} Schema JSON</Typography>
-                        <IconButton onClick={() => setIsOpen(false)}>
-                            <CloseIcon />
-                        </IconButton>
-                    </div>
-                    
-                    <JSONPretty style={{ padding: 16  }} data={createdSchema.schema}></JSONPretty>
-                
+
+                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
+                    <Typography variant="h6">{schemaName} Schema JSON</Typography>
+                    <IconButton onClick={() => setIsOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                <DialogContent>
+                    <JSONPretty data={createdSchema.schema}></JSONPretty>
+                </DialogContent>
+
+
             </Dialog>
 
         </div>

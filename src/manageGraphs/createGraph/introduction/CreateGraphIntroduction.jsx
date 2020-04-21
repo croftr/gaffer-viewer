@@ -86,7 +86,6 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                 </div>
             )}
 
-
             {isStarted && <CreateGraphStepper onCloseDialog={onCloseDialog} loadSchemas={loadSchemas} />}
 
             <Dialog open={isHelpPageOpen} maxWidth={false}>
@@ -127,22 +126,17 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                             <ColumnTable data={SIMPLE_COLUMNS} />
                         )}
 
-
                         {tabPage === 3 && (
                             <div className={classes.imageWrapper}>
                                 <img src={simpleCsv} width="300" />
                             </div>
                         )}
                     </div>
-
-
                 </DialogContent>
-
             </Dialog>
 
         </div>
     )
-
 }
 
 CreateGraphIntroduction.propTypes = {

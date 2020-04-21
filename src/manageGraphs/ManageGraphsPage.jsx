@@ -23,6 +23,7 @@ import JSONPretty from 'react-json-pretty';
 const styles = {
     paper: {
         height: "100%",
+        // width: "100%",
         padding: 16,
         display: "flex"
     },
@@ -77,6 +78,9 @@ const styles = {
     },
     deleteBody: {
         padding: 32
+    },
+    noGraphsText: {
+        margin: "auto"
     }
 }
 
@@ -113,21 +117,34 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
         <>
             <Paper className={classes.paper}>
 
-                <List className={classes.graphsList}>
-                    {graphs.map(graph => (
-                        <ListItem
-                            button
-                            onClick={() => loadSelectedGraph(graph)}
-                            key={graph}>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <GraphIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText primary={graph} />
-                        </ListItem>
-                    ))}
-                </List>
+                {(!graphs || graphs.length < 1) && (
+                    <Typography 
+                        className={classes.noGraphsText} 
+                        variant="h4"                         
+                        color="textSecondary">
+                           You have no graphs
+                    </Typography>
+                )} 
+                {
+                    (graphs && graphs.length > 0) && (
+                        <List className={classes.graphsList}>
+                            {graphs.map(graph => (
+                                <ListItem
+                                    button
+                                    onClick={() => loadSelectedGraph(graph)}
+                                    key={graph}>
+                                    <ListItemAvatar>
+                                        <Avatar>
+                                            <GraphIcon />
+                                        </Avatar>
+                                    </ListItemAvatar>
+                                    <ListItemText primary={graph} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    )}
+
+
 
                 {selectedGraph &&
                     <div id="graphToManage">
@@ -199,7 +216,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                 <DialogContent>
                     <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
                 </DialogContent>
-                
+
             </Dialog>
 
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>

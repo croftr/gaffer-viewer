@@ -270,7 +270,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
 
                     {activeStep + 1 <= steps.length &&
                         (
-                            <div className="stepperFooter" style={{ marginTop: 16 }}>
+                            <div className="stepperFooter" style={{ marginTop: 16, padding: 16 }}>
                                 {activeStep !== steps.length - 1 && (
                                     <Button 
                                         disabled={activeStep === 0} 
@@ -284,7 +284,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                 {activeStep === 3 && (
                                     <Button
                                         onClick={deleteSchema}
-                                        style={{ marginLeft: 16 }}
+                                        style={{ marginLeft: 32 }}
                                         variant="contained"
                                         color="secondary"
                                     >
@@ -296,7 +296,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}
-                                    style={{ marginLeft: 16 }}
+                                    style={{ marginLeft: 32 }}
                                     disabled={checkNextStepDisabled()}
                                     endIcon={activeStep === steps.length - 1 ? <FinishIcon /> : <NextIcon />}
                                 >
