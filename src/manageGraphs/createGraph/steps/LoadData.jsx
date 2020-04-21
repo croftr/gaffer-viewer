@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Typography, Input, Button, CircularProgress } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
-import csvLogo from "../../images/csv4.png";
 
 const styles = {
     button: {
@@ -23,25 +22,11 @@ const styles = {
     }    
 }
 
-const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed, fileUploadMessage, onResetUpload, uploadInProgress }) => {
-
-    // const [inProgress, setInProgress] = React.useState(false);
-
-    // const upload = (e) => {
-    //     setInProgress(true);
-    //     onUploadFile(e);
-    // }
-
-    // const resetUpload = () => {
-    //     setInProgress(false);
-    //     onResetUpload();
-    // }
+const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed, fileUploadMessage, uploadInProgress }) => {
 
     return (
         <div>
             <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>
-
-            {/* <img src={csvLogo} /> */}
 
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
 
@@ -57,7 +42,7 @@ const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaN
                             type='file'
                             className='custom-file-input'
                             id='customFile'
-                            onChange={onSelectFile}
+                            onChange={onSelectFile}                            
                             label={filename}
                             style={{ display: "none" }}
                         />
