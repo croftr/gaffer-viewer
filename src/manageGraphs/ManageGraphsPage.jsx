@@ -23,7 +23,6 @@ import JSONPretty from 'react-json-pretty';
 const styles = {
     paper: {
         height: "100%",
-        // width: "100%",
         padding: 16,
         display: "flex"
     },
@@ -31,21 +30,24 @@ const styles = {
         height: "calc(100vh - 130px)",
         overflowY: "auto",
         width: 320,
-        marginRight: 8
+        marginRight: 8,      
     },
     manageGraphsHeader: {
         display: "flex",
-        alignItems: "center",
-        height: 48,
+        alignItems: "center",        
         justifyContent: "space-between",
-        marginBottom: 8
+        marginBottom: 4
     },
     marginLeft16: {
         marginLeft: 16
     },
     json: {
         border: "1px solid lightGrey",
-        padding: 8
+        padding: 8,
+        overflowX: "auto",
+        overflowY: "auto",
+        width: "calc(100vw - 650px)",
+        height: "calc(100vh - 180px)"
     },
     actionButton: {
         position: "absolute",
@@ -81,6 +83,9 @@ const styles = {
     },
     noGraphsText: {
         margin: "auto"
+    },
+    listHeader: {
+        marginBottom: 8
     }
 }
 
@@ -118,33 +123,34 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             <Paper className={classes.paper}>
 
                 {(!graphs || graphs.length < 1) && (
-                    <Typography 
-                        className={classes.noGraphsText} 
-                        variant="h4"                         
+                    <Typography
+                        className={classes.noGraphsText}
+                        variant="h4"
                         color="textSecondary">
-                           You have no graphs
+                        You have no graphs
                     </Typography>
-                )} 
-                {
-                    (graphs && graphs.length > 0) && (
-                        <List className={classes.graphsList}>
-                            {graphs.map(graph => (
-                                <ListItem
-                                    button
-                                    onClick={() => loadSelectedGraph(graph)}
-                                    key={graph}>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <GraphIcon />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={graph} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    )}
-
-
+                )}
+                {(graphs && graphs.length > 0) && (
+                    <List
+                        className={classes.graphsList}
+                        subheader={<Typography className={classes.listHeader} variant="h6">My Graphs</Typography>}
+                    >
+                        {graphs.map(graph => (
+                            <ListItem
+                                button
+                                onClick={() => loadSelectedGraph(graph)}
+                                key={graph}
+                            >
+                                <ListItemAvatar>
+                                    <Avatar>
+                                        <GraphIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={graph} />
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
 
                 {selectedGraph &&
                     <div id="graphToManage">
@@ -169,8 +175,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                             </div>
                         </div>
                         <JSONPretty
-                            className={classes.json}
-                            id="json-pretty"
+                            className={classes.json}                            
                             data={schema} >
                         </JSONPretty>
                     </div>
@@ -192,7 +197,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             <Dialog aria-labelledby="loadDatahDialog" open={isLoadOpen} maxWidth="lg">
 
                 <div className={classes.loadDataHeader}>
-                    <DialogTitle id="simple-dialog-title">Load Data</DialogTitle>
+                    <DialogTitle id="loaddataTitle">Load Data</DialogTitle>
 
                     <IconButton onClick={() => setIsLoadOpen(false)}>
                         <CloseIcon />
@@ -207,7 +212,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             <Dialog aria-labelledby="createGraphDialog" open={isOpen} fullScreen>
 
                 <div className={classes.createGraphHeader}>
-                    <DialogTitle id="simple-dialog-title">Add Graph</DialogTitle>
+                    <DialogTitle id="addGraphTitle">Add Graph</DialogTitle>
 
                     <IconButton onClick={() => setIsOpen(false)}>
                         <CloseIcon />
@@ -222,7 +227,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             <Dialog aria-labelledby="deleteGraphDialog" open={isDeleteGraphOpen} onEnter={() => setConfirmDeleteText('')}>
 
                 <div className={classes.deleteHeader} >
-                    <DialogTitle id="simple-dialog-title">Delete {graphToDelete}</DialogTitle>
+                    <DialogTitle id="deleteGraphTitle">Delete {graphToDelete}</DialogTitle>
                     <IconButton onClick={() => setIsDeleteGraphOpen(false)}>
                         <CloseIcon />
                     </IconButton>

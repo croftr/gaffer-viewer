@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, Link } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 
 export default function Finished({ handleReset, schemaName, onCloseDialog }) {
@@ -10,8 +10,8 @@ export default function Finished({ handleReset, schemaName, onCloseDialog }) {
     operations: [
       {
         class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
-        options : {
-          "gaffer.federatedstore.operation.graphIds" : `${schemaName}`
+        options: {
+          "gaffer.federatedstore.operation.graphIds": `${schemaName}`
         }
       },
       {
@@ -29,7 +29,10 @@ export default function Finished({ handleReset, schemaName, onCloseDialog }) {
       </Typography>
 
       <Typography paragraph>
-        You can now query your data from your new graph for example by posting the following query to <a href="http://localhost:8080/rest/v2/graph/operations/execute">http://localhost:8080/rest/v2/graph/operations/execute</a>
+        You can now query your data from your new graph for example by posting the following query to &nbsp; 
+        <Link href="http://localhost:8080/rest/v2/graph/operations/execute">
+          http://localhost:8080/rest/v2/graph/operations/execute
+        </Link>
       </Typography>
 
       <div style={{ border: "1px solid lightGrey", marginBottom: 32 }}>

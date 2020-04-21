@@ -88,9 +88,8 @@ const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaN
                         {isLoadSuccess && (
                             <React.Fragment>
                                 <ValidIcon style={{ color: "green", marginRight: 8 }} />
-                                <Typography>Success your schema has been created and {elemetsLoaded} edges have been loaded</Typography>
+                                <Typography>Success your graph has been created and {elemetsLoaded} edges have been loaded</Typography>
                             </React.Fragment>
-
                         )}
 
                         {schemaLoadFailed && (
