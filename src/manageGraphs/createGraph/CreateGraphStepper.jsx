@@ -25,7 +25,19 @@ const styles = {
         height: "calc(100vh - 260px)",
         overflowY: "auto",
         padding: 32
-    }
+    },
+    stepperFooter: {
+        marginTop: 16,
+        padding: 16
+    },
+    button: {
+        width: 100,
+        marginRight: 16
+    },
+    bigButton: {
+        width: 200,
+        marginRight: 16
+    },    
 }
 
 const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
@@ -271,7 +283,6 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                             />
                         )}
 
-
                         {activeStep === 2 && (
                             <LoadData
                                 onSelectFile={onSelectFile}
@@ -307,57 +318,55 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
                     </div>
 
-                    {activeStep + 1 <= steps.length &&
-                        (
-                            <div className="stepperFooter" style={{ marginTop: 16, padding: 16 }}>
-                                {activeStep !== steps.length - 1 && (
-                                    <Button
-                                        onClick={handleBack}
-                                        startIcon={activeStep === 0 ? <CloseIcon /> : <BackIcon />}
-                                        color={activeStep === 0 ? "secondary" : "default"}
-                                    >
-                                        {activeStep === 0 ? "Cancel" : "Back"}
-                                    </Button>
-
-                                )}
-
-                                {activeStep === 3 && (
-                                    <Button
-                                        onClick={deleteSchema}
-                                        style={{ marginLeft: 16 }}
-                                        variant="contained"
-                                        color="secondary"
-                                    >
-                                        Start again
-                                    </Button>
-                                )}
-
-                                {activeStep === 2 && (
-                                    <Button
-                                        color="secondary"
-                                        style={{ marginLeft: 16 }}
-                                        variant="contained"
-                                        disabled={!createdSchema.loadSuccess}
-                                        onClick={onResetUpload}
-                                    >
-                                        Reset Upload
-                                    </Button>
-                                )}
-
+                    {activeStep + 1 <= steps.length && (
+                        <div className={classes.stepperFooter}>
+                            {activeStep !== steps.length - 1 && (
                                 <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleNext}
-                                    style={{ marginLeft: 16 }}
-                                    disabled={checkNextStepDisabled()}
-                                    endIcon={activeStep === steps.length - 1 ? '' : <NextIcon />}
+                                    onClick={handleBack}
+                                    className={classes.button}
+                                    startIcon={activeStep === 0 ? <CloseIcon /> : <BackIcon />}
+                                    color={activeStep === 0 ? "secondary" : "default"}
                                 >
-                                    {activeStep === steps.length - 1 ? `Confirm Create ${schemaName}` : 'Next'}
+                                    {activeStep === 0 ? "Cancel" : "Back"}
                                 </Button>
 
-                            </div>
-                        )
-                    }
+                            )}
+
+                            {activeStep === 3 && (
+                                <Button
+                                    onClick={deleteSchema}
+                                    className={classes.bigButton}
+                                    variant="contained"
+                                    color="secondary"
+                                >
+                                    Start again
+                                </Button>
+                            )}
+
+                            {activeStep === 2 && (
+                                <Button
+                                    color="secondary"
+                                    className={classes.bigButton}
+                                    variant="contained"
+                                    disabled={!createdSchema.loadSuccess}
+                                    onClick={onResetUpload}
+                                >
+                                    Reset Upload
+                                </Button>
+                            )}
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleNext}
+                                className={activeStep === steps.length - 1 ? classes.bigButton : classes.button}
+                                disabled={checkNextStepDisabled()}
+                                endIcon={activeStep === steps.length - 1 ? '' : <NextIcon />}
+                            >
+                                {activeStep === steps.length - 1 ? `Confirm Create` : 'Next'}
+                            </Button>
+                        </div>
+                    )}
 
                 </React.Fragment>
             </div>
@@ -368,6 +377,8 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
 CreateGraphStepper.propTypes = {
     classes: PropTypes.object.isRequired,
+    onCloseDialog: PropTypes.func,
+    loadSchemas: PropTypes.func,
 };
 
 export default withStyles(styles)(CreateGraphStepper);
