@@ -51,7 +51,6 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                             )}
 
                         </div>
-
                     }
 
                 </div>

@@ -68,13 +68,20 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const onSelectFile = e => {
+
+        console.log("upload file step 1");
+
         setFile(e.target.files[0]);
+        console.log("upload file step 2");
         setFilename(e.target.files[0].name);
+        console.log("upload file step 3");
 
         var reader = new FileReader();
+        console.log("upload file step 4");
                 
         // read csv file as text 
         reader.onload = (e) => {
+            console.log("upload file step 5");
             const validationResponmse = validateCsvFile(e.target.result);
             setFileUploadMessage(validationResponmse);                   
         };
@@ -84,7 +91,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const onUploadFile = async e => {
-
+                
         setSchemaLoadFailed(false);
         e.preventDefault();
         const formData = new FormData();
