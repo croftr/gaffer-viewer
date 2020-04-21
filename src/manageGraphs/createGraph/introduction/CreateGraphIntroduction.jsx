@@ -26,8 +26,10 @@ const styles = {
     marginLeft16: {
         marginLeft: 16
     },
-    marginTop32: {
-        marginTop: 32
+    buttonsWrapper: {
+        marginTop: 32,
+        display: "flex",
+        flexDirection: "column"
     },
     imageWrapper: {
         height: 300,
@@ -44,8 +46,12 @@ const styles = {
         height: 500
     },
     tabContentWrapper: {
-        paddingTop: 16
-    }
+        paddingTop: 16        
+    },
+    button: {
+        width: 250,
+        marginBottom: 16
+    },
 }
 
 export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
@@ -77,12 +83,30 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                         This stepper will walk you through the create graph stage
                     </Typography>
 
-                    <div className={classes.marginTop32}>
-                        <Button variant="contained" color="primary" onClick={() => setisStarted(true)}>OK LETS GET STARTED</Button>
-                        <Button variant="contained" onClick={() => setIsHelpPageOpen(true)} className={classes.marginLeft16}>Review CSV formats</Button>
-                        <Button variant="contained" color="secondary" className={classes.marginLeft16} onClick={onCloseDialog}>BACK TO MANAGE GRAPHS</Button>
-                    </div>
+                    <div className={classes.buttonsWrapper}>
+                        <Button 
+                            className={classes.button}
+                            variant="contained" 
+                            color="primary" 
+                            onClick={() => setisStarted(true)}>
+                                OK LETS GET STARTED
+                        </Button>
 
+                        <Button 
+                            className={classes.button}
+                            variant="contained" 
+                            onClick={() => setIsHelpPageOpen(true)}>
+                                Review CSV formats
+                        </Button>
+
+                        <Button 
+                            className={classes.button}
+                            variant="contained" 
+                            color="secondary"                             
+                            onClick={onCloseDialog}>
+                                BACK TO MANAGE GRAPHS
+                        </Button>
+                    </div>
                 </div>
             )}
 

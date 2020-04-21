@@ -1,19 +1,41 @@
 
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { Typography, Input, Button, CircularProgress } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 import csvLogo from "../../images/csv4.png";
 
+const styles = {
+    button: {
+        width: 200
+    },
+    buttonArea: {
+        display: "flex", 
+        alignItems: "center", 
+        marginBottom: 16
+    },
+    buttonTextArea: {
+        display: "flex", 
+        alignItems: "center", 
+        marginLeft: 16 
+    }    
+}
 
-export default function LoadData({ onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed, fileUploadMessage }) {
+const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed, fileUploadMessage, onResetUpload, uploadInProgress }) => {
 
-    const [inProgress, setInProgress] = React.useState(false);
+    // const [inProgress, setInProgress] = React.useState(false);
 
-    const upload = (e) => {
-        setInProgress(true);
-        onUploadFile(e);
-    }
+    // const upload = (e) => {
+    //     setInProgress(true);
+    //     onUploadFile(e);
+    // }
+
+    // const resetUpload = () => {
+    //     setInProgress(false);
+    //     onResetUpload();
+    // }
 
     return (
         <div>
@@ -23,11 +45,12 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
 
-                <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
+                <div className={classes.buttonArea}>
                     <Button
                         variant="contained"
                         component="label"
-                        style={{ width: 200 }}
+                        className={classes.button}
+                        disabled={isLoadSuccess}              
                     >
                         {filename || "Select CSV file"}
                         <Input
@@ -41,7 +64,7 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                     </Button>
 
                     {fileUploadMessage &&
-                        <div className="loadFileResults" style={{ display: "flex", alignItems: "center", marginLeft: 16 }}>
+                        <div className={classes.buttonTextArea}>
 
                             {!fileUploadMessage.startsWith("Invalid") && (
                                 <React.Fragment>
@@ -63,20 +86,19 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
 
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div className={classes.buttonArea}>
                     <Button
                         type='submit'
                         color="primary"
                         variant="contained"
-                        onClick={e => upload(e)}
+                        onClick={onUploadFile}
                         value='Upload'
-                        disabled={!file || !schemaName}
-                        style={{ width: 200 }}
-                        className='btn btn-primary btn-block mt-4'>
+                        disabled={!file || !schemaName ||isLoadSuccess}
+                        className={classes.button}>
                         Upload Data
                     </Button>
 
-                    <div className="validationResults" style={{ display: "flex", alignItems: "center", marginLeft: 16 }}>
+                    <div className={classes.buttonTextArea}>
 
                         {isLoadSuccess && (
                             <React.Fragment>
@@ -93,16 +115,24 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                             </React.Fragment>
                         )}
 
-                        {inProgress && !isLoadSuccess && !schemaLoadFailed && <span style={{display: "flex", alignItems: "center"}}><CircularProgress size={24} style={{ marginRight: 8 }} /> <Typography>Creating your graph</Typography> </span> }
+                        {uploadInProgress && !isLoadSuccess && !schemaLoadFailed && (
+                            <span style={{ display: "flex", alignItems: "center" }}>
+                                <CircularProgress size={24} style={{ marginRight: 8 }} />
+                                <Typography>Creating your graph</Typography>
+                            </span>
+                        )}
 
                     </div>
-
-
                 </div>
 
             </div>
 
         </div>
     )
-
 }
+
+LoadData.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(LoadData);

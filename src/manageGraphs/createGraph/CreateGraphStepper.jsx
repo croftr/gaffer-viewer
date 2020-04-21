@@ -21,10 +21,10 @@ import CloseIcon from "@material-ui/icons/Close"
 import { validateCsvFile } from "../utils/validateCsv";
 
 const styles = {
-    stepperContent: { 
-        height: "calc(100vh - 260px)", 
-        overflowY: "auto", 
-        padding: 32 
+    stepperContent: {
+        height: "calc(100vh - 260px)",
+        overflowY: "auto",
+        padding: 32
     }
 }
 
@@ -44,6 +44,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [auths, setAuths] = useState([]);
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
+    const [uploadInProgress, setUploadInProgress] = useState(false);
 
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
@@ -100,10 +101,12 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const onUploadFile = async e => {
 
+        setUploadInProgress(true);
+
         e.preventDefault();
-        
+
         setSchemaLoadFailed(false);
-        
+
         const formData = new FormData();
 
         formData.append('file', file);
@@ -197,7 +200,6 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         setAuths([])
         setNameValidationStatus("unknown")
         setFilename("")
-        setAuths([])
         setAuthsRadioValue("justMe")
         setFileUploadMessage("")
 
@@ -209,6 +211,24 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                 graphId: `${schemaName}`
             }
         );
+    }
+
+    const onResetUpload = () => {
+
+        setCreatedSchema({});
+        setFile(undefined);
+        setFilename("")
+        setNameValidationStatus("unknown")
+        setFileUploadMessage("")
+        setUploadInProgress(false);
+
+        execute(
+            {
+                class: "uk.gov.gchq.gaffer.federatedstore.operation.RemoveGraph",
+                graphId: `${schemaName}`
+            }
+        );
+
     }
 
     return (
@@ -263,6 +283,8 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 elemetsLoaded={createdSchema.edgeLoadCount}
                                 schemaLoadFailed={schemaLoadFailed}
                                 fileUploadMessage={fileUploadMessage}
+                                onResetUpload={onResetUpload}
+                                uploadInProgress={uploadInProgress}
                             />
                         )}
 
@@ -299,7 +321,6 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
                                 )}
 
-
                                 {activeStep === 3 && (
                                     <Button
                                         onClick={deleteSchema}
@@ -308,6 +329,18 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                         color="secondary"
                                     >
                                         Start again
+                                    </Button>
+                                )}
+
+                                {activeStep === 2 && (
+                                    <Button
+                                        color="secondary"
+                                        style={{ marginLeft: 16 }}
+                                        variant="contained"
+                                        disabled={!createdSchema.loadSuccess}
+                                        onClick={onResetUpload}
+                                    >
+                                        Reset Upload
                                     </Button>
                                 )}
 
