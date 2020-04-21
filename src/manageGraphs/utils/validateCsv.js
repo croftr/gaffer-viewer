@@ -67,13 +67,11 @@ export const validateCsvFile = (data) => {
     let validationResponse = "No data";
 
     if (data) {
-        console.log("result ", data);
+        
         const firstLine = data.substring(0, data.indexOf("\n"));
-        console.log("first line ", firstLine);
-
+        
         if (firstLine) {
-            const columnCount = firstLine.split(",").length;
-            console.log("column count is ", columnCount);
+            const columnCount = firstLine.split(",").length;        
             if (columnCount === SIMPLE_COLUMN_COUNT) {
                 validationResponse = "Uploading 2 coulum CSV file";
             } else if (columnCount === DETAIL_COLUMN_COUNT) {

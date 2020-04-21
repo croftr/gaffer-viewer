@@ -44,11 +44,11 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const handleNext = () => {
-        
+
         if (activeStep === 3) {
             loadSchemas();
         }
-        
+
         let newSkipped = skipped;
         if (isStepSkipped(activeStep)) {
             newSkipped = new Set(newSkipped.values());
@@ -69,21 +69,15 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
 
     const onSelectFile = e => {
 
-        console.log("upload file step 1");
-
         setFile(e.target.files[0]);
-        console.log("upload file step 2");
         setFilename(e.target.files[0].name);
-        console.log("upload file step 3");
 
         var reader = new FileReader();
-        console.log("upload file step 4");
-                
+
         // read csv file as text 
         reader.onload = (e) => {
-            console.log("upload file step 5");
             const validationResponmse = validateCsvFile(e.target.result);
-            setFileUploadMessage(validationResponmse);                   
+            setFileUploadMessage(validationResponmse);
         };
 
         reader.readAsText(e.target.files[0]);
@@ -91,7 +85,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const onUploadFile = async e => {
-                
+
         setSchemaLoadFailed(false);
         e.preventDefault();
         const formData = new FormData();
@@ -219,7 +213,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                 <React.Fragment>
                     <div id="stepperContent" style={{ height: "calc(100vh - 260px)", overflowY: "auto", padding: 32 }}>
 
-                        <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />
+                        {activeStep !== steps.length && <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />}
 
                         {activeStep === 0 && (
                             <Name
@@ -262,7 +256,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                 createdSchema={createdSchema}
                                 auths={auths}
                                 authsRadioValue={authsRadioValue}
-                             />
+                            />
                         )}
 
                         {activeStep === steps.length && (
@@ -279,11 +273,11 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                         (
                             <div className="stepperFooter" style={{ marginTop: 16, padding: 16 }}>
                                 {activeStep !== steps.length - 1 && (
-                                    <Button 
-                                        disabled={activeStep === 0} 
-                                        onClick={handleBack} 
+                                    <Button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
                                         startIcon={<BackIcon />}
-                                        >
+                                    >
                                         Back
                                     </Button>
                                 )}
@@ -291,7 +285,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                 {activeStep === 3 && (
                                     <Button
                                         onClick={deleteSchema}
-                                        style={{ marginLeft: 32 }}
+                                        style={{ marginLeft: 16 }}
                                         variant="contained"
                                         color="secondary"
                                     >
@@ -303,11 +297,11 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}
-                                    style={{ marginLeft: 32 }}
+                                    style={{ marginLeft: 16 }}
                                     disabled={checkNextStepDisabled()}
-                                    endIcon={activeStep === steps.length - 1 ? <FinishIcon /> : <NextIcon />}
+                                    endIcon={activeStep === steps.length - 1 ? '' : <NextIcon />}
                                 >
-                                    {activeStep === steps.length - 1 ? `Finish` : 'Next'}
+                                    {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
                                 </Button>
 
                             </div>

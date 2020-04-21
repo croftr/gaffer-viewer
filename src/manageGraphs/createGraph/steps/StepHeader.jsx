@@ -8,7 +8,7 @@ export default function StepperHeader({ activeStep, confirmedSchemaName }) {
     return (
         <>
             <div style={{ height: 35 }}>
-                {confirmedSchemaName && <Typography variant="h6" align="center">Creating Graph {confirmedSchemaName}</Typography>}
+                {confirmedSchemaName && <Typography variant="h6" color="textSecondary" align="center">Creating Graph {confirmedSchemaName}</Typography>}
             </div>
             
             <div id="stepHeader" style={{ display: "flex", alignItems: "center", marginBottom: 16  }}>
