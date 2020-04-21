@@ -1,11 +1,19 @@
 
 import React from 'react';
-import { Typography, Input, Button, Tab, Tabs } from '@material-ui/core';
+import { Typography, Input, Button, CircularProgress } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 import csvLogo from "../../images/csv4.png";
 
+
 export default function LoadData({ onSelectFile, filename, file, onUploadFile, schemaName, isLoadSuccess, elemetsLoaded, schemaLoadFailed, fileUploadMessage }) {
+
+    const [inProgress, setInProgress] = React.useState(false);
+
+    const upload = (e) => {
+        setInProgress(true);
+        onUploadFile(e);
+    }
 
     return (
         <div>
@@ -60,7 +68,7 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                         type='submit'
                         color="primary"
                         variant="contained"
-                        onClick={onUploadFile}
+                        onClick={e => upload(e)}
                         value='Upload'
                         disabled={!file || !schemaName}
                         style={{ width: 200 }}
@@ -84,6 +92,8 @@ export default function LoadData({ onSelectFile, filename, file, onUploadFile, s
                                 <Typography>Schema creation failed</Typography>
                             </React.Fragment>
                         )}
+
+                        {inProgress && !isLoadSuccess && !schemaLoadFailed && <span style={{display: "flex", alignItems: "center"}}><CircularProgress size={24} style={{ marginRight: 8 }} /> <Typography>Creating your graph</Typography> </span> }
 
                     </div>
 
