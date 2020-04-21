@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -14,13 +17,20 @@ import Finished from "./steps/Finished";
 
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
-import FinishIcon from "@material-ui/icons/Done"
-
+import CloseIcon from "@material-ui/icons/Close"
 import { validateCsvFile } from "../utils/validateCsv";
+
+const styles = {
+    stepperContent: { 
+        height: "calc(100vh - 260px)", 
+        overflowY: "auto", 
+        padding: 32 
+    }
+}
 
 const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 
-export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
+export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
@@ -60,7 +70,11 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     };
 
     const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        if (activeStep === 0) {
+            onCloseDialog();
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        }
     };
 
     const handleReset = () => {
@@ -86,8 +100,10 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
 
     const onUploadFile = async e => {
 
-        setSchemaLoadFailed(false);
         e.preventDefault();
+        
+        setSchemaLoadFailed(false);
+        
         const formData = new FormData();
 
         formData.append('file', file);
@@ -211,7 +227,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
             </Stepper>
             <div >
                 <React.Fragment>
-                    <div id="stepperContent" style={{ height: "calc(100vh - 260px)", overflowY: "auto", padding: 32 }}>
+                    <div className={classes.stepperContent}>
 
                         {activeStep !== steps.length && <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />}
 
@@ -274,13 +290,15 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                             <div className="stepperFooter" style={{ marginTop: 16, padding: 16 }}>
                                 {activeStep !== steps.length - 1 && (
                                     <Button
-                                        disabled={activeStep === 0}
                                         onClick={handleBack}
-                                        startIcon={<BackIcon />}
+                                        startIcon={activeStep === 0 ? <CloseIcon /> : <BackIcon />}
+                                        color={activeStep === 0 ? "secondary" : "default"}
                                     >
-                                        Back
+                                        {activeStep === 0 ? "Cancel" : "Back"}
                                     </Button>
+
                                 )}
+
 
                                 {activeStep === 3 && (
                                     <Button
@@ -289,7 +307,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                         variant="contained"
                                         color="secondary"
                                     >
-                                        Cancel Creation of {schemaName}
+                                        Start again
                                     </Button>
                                 )}
 
@@ -301,7 +319,7 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
                                     disabled={checkNextStepDisabled()}
                                     endIcon={activeStep === steps.length - 1 ? '' : <NextIcon />}
                                 >
-                                    {activeStep === steps.length - 1 ? `Confirm Creation of ${schemaName}` : 'Next'}
+                                    {activeStep === steps.length - 1 ? `Confirm Create ${schemaName}` : 'Next'}
                                 </Button>
 
                             </div>
@@ -314,3 +332,9 @@ export default function CreateGraphStepper({ onCloseDialog, loadSchemas }) {
     );
 
 }
+
+CreateGraphStepper.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CreateGraphStepper);

@@ -41,6 +41,8 @@ export const ColumnTable = ({ classes, data }) => {
 
 ColumnTable.propTypes = {
     classes: PropTypes.object.isRequired,    
+    //the table data
+    data: PropTypes.object
 };
 
 export default withStyles(styles)(ColumnTable);
