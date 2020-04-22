@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -33,7 +32,7 @@ const LoadData = ({
     elemetsLoaded,
     schemaLoadFailed,
     fileUploadMessage,
-    uploadInProgress,
+    isUploadInProgress,
     isFromStepper = true
 }) => {
 
@@ -63,7 +62,6 @@ const LoadData = ({
 
                     {fileUploadMessage &&
                         <div className={classes.buttonTextArea}>
-
                             {!fileUploadMessage.startsWith("Invalid") && (
                                 <React.Fragment>
                                     <ValidIcon style={{ color: "green", marginRight: 8 }} />
@@ -78,10 +76,8 @@ const LoadData = ({
                                     <Typography>{fileUploadMessage}</Typography>
                                 </React.Fragment>
                             )}
-
                         </div>
                     }
-
                 </div>
 
                 <div className={classes.buttonArea}>
@@ -113,7 +109,7 @@ const LoadData = ({
                             </React.Fragment>
                         )}
 
-                        {uploadInProgress && !isLoadSuccess && !schemaLoadFailed && (
+                        {isUploadInProgress && !isLoadSuccess && !schemaLoadFailed && (
                             <span style={{ display: "flex", alignItems: "center" }}>
                                 <CircularProgress size={24} style={{ marginRight: 8 }} />
                                 <Typography>Creating your graph</Typography>
@@ -131,6 +127,17 @@ const LoadData = ({
 
 LoadData.propTypes = {
     classes: PropTypes.object.isRequired,
+    fileUploadMessage: PropTypes.string,
+    onSelectFile: PropTypes.func,
+    filename: PropTypes.string,
+    file: PropTypes.any,
+    onUploadFile: PropTypes.func,
+    schemaName: PropTypes.string,
+    isLoadSuccess: PropTypes.bool,
+    elemetsLoaded: PropTypes.number,
+    schemaLoadFailed: PropTypes.bool,    
+    isUploadInProgress: PropTypes.bool,
+    isFromStepper: PropTypes.bool
 };
 
 export default withStyles(styles)(LoadData);

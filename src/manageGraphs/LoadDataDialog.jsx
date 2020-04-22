@@ -135,7 +135,7 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
                     elemetsLoaded={createdSchema.edgeLoadCount}
                     schemaLoadFailed={schemaLoadFailed}
                     fileUploadMessage={fileUploadMessage}
-                    uploadInProgress={uploadInProgress}
+                    isUploadInProgress={uploadInProgress}
                 />
 
                 <span className={classes.csvText}>

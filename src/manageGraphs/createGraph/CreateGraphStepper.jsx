@@ -247,7 +247,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         <div >
             <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
+                {steps.map((label) => {
                     const stepProps = {};
                     const labelProps = {};
                     return (
@@ -296,7 +296,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 schemaLoadFailed={schemaLoadFailed}
                                 fileUploadMessage={fileUploadMessage}
                                 onResetUpload={onResetUpload}
-                                uploadInProgress={uploadInProgress}
+                                isUploadInProgress={uploadInProgress}
                             />
                         )}
 
