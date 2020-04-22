@@ -100,8 +100,7 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                         </Button>
 
                         <Button 
-                            className={classes.button}
-                            variant="contained" 
+                            className={classes.button}                            
                             color="secondary"                             
                             onClick={onCloseDialog}>
                                 BACK TO MANAGE GRAPHS
