@@ -54,6 +54,17 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [uploadInProgress, setUploadInProgress] = useState(false);
 
+    const close = () => {
+        setCreatedSchema('');
+        setFile('');
+        setFilename('');
+        setSchemaLoadFailed(false);
+        setFileUploadMessage('');
+        setUploadInProgress(false);
+
+        setIsLoadOpen(false)
+    }
+
     const onSelectFile = e => {
 
         setFile(e.target.files[0]);
@@ -107,14 +118,14 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
             <div className={classes.loadDataHeader}>
                 <DialogTitle id="loaddataTitle">Load Data into {schemaName}</DialogTitle>
 
-                <IconButton onClick={() => setIsLoadOpen(false)}>
+                <IconButton onClick={close}>
                     <CloseIcon />
                 </IconButton>
             </div>
             <DialogContent dividers className={classes.dialog}>
 
                 <LoadData
-                    displayTitle={false}
+                    isFromStepper={false}
                     schemaName={schemaName}
                     onSelectFile={onSelectFile}
                     filename={filename}

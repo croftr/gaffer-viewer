@@ -11,36 +11,36 @@ const styles = {
         width: 200
     },
     buttonArea: {
-        display: "flex", 
-        alignItems: "center", 
+        display: "flex",
+        alignItems: "center",
         marginBottom: 16
     },
     buttonTextArea: {
-        display: "flex", 
-        alignItems: "center", 
-        marginLeft: 16 
-    }    
+        display: "flex",
+        alignItems: "center",
+        marginLeft: 16
+    }
 }
 
-const LoadData = ({ 
-    classes, 
-    onSelectFile, 
-    filename, 
-    file, 
-    onUploadFile, 
-    schemaName, 
-    isLoadSuccess, 
-    elemetsLoaded, 
-    schemaLoadFailed, 
-    fileUploadMessage, 
-    uploadInProgress, 
-    displayTitle=true 
+const LoadData = ({
+    classes,
+    onSelectFile,
+    filename,
+    file,
+    onUploadFile,
+    schemaName,
+    isLoadSuccess,
+    elemetsLoaded,
+    schemaLoadFailed,
+    fileUploadMessage,
+    uploadInProgress,
+    isFromStepper = true
 }) => {
 
     return (
         <div>
-            { displayTitle && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography> }
-                        
+            {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
+
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
 
                 <div className={classes.buttonArea}>
@@ -48,14 +48,14 @@ const LoadData = ({
                         variant="contained"
                         component="label"
                         className={classes.button}
-                        disabled={isLoadSuccess}              
+                        disabled={isLoadSuccess}
                     >
                         {filename || "Select CSV file"}
                         <Input
                             type='file'
                             className='custom-file-input'
                             id='customFile'
-                            onChange={onSelectFile}                            
+                            onChange={onSelectFile}
                             label={filename}
                             style={{ display: "none" }}
                         />
@@ -91,7 +91,7 @@ const LoadData = ({
                         variant="contained"
                         onClick={onUploadFile}
                         value='Upload'
-                        disabled={!file || !schemaName ||isLoadSuccess}
+                        disabled={!file || !schemaName || isLoadSuccess}
                         className={classes.button}>
                         Upload Data
                     </Button>
@@ -101,7 +101,8 @@ const LoadData = ({
                         {isLoadSuccess && (
                             <React.Fragment>
                                 <ValidIcon style={{ color: "green", marginRight: 8 }} />
-                                <Typography>Success your graph has been created and {elemetsLoaded} edges have been loaded</Typography>
+                                {isFromStepper && <Typography>Success your graph has been created and {elemetsLoaded} edges have been loaded</Typography>}
+                                {!isFromStepper && <Typography>Successfully added {elemetsLoaded} edges to {schemaName}</Typography>}
                             </React.Fragment>
                         )}
 
