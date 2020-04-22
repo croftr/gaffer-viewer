@@ -7,8 +7,8 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    Typography
 } from '@material-ui/core';
-
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -18,12 +18,26 @@ import { validateCsvFile } from "./utils/validateCsv";
 
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
+import csvLogo from "./images/csv4.png"
+
 const styles = {
     loadDataHeader: {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
     },
+    dialog: {
+        width: 1000,
+        height: 700
+    },
+    csvText: {
+        display: "flex",
+        marginBottom: 16,
+        marginTop: 8
+    },
+    csvLogo: {
+        marginRight: 8
+    }
 }
 
 /**
@@ -34,7 +48,6 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
-    
 
     const [filename, setFilename] = useState('');
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
@@ -72,8 +85,6 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
 
         try {
 
-            console.log("uplaod data !!!");
-            
             const res = await fetchUploadDataGraph(formData, schemaName);
 
             if (res) {
@@ -91,17 +102,19 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
     };
 
     return (
-        <Dialog aria-labelledby="loadDataDialog" open={isLoadOpen} maxWidth="lg">
+        <Dialog aria-labelledby="loadDataDialog" open={isLoadOpen} maxWidth={false}>
 
             <div className={classes.loadDataHeader}>
-                <DialogTitle id="loaddataTitle">Load Data</DialogTitle>
+                <DialogTitle id="loaddataTitle">Load Data into {schemaName}</DialogTitle>
 
                 <IconButton onClick={() => setIsLoadOpen(false)}>
                     <CloseIcon />
                 </IconButton>
             </div>
-            <DialogContent dividers>
+            <DialogContent dividers className={classes.dialog}>
+
                 <LoadData
+                    displayTitle={false}
                     schemaName={schemaName}
                     onSelectFile={onSelectFile}
                     filename={filename}
@@ -110,9 +123,14 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
                     isLoadSuccess={createdSchema.loadSuccess}
                     elemetsLoaded={createdSchema.edgeLoadCount}
                     schemaLoadFailed={schemaLoadFailed}
-                    fileUploadMessage={fileUploadMessage}                    
+                    fileUploadMessage={fileUploadMessage}
                     uploadInProgress={uploadInProgress}
                 />
+
+                <span className={classes.csvText}>
+                    <img src={csvLogo} height="32" className={classes.csvLogo} />
+                    <Typography paragraph>Supported CSV formats</Typography>                    
+                </span>
 
                 <CsvFormats />
             </DialogContent>
