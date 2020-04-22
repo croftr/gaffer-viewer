@@ -286,11 +286,11 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
                         {activeStep === 2 && (
                             <LoadData
+                                schemaName={schemaName}
                                 onSelectFile={onSelectFile}
                                 filename={filename}
                                 file={file}
-                                onUploadFile={onUploadFile}
-                                schemaName={schemaName}
+                                onUploadFile={onUploadFile}                                
                                 isLoadSuccess={createdSchema.loadSuccess}
                                 elemetsLoaded={createdSchema.edgeLoadCount}
                                 schemaLoadFailed={schemaLoadFailed}

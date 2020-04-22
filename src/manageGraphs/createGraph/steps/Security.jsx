@@ -77,7 +77,7 @@ export default function Security({ schemaName, onChangeAuths, auths, setAuthsRad
                 </div>
             )}
 
-            {!isStepper && <Button>Apply</Button>}
+            {!isStepper && <Button color="primary" variant="contained" style={{ width: 100, alignSelf: "flex-end" }}>Apply</Button>}
 
         </div>
     )

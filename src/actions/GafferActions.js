@@ -56,3 +56,14 @@ export const fetchUploadGraph = async (data, schemaName, auths) => {
     return response.json();
     
 }
+
+export const fetchUploadDataGraph = async (data, schemaName, auths) => {
+    
+    let response = await fetch(`http://localhost:8080/rest/loadData?name=${schemaName}`, {
+        method: "POST",        
+        body: data
+    });
+
+    return response.json();
+    
+}

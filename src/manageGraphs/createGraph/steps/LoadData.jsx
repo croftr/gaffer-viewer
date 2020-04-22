@@ -27,7 +27,7 @@ const LoadData = ({ classes, onSelectFile, filename, file, onUploadFile, schemaN
     return (
         <div>
             <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>
-
+                        
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
 
                 <div className={classes.buttonArea}>

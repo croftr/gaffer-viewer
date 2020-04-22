@@ -9,7 +9,6 @@ import {
     Typography,
     IconButton,
     Avatar,
-    Tooltip,
     Dialog,
     DialogContent,
     DialogTitle,
@@ -32,6 +31,8 @@ import SecureIcon from '@material-ui/icons/Security';
 
 import Security from "./createGraph/steps/Security"
 
+import LoadDataDialog from "./LoadDataDialog";
+
 import JSONPretty from 'react-json-pretty';
 
 const styles = {
@@ -51,17 +52,18 @@ const styles = {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: 4
+        marginBottom: 4,
+        width: "100%"
     },
     marginLeft16: {
         marginLeft: 16
     },
     json: {
-        border: "1px solid lightGrey",
+        // border: "1px solid lightGrey",
         padding: 8,
         overflowX: "auto",
         overflowY: "auto",
-        width: "calc(100vw - 650px)",
+        width: "calc(100vw - 700px)",
         height: "calc(100vh - 180px)"
     },
     actionButton: {
@@ -76,13 +78,11 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid lightGrey"
     },
     loadDataHeader: {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid lightGrey"
     },
     buttonText: {
         padding: 8
@@ -91,7 +91,6 @@ const styles = {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid lightGrey"
     },
     deleteBody: {
         padding: 32
@@ -108,6 +107,25 @@ const styles = {
     },
     button: {
         width: 200
+    },
+    buttonWrapper: {
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 16,
+        padding: 32,
+        border: "1px solid lightGrey",
+        width: "100%"
+    },
+    buttonIcon: {
+        position: "absolute",
+        left: 10,
+        bottom: 8
+    },
+    graphToManage: {
+        width: "100%"
+    },
+    manageText: {
+        marginLeft: 16
     }
 }
 
@@ -151,45 +169,6 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
     return (
         <>
-            <Dialog open={schemaIsOpen} maxWidth="lg">
-                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
-                    <Typography variant="h6">{selectedGraph} Schema </Typography>
-                    <IconButton onClick={() => setSchemaIsOpen(false)}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-
-                <DialogContent>
-                    <JSONPretty
-                        className={classes.json}
-                        data={schema} >
-                    </JSONPretty>
-                </DialogContent>
-            </Dialog>
-
-            <Dialog open={authsIsOpen} maxWidth="lg">
-                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
-                    <Typography variant="h6">{selectedGraph} Auths</Typography>
-                    <IconButton onClick={() => setAuthsIsOpen(false)}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-
-                <DialogContent>
-
-                    <Security
-                        schemaName={selectedGraph}
-                        onChangeAuths={onChangeAuths}
-                        auths={auths}
-                        authsRadioValue={authsRadioValue}
-                        setAuthsRadioValue={setAuthsRadioValue}
-                        isStepper={false}
-                    />
-
-                </DialogContent>
-            </Dialog>
-
-
             <Paper className={classes.paper}>
 
                 {(!graphs || graphs.length < 1) && (
@@ -223,50 +202,70 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                 )}
 
                 {selectedGraph &&
-                    <div id="graphToManage">
+                    <div id="graphToManage" className={classes.graphToManage}>
+
+                        <Typography variant="h6">{selectedGraph}</Typography>
+
                         <div className={classes.manageGraphsHeader}>
 
-                            <Typography variant="h6">{selectedGraph}</Typography>
+                            <div className={classes.buttonWrapper}>
 
-                            <Button
-                                variant="contained"
-                                startIcon={<CodeIcon />}
-                                onClick={() => setSchemaIsOpen(true)}
-                                className={classes.button}
-                            >
-                                View JSON
-                            </Button>
-
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                startIcon={<LoadIcon />}
-                                onClick={() => setIsLoadOpen(true)}
-                                className={classes.button}
-                            >
-                                Load Data
-                            </Button>
-
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                startIcon={<SecureIcon />}
-                                onClick={() => setAuthsIsOpen(true)}
-                                className={classes.button}
-                            >
-                                Manage Auths
-                            </Button>
-
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                startIcon={<DeleteIcon />}
-                                onClick={() => openDeleteGraph(selectedGraph)}
-                                className={classes.button}
-                            >
-                                Delete
+                                <Button
+                                    variant="contained"
+                                    startIcon={<CodeIcon className={classes.buttonIcon} />}
+                                    onClick={() => setSchemaIsOpen(true)}
+                                    className={classes.button}
+                                >
+                                    View Schema
                                 </Button>
 
+                                <Typography className={classes.manageText}>Review the full JSON of the {selectedGraph} schema</Typography>
+
+                            </div>
+
+                            <div className={classes.buttonWrapper}>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    startIcon={<LoadIcon className={classes.buttonIcon} />}
+                                    onClick={() => setIsLoadOpen(true)}
+                                    className={classes.button}
+                                >
+                                    Load Data
+                                </Button>
+
+                                <Typography className={classes.manageText}>Add elemment from CSV files</Typography>
+                            </div>
+                            <div className={classes.buttonWrapper}>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    startIcon={<SecureIcon className={classes.buttonIcon} />}
+                                    onClick={() => setAuthsIsOpen(true)}
+                                    className={classes.button}
+                                >
+                                    Manage Auths
+                                </Button>
+
+                                <Typography className={classes.manageText}>Manage who can read data from {selectedGraph} </Typography>
+
+                            </div>
+
+                            <div className={classes.buttonWrapper}>
+
+                                <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    startIcon={<DeleteIcon className={classes.buttonIcon} />}
+                                    onClick={() => openDeleteGraph(selectedGraph)}
+                                    className={classes.button}
+                                >
+                                    Delete
+                                </Button>
+
+                                <Typography className={classes.manageText}>Remove the {selectedGraph} graph and all it data</Typography>
+
+                            </div>
                         </div>
                     </div>
                 }
@@ -284,20 +283,48 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
             </Paper>
 
-            <Dialog aria-labelledby="loadDatahDialog" open={isLoadOpen} maxWidth="lg">
-
-                <div className={classes.loadDataHeader}>
-                    <DialogTitle id="loaddataTitle">Load Data</DialogTitle>
-
-                    <IconButton onClick={() => setIsLoadOpen(false)}>
+            <Dialog open={schemaIsOpen} maxWidth="lg">
+                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 16 }}>
+                    <Typography variant="h6">{selectedGraph} Schema </Typography>
+                    <IconButton onClick={() => setSchemaIsOpen(false)}>
                         <CloseIcon />
                     </IconButton>
                 </div>
-                <DialogContent>
-                    <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
-                </DialogContent>
 
+                <DialogContent dividers>
+                    <JSONPretty
+                        className={classes.json}
+                        data={schema} >
+                    </JSONPretty>
+                </DialogContent>
             </Dialog>
+
+            <Dialog open={authsIsOpen}>
+
+                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: 16, width: 600 }}>
+                    <Typography variant="h6">{selectedGraph} Auths</Typography>
+                    <IconButton onClick={() => setAuthsIsOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                <DialogContent dividers>
+                    <Security
+                        schemaName={selectedGraph}
+                        onChangeAuths={onChangeAuths}
+                        auths={auths}
+                        authsRadioValue={authsRadioValue}
+                        setAuthsRadioValue={setAuthsRadioValue}
+                        isStepper={false}
+                    />
+                </DialogContent>
+            </Dialog>
+
+            <LoadDataDialog
+                schemaName={selectedGraph}
+                isLoadOpen={isLoadOpen}
+                setIsLoadOpen={setIsLoadOpen}
+            />
 
             <Dialog aria-labelledby="createGraphDialog" open={isOpen} fullScreen>
 
@@ -308,7 +335,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         <CloseIcon />
                     </IconButton>
                 </div>
-                <DialogContent>
+                <DialogContent dividers>
                     <CreateGraphIntroduction onCloseDialog={() => setIsOpen(false)} loadSchemas={loadSchemas} />
                 </DialogContent>
 
@@ -323,7 +350,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                     </IconButton>
                 </div>
 
-                <div className={classes.deleteBody}>
+                <DialogContent dividers>
                     <Typography paragraph>Enter name of graph to confirm delete</Typography>
                     <TextField
                         value={confirmDeleteText}
@@ -340,7 +367,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         Delete
                 </Button>
 
-                </div>
+                </DialogContent>
 
             </Dialog>
 

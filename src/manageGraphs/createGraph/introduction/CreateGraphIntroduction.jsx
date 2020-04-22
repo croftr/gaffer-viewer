@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-import { Button, Tab, Tabs, Typography, Dialog, IconButton, DialogTitle, DialogContent } from '@material-ui/core';
+import { Button, Typography, Dialog, IconButton, DialogTitle, DialogContent } from '@material-ui/core';
 import CreateGraphStepper from "../CreateGraphStepper";
-import ColumnTable from "./ColumnTable";
-import simpleCsv from "../../images/simpleCsv.jpg";
-import detailCsv from "../../images/detailCsv.jpg";
+
+import CsvFormats from "../../CsvFormats";
+
 import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateCsv"
 
 import CloseIcon from "@material-ui/icons/Close"
 
 const csvFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
+
 const csvDescriptions = [
     "The detailed upload format allows control node and edge types as well as edge weights",
     "The detailed upload format allows control node and edge types as well as edge weights",
@@ -56,15 +57,8 @@ const styles = {
 
 export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
 
-    const [isStarted, setisStarted] = useState(false);
-    const [tabPage, setTabPage] = useState(0);
-    const [csvFormatText, setCsvFormatText] = useState(csvDescriptions[0]);
+    const [isStarted, setisStarted] = useState(false);    
     const [isHelpPageOpen, setIsHelpPageOpen] = useState(false);
-
-    const changeTabPage = (value) => {
-        setTabPage(value);
-        setCsvFormatText(csvDescriptions[value]);
-    }
 
     return (
         <div id="createGraphIntoduction">
@@ -124,37 +118,7 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
 
                 <DialogContent dividers={true} className={classes.dialogContent}>
 
-                    <Typography paragraph>{csvFormatText}</Typography>
-
-                    <Tabs
-                        className={classes.marginTop16}
-                        value={tabPage}
-                        onChange={(event, value) => changeTabPage(value)}
-                        aria-label="csvFormat">
-                        {csvFormats.map(view => <Tab label={view} key={view} />)}
-                    </Tabs>
-
-                    <div className={classes.tabContentWrapper}>
-                        {tabPage === 0 && (
-                            <ColumnTable data={DETAILED_COLUMNS} />
-                        )}
-
-                        {tabPage === 1 && (
-                            <div className={classes.imageWrapper}>
-                                <img src={detailCsv} width="800" />
-                            </div>
-                        )}
-
-                        {tabPage === 2 && (
-                            <ColumnTable data={SIMPLE_COLUMNS} />
-                        )}
-
-                        {tabPage === 3 && (
-                            <div className={classes.imageWrapper}>
-                                <img src={simpleCsv} width="300" />
-                            </div>
-                        )}
-                    </div>
+                <CsvFormats />
                 </DialogContent>
             </Dialog>
 
