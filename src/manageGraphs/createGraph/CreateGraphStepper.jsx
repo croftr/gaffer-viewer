@@ -52,9 +52,9 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
     const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
-    const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
-    const [auths, setAuths] = useState([]);
+    const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);    
     const [fileUploadMessage, setFileUploadMessage] = useState("");
+    const [auths, setAuths] = useState([]);
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
     const [uploadInProgress, setUploadInProgress] = useState(false);
 
@@ -280,6 +280,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 auths={auths}
                                 authsRadioValue={authsRadioValue}
                                 setAuthsRadioValue={setAuthsRadioValue}
+                                isStepper={true}
                             />
                         )}
 

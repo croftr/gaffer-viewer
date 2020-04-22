@@ -7,10 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
+import { Radio, RadioGroup, Button, FormControlLabel, FormLabel } from '@material-ui/core';
 
 const dummyAuths = [
     "Auth1",
@@ -32,20 +29,14 @@ const MenuProps = {
     },
 };
 
-export default function Security({ schemaName, onChangeAuths, auths, setAuthsRadioValue, authsRadioValue }) {
-
-    // const [radioValue, setRadioValue] = useState('justMe');
-
-    // const handleChange = (event) => {
-    //     setRadioValue(event.target.value);
-    // };
+export default function Security({ schemaName, onChangeAuths, auths, setAuthsRadioValue, authsRadioValue, isStepper }) {
 
     return (
-        <div style={{ }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
 
             <FormControl component="fieldset">
                 {/* <FormLabel component="legend">Who can access your graph</FormLabel> */}
-                <RadioGroup aria-label="gender" name="gender1" value={authsRadioValue} onChange={(e) => setAuthsRadioValue(e.target.value)}>                    
+                <RadioGroup aria-label="gender" name="gender1" value={authsRadioValue} onChange={(e) => setAuthsRadioValue(e.target.value)}>
                     <FormControlLabel value="justMe" control={<Radio />} label="Just me" />
                     <FormControlLabel value="everyone" control={<Radio />} label="Everyone" />
                     <FormControlLabel value="specifyGroups" control={<Radio />} label="Specify groups" />
@@ -83,11 +74,10 @@ export default function Security({ schemaName, onChangeAuths, auths, setAuthsRad
                             ))}
                         </Select>
                     </FormControl>
-
                 </div>
-
             )}
 
+            {!isStepper && <Button>Apply</Button>}
 
         </div>
     )

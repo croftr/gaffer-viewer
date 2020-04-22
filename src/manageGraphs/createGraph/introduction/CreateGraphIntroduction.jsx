@@ -96,7 +96,7 @@ export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas })
                             className={classes.button}
                             variant="contained" 
                             onClick={() => setIsHelpPageOpen(true)}>
-                                Review CSV formats
+                                REVIEW CSV FORMATS
                         </Button>
 
                         <Button 

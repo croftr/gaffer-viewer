@@ -2,22 +2,36 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { Paper, Button, TextField, Typography, IconButton, Avatar } from '@material-ui/core';
+import {
+    Paper,
+    Button,
+    TextField,
+    Typography,
+    IconButton,
+    Avatar,
+    Tooltip,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemAvatar
+} from '@material-ui/core';
+
 import CreateGraphIntroduction from "./createGraph/introduction/CreateGraphIntroduction";
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 
-import List from '@material-ui/core/List';
-import DialogContent from '@material-ui/core/DialogContent';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import GraphIcon from '@material-ui/icons/Storage';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LoadIcon from '@material-ui/icons/Publish';
+import CodeIcon from '@material-ui/icons/Code';
+import SecureIcon from '@material-ui/icons/Security';
+
+import Security from "./createGraph/steps/Security"
+
 import JSONPretty from 'react-json-pretty';
 
 const styles = {
@@ -30,11 +44,12 @@ const styles = {
         height: "calc(100vh - 130px)",
         overflowY: "auto",
         width: 320,
-        marginRight: 8,      
+        marginRight: 8,
     },
     manageGraphsHeader: {
         display: "flex",
-        alignItems: "center",        
+        flexDirection: "column",
+        alignItems: "center",
         justifyContent: "space-between",
         marginBottom: 4
     },
@@ -86,6 +101,13 @@ const styles = {
     },
     listHeader: {
         marginBottom: 8
+    },
+    header: {
+        display: "flex",
+        alignItems: "center"
+    },
+    button: {
+        width: 200
     }
 }
 
@@ -96,11 +118,20 @@ const styles = {
 export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteGraph, loadSchemas }) => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [schemaIsOpen, setSchemaIsOpen] = useState(false);
+    const [authsIsOpen, setAuthsIsOpen] = useState(false);
     const [isLoadOpen, setIsLoadOpen] = useState(false);
     const [graphToDelete, setGraphToDelete] = useState(false);
     const [isDeleteGraphOpen, setIsDeleteGraphOpen] = useState(false);
     const [selectedGraph, setSelectedGraph] = useState();
     const [confirmDeleteText, setConfirmDeleteText] = useState("");
+
+    const [auths, setAuths] = useState([]);
+    const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
+
+    const onChangeAuths = (e) => {
+        setAuths(e.target.value)
+    }
 
     const loadSelectedGraph = (graph) => {
         setSelectedGraph(graph);
@@ -120,6 +151,45 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
     return (
         <>
+            <Dialog open={schemaIsOpen} maxWidth="lg">
+                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
+                    <Typography variant="h6">{selectedGraph} Schema </Typography>
+                    <IconButton onClick={() => setSchemaIsOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                <DialogContent>
+                    <JSONPretty
+                        className={classes.json}
+                        data={schema} >
+                    </JSONPretty>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={authsIsOpen} maxWidth="lg">
+                <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
+                    <Typography variant="h6">{selectedGraph} Auths</Typography>
+                    <IconButton onClick={() => setAuthsIsOpen(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                <DialogContent>
+
+                    <Security
+                        schemaName={selectedGraph}
+                        onChangeAuths={onChangeAuths}
+                        auths={auths}
+                        authsRadioValue={authsRadioValue}
+                        setAuthsRadioValue={setAuthsRadioValue}
+                        isStepper={false}
+                    />
+
+                </DialogContent>
+            </Dialog>
+
+
             <Paper className={classes.paper}>
 
                 {(!graphs || graphs.length < 1) && (
@@ -155,29 +225,49 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                 {selectedGraph &&
                     <div id="graphToManage">
                         <div className={classes.manageGraphsHeader}>
+
                             <Typography variant="h6">{selectedGraph}</Typography>
-                            <div className="manageGraphButtons">
-                                <Button
-                                    color="primary"
-                                    variant="contained"
-                                    startIcon={<LoadIcon />}
-                                    onClick={() => setIsLoadOpen(true)}>
-                                    Load Data
+
+                            <Button
+                                variant="contained"
+                                startIcon={<CodeIcon />}
+                                onClick={() => setSchemaIsOpen(true)}
+                                className={classes.button}
+                            >
+                                View JSON
+                            </Button>
+
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                startIcon={<LoadIcon />}
+                                onClick={() => setIsLoadOpen(true)}
+                                className={classes.button}
+                            >
+                                Load Data
+                            </Button>
+
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                startIcon={<SecureIcon />}
+                                onClick={() => setAuthsIsOpen(true)}
+                                className={classes.button}
+                            >
+                                Manage Auths
+                            </Button>
+
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<DeleteIcon />}
+                                onClick={() => openDeleteGraph(selectedGraph)}
+                                className={classes.button}
+                            >
+                                Delete
                                 </Button>
-                                <Button
-                                    color="secondary"
-                                    variant="contained"
-                                    startIcon={<DeleteIcon />}
-                                    onClick={() => openDeleteGraph(selectedGraph)}
-                                    className={classes.marginLeft16}>
-                                    Delete
-                                </Button>
-                            </div>
+
                         </div>
-                        <JSONPretty
-                            className={classes.json}                            
-                            data={schema} >
-                        </JSONPretty>
                     </div>
                 }
 

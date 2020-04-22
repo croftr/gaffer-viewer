@@ -90,7 +90,7 @@ export default function Review({ schemaName, createdSchema = {}, auths, authsRad
             <Dialog open={isOpen} maxWidth="lg">
 
                 <div className="modalHeader" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightGrey", padding: 16 }}>
-                    <Typography variant="h6">{schemaName} Schema JSON</Typography>
+                    <Typography variant="h6">{schemaName}Schema JSON</Typography>
                     <IconButton onClick={() => setIsOpen(false)}>
                         <CloseIcon />
                     </IconButton>
