@@ -15,10 +15,27 @@ import CloseIcon from '@material-ui/icons/Close';
 import CsvFormats from "./CsvFormats";
 import LoadData from "./createGraph/steps/LoadData"
 import { validateCsvFile } from "./utils/validateCsv";
-
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import NewEdgeIcon from '@material-ui/icons/ShowChart';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+
 import csvLogo from "./images/csv4.png"
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
 
 const styles = {
     loadDataHeader: {
@@ -32,11 +49,19 @@ const styles = {
     },
     csvText: {
         display: "flex",
-        marginBottom: 16,
-        marginTop: 8
     },
     csvLogo: {
         marginRight: 8
+    },
+    loadSubText: {
+        marginBottom: 8
+    },
+    panelDetails: {
+        width: 1000,
+        height: 500
+    },
+    expansionPanel: {
+        marginBottom: 16
     }
 }
 
@@ -123,6 +148,25 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
                 </IconButton>
             </div>
             <DialogContent dividers className={classes.dialog}>
+                <Typography className={classes.loadSubText}>
+                    You can load data into you existing graph here.  If you add new edge types that dont currently exist they will be created and added to your schema
+                </Typography>
+
+                <ExpansionPanel className={classes.expansionPanel}>
+                    <ExpansionPanelSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="csv-content"
+                        id="csvExpandPanelHeader"
+                    >
+                        <span className={classes.csvText}>
+                            <img src={csvLogo} height="32" className={classes.csvLogo} />
+                            <Typography paragraph>Supported CSV formats</Typography>
+                        </span>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails className={classes.panelDetails}>
+                        <CsvFormats />
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
 
                 <LoadData
                     isFromStepper={false}
@@ -138,14 +182,41 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
                     isUploadInProgress={uploadInProgress}
                 />
 
-                <span className={classes.csvText}>
-                    <img src={csvLogo} height="32" className={classes.csvLogo} />
-                    <Typography paragraph>Supported CSV formats</Typography>                    
-                </span>
-
-                <CsvFormats />
+                <TableContainer>
+                    <Table className={classes.table}>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>Total edges loaded</TableCell>
+                                <TableCell>{createdSchema.edgeLoadCount || 0}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Failed edges</TableCell>
+                                <TableCell>{createdSchema.rejectedEdgeLoadCount || 0}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>New edge types created</TableCell>
+                                <TableCell>{createdSchema.newEdgeTypes ? createdSchema.newEdgeTypes.length : 0}</TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <List>
+                    {createdSchema.newEdgeTypes && createdSchema.newEdgeTypes.map(edgeType => (
+                        <ListItem key={edgeType}>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <NewEdgeIcon />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={edgeType}
+                                secondary="New edge type"
+                            />
+                        </ListItem>
+                    ))}
+                </List>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 
 }
@@ -153,7 +224,7 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
 LoadDataDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     schemaName: PropTypes.string,
-    isLoadOpen: PropTypes.bool, 
+    isLoadOpen: PropTypes.bool,
     setIsLoadOpen: PropTypes.func
 };
 

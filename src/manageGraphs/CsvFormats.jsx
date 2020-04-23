@@ -38,12 +38,8 @@ const styles = {
         alignItems: "center",
         justifyContent: "space-between",
     },
-    dialogContent: {
-        width: 1000,
-        height: 500
-    },
     tabContentWrapper: {
-        paddingTop: 16
+        paddingTop: 16,        
     },
     button: {
         width: 250,
