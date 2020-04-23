@@ -194,7 +194,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                         <TableBody>
                             <TableRow>
                                 <TableCell>Edges processed</TableCell>
-                                <TableCell>{createdSchema.edgeLoadCount ? createdSchema.edgeLoadCount + createdSchema.rejectedEdgeLoadCount : 0}</TableCell>
+                                <TableCell>{createdSchema ? createdSchema.edgeLoadCount + createdSchema.rejectedEdgeLoadCount : 0}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>Edges loaded</TableCell>
