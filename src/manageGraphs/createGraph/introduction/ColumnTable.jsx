@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 const styles = {}
 
-export const ColumnTable = ({ classes, data }) => {
+const ColumnTable = ({ classes, data }) => {
     return (
         <TableContainer>
           <Table className={classes.table} size="small" aria-label="a dense table">

@@ -1,18 +1,47 @@
-
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { TextField, Typography, Button } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
-import StorageIcon from '@material-ui/icons/Storage';
 
-export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName, confirmedSchemaName }) {
+const styles = {
+    chooseSchemaName: {
+        display: "flex",
+        flexDirection: "column"
+    },
+    inputWrapper: {
+        display: "flex",
+        alignItems: "center"
+    },
+    textField: {
+        marginBottom: 16,
+        marginTop: 16
+    },
+    validationResults: {
+        display: "flex",
+        alignItems: "center",
+        marginTop: 16,
+        marginLeft: 16
+    },
+    validIcon: {
+        color: "green",
+        marginLeft: 16
+    },
+    errorIcon: {
+        color: "red", 
+        marginLeft: 16
+    }
+}
+
+const Name = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName }) => {
 
     return (
-        <div id="chooseSchemaName" style={{ display: "flex", flexDirection: "column" }}>
-            
+        <div id="chooseSchemaName" className={classes.chooseSchemaName}>
+
             <Typography>It must be unique and not contain any spaces</Typography>
 
-            <div className="inputWrapper" style={{ display: "flex", alignItems: "center" }}>
+            <div className={classes.inputWrapper}  >
 
                 <TextField
                     required
@@ -21,18 +50,27 @@ export default function ChooseSchemaName({ onChangeSchemaName, schemaName, nameV
                     label="Schema name"
                     value={schemaName}
                     onChange={onChangeSchemaName}
-                    style={{ marginBottom: 16, marginTop: 16 }}
+                    className={classes.textField}
                 />
 
-                <div className="validationResults" style={{ display: "flex", alignItems: "center", marginTop: 16, marginLeft: 16 }}>
+                <div className={classes.validationResults}>
                     <Button variant="contained" disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
-                    {nameValidationStatus === "valid" && schemaName && <ValidIcon style={{ color: "green", marginLeft: 16 }} />}
-                    {nameValidationStatus === "invalid" && <InvalidIcon style={{ color: "red" , marginLeft: 16 }} />}
+                    {nameValidationStatus === "valid" && schemaName && <ValidIcon className={classes.validIcon} />}
+                    {nameValidationStatus === "invalid" && <InvalidIcon className={classes.errorIcon} />}
                 </div>
 
             </div>
 
         </div>
     )
-
 }
+
+Name.propTypes = {
+    classes: PropTypes.object.isRequired,
+    onChangeSchemaName: PropTypes.func,
+    schemaName: PropTypes.string,
+    nameValidationStatus: PropTypes.string,
+    onValidateSchemaName: PropTypes.func,
+};
+
+export default withStyles(styles)(Name);

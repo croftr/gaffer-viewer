@@ -62,6 +62,9 @@ const styles = {
     },
     expansionPanel: {
         marginBottom: 16
+    },
+    avatar: {
+        background: "orange"
     }
 }
 
@@ -69,7 +72,7 @@ const styles = {
  * Top level page that lists all the graphs that the user as admin access to 
  * delete and maintian 
  */
-export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
+const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
@@ -186,31 +189,36 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
                     <Table className={classes.table}>
                         <TableBody>
                             <TableRow>
-                                <TableCell>Total edges loaded</TableCell>
+                                <TableCell>Edges processed</TableCell>
+                                <TableCell>{createdSchema.edgeLoadCount ? createdSchema.edgeLoadCount + createdSchema.rejectedEdgeLoadCount : 0}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Edges loaded</TableCell>
                                 <TableCell>{createdSchema.edgeLoadCount || 0}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>Failed edges</TableCell>
+                                <TableCell>Edges Rejected</TableCell>
                                 <TableCell>{createdSchema.rejectedEdgeLoadCount || 0}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>New edge types created</TableCell>
+                                <TableCell>Unsupported edge types</TableCell>
                                 <TableCell>{createdSchema.newEdgeTypes ? createdSchema.newEdgeTypes.length : 0}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
+
                 <List>
                     {createdSchema.newEdgeTypes && createdSchema.newEdgeTypes.map(edgeType => (
                         <ListItem key={edgeType}>
                             <ListItemAvatar>
-                                <Avatar>
+                                <Avatar className={classes.avatar}>
                                     <NewEdgeIcon />
                                 </Avatar>
                             </ListItemAvatar>
                             <ListItemText
                                 primary={edgeType}
-                                secondary="New edge type"
+                                secondary="Unsupported edge type"
                             />
                         </ListItem>
                     ))}
