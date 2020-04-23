@@ -34,7 +34,7 @@ const styles = {
     }
 }
 
-const Name = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName }) => {
+const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName }) => {
 
     return (
         <div id="chooseSchemaName" className={classes.chooseSchemaName}>
@@ -65,7 +65,7 @@ const Name = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, o
     )
 }
 
-Name.propTypes = {
+NameStep.propTypes = {
     classes: PropTypes.object.isRequired,
     onChangeSchemaName: PropTypes.func,
     schemaName: PropTypes.string,
@@ -73,4 +73,4 @@ Name.propTypes = {
     onValidateSchemaName: PropTypes.func,
 };
 
-export default withStyles(styles)(Name);
+export default withStyles(styles)(NameStep);

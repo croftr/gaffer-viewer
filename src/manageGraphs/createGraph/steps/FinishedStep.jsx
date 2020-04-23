@@ -13,7 +13,7 @@ const styles = {
   }
 }
 
-const Finished = ({ classes, schemaName, onCloseDialog }) => {
+const FinishedStep = ({ classes, schemaName, onCloseDialog }) => {
 
   const exampleQuery = {
     class: "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -57,10 +57,10 @@ const Finished = ({ classes, schemaName, onCloseDialog }) => {
 
 }
 
-Finished.propTypes = {
+FinishedStep.propTypes = {
   classes: PropTypes.object.isRequired,
   schemaName: PropTypes.string,
   onCloseDialog: PropTypes.func,
 };
 
-export default withStyles(styles)(Finished);
+export default withStyles(styles)(FinishedStep);

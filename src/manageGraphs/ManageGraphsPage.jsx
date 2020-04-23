@@ -29,7 +29,7 @@ import LoadIcon from '@material-ui/icons/Publish';
 import CodeIcon from '@material-ui/icons/Code';
 import SecureIcon from '@material-ui/icons/Security';
 
-import Security from "./createGraph/steps/Security"
+import SecurityStep from "./createGraph/steps/SecurityStep"
 
 import LoadDataDialog from "./LoadDataDialog";
 
@@ -58,8 +58,7 @@ const styles = {
     marginLeft16: {
         marginLeft: 16
     },
-    json: {
-        // border: "1px solid lightGrey",
+    json: {        
         padding: 8,
         overflowX: "auto",
         overflowY: "auto",
@@ -309,7 +308,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                 </div>
 
                 <DialogContent dividers>
-                    <Security
+                    <SecurityStep
                         schemaName={selectedGraph}
                         onChangeAuths={onChangeAuths}
                         auths={auths}

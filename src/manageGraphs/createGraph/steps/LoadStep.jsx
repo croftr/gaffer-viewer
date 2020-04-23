@@ -21,7 +21,7 @@ const styles = {
     }
 }
 
-const LoadData = ({
+const LoadStep = ({
     classes,
     onSelectFile,
     filename,
@@ -127,7 +127,7 @@ const LoadData = ({
     )
 }
 
-LoadData.propTypes = {
+LoadStep.propTypes = {
     classes: PropTypes.object.isRequired,
     fileUploadMessage: PropTypes.string,
     onSelectFile: PropTypes.func,
@@ -142,4 +142,4 @@ LoadData.propTypes = {
     isFromStepper: PropTypes.bool
 };
 
-export default withStyles(styles)(LoadData);
+export default withStyles(styles)(LoadStep);

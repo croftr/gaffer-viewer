@@ -9,11 +9,11 @@ import Button from '@material-ui/core/Button';
 import { fetchUploadGraph, execute } from "../../actions/GafferActions"
 
 import StepperHeader from "./steps/StepHeader";
-import Name from "./steps/Name";
-import LoadData from "./steps/LoadData";
-import Security from "./steps/Security"
-import Review from "./steps/Review";
-import Finished from "./steps/Finished";
+import NameStep from "./steps/NameStep";
+import LoadStep from "./steps/LoadStep";
+import SecurityStep from "./steps/SecurityStep"
+import ReviewStep from "./steps/ReviewStep";
+import FinishedStep from "./steps/FinishedStep";
 
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
@@ -37,12 +37,12 @@ const styles = {
     bigButton: {
         width: 200,
         marginRight: 16
-    },    
+    },
 }
 
 const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 
-export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
+const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const [file, setFile] = useState();
     const [createdSchema, setCreatedSchema] = useState('');
@@ -52,7 +52,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
     const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
-    const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);    
+    const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [auths, setAuths] = useState([]);
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
@@ -111,12 +111,9 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     };
 
-    const onUploadFile = async e => {
+    const onUploadFile = async () => {
 
         setUploadInProgress(true);
-
-        e.preventDefault();
-
         setSchemaLoadFailed(false);
 
         const formData = new FormData();
@@ -137,14 +134,13 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
             if (res) {
                 setCreatedSchema(res);
             } else {
+                //no response
                 setSchemaLoadFailed(true);
-                console.log("no response data ");
             }
 
         } catch (err) {
             setSchemaLoadFailed(true);
             console.error("error loading file ", err);
-
         }
     };
 
@@ -205,6 +201,8 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     }
 
     const deleteSchema = () => {
+        
+        setUploadInProgress(false);
         setSchemaName(undefined);
         setCreatedSchema({});
         setFile(undefined);
@@ -261,10 +259,12 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                 <React.Fragment>
                     <div className={classes.stepperContent}>
 
-                        {activeStep !== steps.length && <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />}
+                        {activeStep !== steps.length && (
+                            <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />
+                        )}
 
                         {activeStep === 0 && (
-                            <Name
+                            <NameStep
                                 schemaName={schemaName}
                                 onChangeSchemaName={onChangeSchemaName}
                                 nameValidationStatus={nameValidationStatus}
@@ -274,8 +274,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                         )}
 
                         {activeStep === 1 && (
-                            <Security
-                                schemaName={schemaName}
+                            <SecurityStep                                
                                 onChangeAuths={onChangeAuths}
                                 auths={auths}
                                 authsRadioValue={authsRadioValue}
@@ -285,12 +284,12 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                         )}
 
                         {activeStep === 2 && (
-                            <LoadData
+                            <LoadStep
                                 schemaName={schemaName}
                                 onSelectFile={onSelectFile}
                                 filename={filename}
                                 file={file}
-                                onUploadFile={onUploadFile}                                
+                                onUploadFile={onUploadFile}
                                 isLoadSuccess={createdSchema.loadSuccess}
                                 elemetsLoaded={createdSchema.edgeLoadCount}
                                 schemaLoadFailed={schemaLoadFailed}
@@ -301,7 +300,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                         )}
 
                         {activeStep === 3 && (
-                            <Review
+                            <ReviewStep
                                 schemaName={schemaName}
                                 createdSchema={createdSchema}
                                 auths={auths}
@@ -310,7 +309,7 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                         )}
 
                         {activeStep === steps.length && (
-                            <Finished
+                            <FinishedStep
                                 handleReset={handleReset}
                                 schemaName={schemaName}
                                 onCloseDialog={onCloseDialog}
@@ -373,7 +372,6 @@ export const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
             </div>
         </div>
     );
-
 }
 
 CreateGraphStepper.propTypes = {

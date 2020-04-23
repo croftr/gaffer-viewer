@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { steps } from "./steps"
-import csvLogo from "../../images/csv4.png";
 
 const styles = {
     graphMessage: {
@@ -48,6 +47,8 @@ export const StepperHeader = ({ classes, activeStep, confirmedSchemaName }) => {
 
 StepperHeader.propTypes = {
     classes: PropTypes.object.isRequired,
+    activeStep: PropTypes.number, 
+    confirmedSchemaName: PropTypes.string
 };
 
 export default withStyles(styles)(StepperHeader);

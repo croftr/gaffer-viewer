@@ -5,7 +5,6 @@ import SecureIcon from '@material-ui/icons/Security';
 import UploadIcon from '@material-ui/icons/Publish';
 import ConfirmIcon from '@material-ui/icons/DoneAllRounded';
 
-
 export const STEP_NAMES = {
  NAME :  0,
  ACCESS :  1,
@@ -32,9 +31,5 @@ export const steps = {
     3: {
         title: "Make sure you are happy with how your graph looks",
         icon: <ConfirmIcon />
-    },
-    4: {
-        title: "",
-        icon: undefined
     }
 }

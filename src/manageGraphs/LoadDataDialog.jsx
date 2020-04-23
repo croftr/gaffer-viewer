@@ -13,7 +13,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 
 import CsvFormats from "./CsvFormats";
-import LoadData from "./createGraph/steps/LoadData"
+import LoadStep from "./createGraph/steps/LoadStep"
 import { validateCsvFile } from "./utils/validateCsv";
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
@@ -175,7 +175,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
                 
-                <LoadData
+                <LoadStep
                     isFromStepper={false}
                     schemaName={schemaName}
                     onSelectFile={onSelectFile}

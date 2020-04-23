@@ -43,7 +43,7 @@ const styles = {
     }
 }
 
-const Review = ({ classes, schemaName, createdSchema = {}, auths, authsRadioValue }) => {
+const ReviewStep = ({ classes, schemaName, createdSchema = {}, auths, authsRadioValue }) => {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -132,7 +132,7 @@ const Review = ({ classes, schemaName, createdSchema = {}, auths, authsRadioValu
     )
 }
 
-Review.propTypes = {
+ReviewStep.propTypes = {
     classes: PropTypes.object.isRequired,
     schemaName: PropTypes.string,
     authsRadioValue: PropTypes.string,
@@ -140,4 +140,4 @@ Review.propTypes = {
     auths: PropTypes.array,
 };
 
-export default withStyles(styles)(Review);
+export default withStyles(styles)(ReviewStep);
