@@ -1,9 +1,19 @@
 
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+
 import { Button, Typography, Link } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 
-export default function Finished({ handleReset, schemaName, onCloseDialog }) {
+const styles = {
+  jsonWrapper: {
+    border: "1px solid lightGrey",
+    marginBottom: 32
+  }
+}
+
+const Finished = ({ classes, schemaName, onCloseDialog }) => {
 
   const exampleQuery = {
     class: "uk.gov.gchq.gaffer.operation.OperationChain",
@@ -29,13 +39,13 @@ export default function Finished({ handleReset, schemaName, onCloseDialog }) {
       </Typography>
 
       <Typography paragraph>
-        You can now query your data from your new graph for example by posting the following query to &nbsp; 
+        You can now query your data from your new graph for example by posting the following query to &nbsp;
         <Link href="http://localhost:8080/rest/v2/graph/operations/execute">
           http://localhost:8080/rest/v2/graph/operations/execute
         </Link>
       </Typography>
 
-      <div style={{ border: "1px solid lightGrey", marginBottom: 32 }}>
+      <div className={classes.jsonWrapper}>
         <JSONPretty id="json-payload" data={exampleQuery}></JSONPretty>
       </div>
 
@@ -46,3 +56,11 @@ export default function Finished({ handleReset, schemaName, onCloseDialog }) {
   )
 
 }
+
+Finished.propTypes = {
+  classes: PropTypes.object.isRequired,
+  schemaName: PropTypes.string,
+  onCloseDialog: PropTypes.func,
+};
+
+export default withStyles(styles)(Finished);
