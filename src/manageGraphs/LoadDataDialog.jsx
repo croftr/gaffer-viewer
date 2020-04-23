@@ -152,7 +152,9 @@ export const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen 
 
 LoadDataDialog.propTypes = {
     classes: PropTypes.object.isRequired,
-    schemaName: PropTypes.string
+    schemaName: PropTypes.string,
+    isLoadOpen: PropTypes.bool, 
+    setIsLoadOpen: PropTypes.func
 };
 
 export default withStyles(styles)(LoadDataDialog);

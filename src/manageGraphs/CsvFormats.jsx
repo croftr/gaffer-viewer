@@ -81,7 +81,7 @@ export const CsvFormats = ({ classes, }) => {
 
                 {tabPage === 1 && (
                     <div className={classes.imageWrapper}>
-                        <img src={detailCsv} width="800" />
+                        <img src={detailCsv} width="800" alt="Detail CSV example" />
                     </div>
                 )}
 
@@ -91,7 +91,7 @@ export const CsvFormats = ({ classes, }) => {
 
                 {tabPage === 3 && (
                     <div className={classes.imageWrapper}>
-                        <img src={simpleCsv} width="300" />
+                        <img src={simpleCsv} width="300" alt="Simple CSV example" />
                     </div>
                 )}
             </div>

@@ -22,5 +22,11 @@ module.exports = {
         "react"
     ],
     "rules": {
-    }
+    },
+    "ignorePatterns": [
+     "src/queries",
+     "src/Data.jsx",
+     "*.test.js",
+     "test.js"
+    ]
 };
