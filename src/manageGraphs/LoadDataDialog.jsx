@@ -128,6 +128,10 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
             if (res) {
                 setCreatedSchema(res);
+
+                if (res.loadSuccess === false) {
+                    setSchemaLoadFailed(true);
+                }
             } else {
                 setSchemaLoadFailed(true);
                 console.log("no response data ");
@@ -170,7 +174,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                         <CsvFormats />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
+                
                 <LoadData
                     isFromStepper={false}
                     schemaName={schemaName}

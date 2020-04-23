@@ -105,7 +105,8 @@ const LoadData = ({
                         {schemaLoadFailed && (
                             <React.Fragment>
                                 <InvalidIcon style={{ color: "red", marginRight: 8 }} />
-                                <Typography>Schema creation failed</Typography>
+                                {isFromStepper && <Typography>Schema creation failed</Typography> }
+                                {!isFromStepper && <Typography>No edges loaded</Typography> }
                             </React.Fragment>
                         )}
 
