@@ -68,10 +68,6 @@ const styles = {
     }
 }
 
-/**
- * Top level page that lists all the graphs that the user as admin access to 
- * delete and maintian 
- */
 const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
     const [file, setFile] = useState();
@@ -110,12 +106,9 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
     };
 
-    const onUploadFile = async e => {
+    const onUploadFile = async () => {
 
         setUploadInProgress(true);
-
-        e.preventDefault();
-
         setSchemaLoadFailed(false);
 
         const formData = new FormData();
@@ -133,14 +126,13 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     setSchemaLoadFailed(true);
                 }
             } else {
-                setSchemaLoadFailed(true);
-                console.log("no response data ");
+                //no response
+                setSchemaLoadFailed(true);                
             }
 
         } catch (err) {
             setSchemaLoadFailed(true);
             console.error("error loading file ", err);
-
         }
     };
 
@@ -230,7 +222,6 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
             </DialogContent>
         </Dialog >
     )
-
 }
 
 LoadDataDialog.propTypes = {

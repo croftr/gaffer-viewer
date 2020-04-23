@@ -3,22 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 import { Button, Typography, Dialog, IconButton, DialogTitle, DialogContent } from '@material-ui/core';
-import CreateGraphStepper from "../CreateGraphStepper";
 
+import CreateGraphStepper from "../CreateGraphStepper";
 import CsvFormats from "../../CsvFormats";
 
-import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateCsv"
-
 import CloseIcon from "@material-ui/icons/Close"
-
-const csvFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
-
-const csvDescriptions = [
-    "The detailed upload format allows control node and edge types as well as edge weights",
-    "The detailed upload format allows control node and edge types as well as edge weights",
-    "With the simple format you can create a graph just by providing from and to node values",
-    "With the simple format you can create a graph just by providing from and to node values",
-]
 
 const styles = {
     marginTop16: {
