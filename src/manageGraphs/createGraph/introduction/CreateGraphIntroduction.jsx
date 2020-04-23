@@ -44,7 +44,12 @@ const styles = {
     },
 }
 
-export const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
+/**
+ * This components is shown before the user starts using the create graph stepper.
+ * It gives the user details of what the stepper will do and what they will need 
+ * to create a graph using it
+ */
+const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const [isStarted, setisStarted] = useState(false);    
     const [isHelpPageOpen, setIsHelpPageOpen] = useState(false);

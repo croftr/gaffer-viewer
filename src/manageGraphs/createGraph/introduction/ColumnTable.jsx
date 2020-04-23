@@ -10,6 +10,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 const styles = {}
 
+/**
+ * This table displays information about csv columns that we take for uploading grpahs 
+ */
 const ColumnTable = ({ classes, data }) => {
     return (
         <TableContainer>
