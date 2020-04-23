@@ -62,10 +62,12 @@ export const DETAILED_COLUMNS = {
     },
 }
 
-export const validateCsvFile = (data) => {
+export const validateCsvFile = (data, fileName) => {
 
+    console.log("validate file ", fileName);
+    
     let validationResponse = "No data";
-
+    
     if (data) {
         
         const firstLine = data.substring(0, data.indexOf("\n"));

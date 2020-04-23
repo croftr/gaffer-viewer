@@ -102,7 +102,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const validationResponmse = validateCsvFile(e.target.result);
+            const validationResponmse = validateCsvFile(e.target.result, e.target.files[0].name);
             setFileUploadMessage(validationResponmse);
         };
 

@@ -57,6 +57,7 @@ const LoadData = ({
                             onChange={onSelectFile}
                             label={filename}
                             style={{ display: "none" }}
+                            accept=".csv"
                         />
                     </Button>
 
