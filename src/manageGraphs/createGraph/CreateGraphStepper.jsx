@@ -225,6 +225,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const onResetUpload = () => {
 
+        document.getElementById("customFile").value = "";
         setCreatedSchema({});
         setFile(undefined);
         setFilename("")
