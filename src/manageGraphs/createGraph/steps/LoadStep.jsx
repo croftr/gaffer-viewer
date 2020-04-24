@@ -9,7 +9,11 @@ import LoadResultsTable from "../../LoadResultsTable";
 
 const styles = {
     button: {
-        width: 200
+        width: 200,
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        wordBreak: "break-all"
     },
     buttonArea: {
         display: "flex",
