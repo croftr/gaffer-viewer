@@ -2,14 +2,19 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+
 import {
     IconButton,
     Dialog,
     DialogContent,
     DialogTitle,
-    Typography
+    Typography,
+    ExpansionPanel,
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
 } from '@material-ui/core';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseIcon from '@material-ui/icons/Close';
 
 import CsvFormats from "./CsvFormats";
@@ -17,25 +22,9 @@ import LoadStep from "./createGraph/steps/LoadStep"
 import { validateCsvFile } from "./utils/validateCsv";
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import NewEdgeIcon from '@material-ui/icons/ShowChart';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
+import MissingEdgeList from "./MissingEdgeList";
 
 import csvLogo from "./images/csv4.png"
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
 
 const styles = {
     loadDataHeader: {
@@ -62,10 +51,7 @@ const styles = {
     },
     expansionPanel: {
         marginBottom: 16
-    },
-    avatar: {
-        background: "orange"
-    }
+    },    
 }
 
 const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
@@ -127,7 +113,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                 }
             } else {
                 //no response
-                setSchemaLoadFailed(true);                
+                setSchemaLoadFailed(true);
             }
 
         } catch (err) {
@@ -138,7 +124,6 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
     return (
         <Dialog aria-labelledby="loadDataDialog" open={isLoadOpen} maxWidth={false}>
-
             <div className={classes.loadDataHeader}>
                 <DialogTitle id="loaddataTitle">Load Data into {schemaName}</DialogTitle>
 
@@ -166,7 +151,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                         <CsvFormats />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-                
+
                 <LoadStep
                     isFromStepper={false}
                     schemaName={schemaName}
@@ -179,46 +164,11 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     schemaLoadFailed={schemaLoadFailed}
                     fileUploadMessage={fileUploadMessage}
                     isUploadInProgress={uploadInProgress}
+                    createdSchema={createdSchema}
                 />
+                
+                <MissingEdgeList createdSchema={createdSchema} /> 
 
-                <TableContainer>
-                    <Table className={classes.table}>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>Edges processed</TableCell>
-                                <TableCell>{createdSchema ? createdSchema.edgeLoadCount + createdSchema.rejectedEdgeLoadCount : 0}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Edges loaded</TableCell>
-                                <TableCell>{createdSchema.edgeLoadCount || 0}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Edges Rejected</TableCell>
-                                <TableCell>{createdSchema.rejectedEdgeLoadCount || 0}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>Unsupported edge types</TableCell>
-                                <TableCell>{createdSchema.newEdgeTypes ? createdSchema.newEdgeTypes.length : 0}</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-
-                <List>
-                    {createdSchema.newEdgeTypes && createdSchema.newEdgeTypes.map(edgeType => (
-                        <ListItem key={edgeType}>
-                            <ListItemAvatar>
-                                <Avatar className={classes.avatar}>
-                                    <NewEdgeIcon />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={edgeType}
-                                secondary="Unsupported edge type"
-                            />
-                        </ListItem>
-                    ))}
-                </List>
             </DialogContent>
         </Dialog >
     )

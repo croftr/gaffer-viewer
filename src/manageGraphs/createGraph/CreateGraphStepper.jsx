@@ -296,6 +296,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 fileUploadMessage={fileUploadMessage}
                                 onResetUpload={onResetUpload}
                                 isUploadInProgress={uploadInProgress}
+                                createdSchema={createdSchema}
                             />
                         )}
 

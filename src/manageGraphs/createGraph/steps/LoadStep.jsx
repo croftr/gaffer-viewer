@@ -5,6 +5,8 @@ import { Typography, Input, Button, CircularProgress } from '@material-ui/core';
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 
+import LoadResultsTable from "../../LoadResultsTable";
+
 const styles = {
     button: {
         width: 200
@@ -33,7 +35,8 @@ const LoadStep = ({
     schemaLoadFailed,
     fileUploadMessage,
     isUploadInProgress,
-    isFromStepper = true
+    isFromStepper = true,
+    createdSchema
 }) => {
 
     return (
@@ -77,8 +80,7 @@ const LoadStep = ({
                                     <Typography>{fileUploadMessage}</Typography>
                                 </React.Fragment>
                             )}
-                        </div>
-                    }
+                        </div>}
                 </div>
 
                 <div className={classes.buttonArea}>
@@ -106,8 +108,8 @@ const LoadStep = ({
                         {schemaLoadFailed && (
                             <React.Fragment>
                                 <InvalidIcon style={{ color: "red", marginRight: 8 }} />
-                                {isFromStepper && <Typography>Schema creation failed</Typography> }
-                                {!isFromStepper && <Typography>No edges loaded</Typography> }
+                                {isFromStepper && <Typography>Schema creation failed</Typography>}
+                                {!isFromStepper && <Typography>No edges loaded</Typography>}
                             </React.Fragment>
                         )}
 
@@ -120,6 +122,11 @@ const LoadStep = ({
 
                     </div>
                 </div>
+
+                <LoadResultsTable 
+                    createdSchema={createdSchema} 
+                    isShowingMissingEdges={false} 
+                />
 
             </div>
 
@@ -137,9 +144,10 @@ LoadStep.propTypes = {
     schemaName: PropTypes.string,
     isLoadSuccess: PropTypes.bool,
     elemetsLoaded: PropTypes.number,
-    schemaLoadFailed: PropTypes.bool,    
+    schemaLoadFailed: PropTypes.bool,
     isUploadInProgress: PropTypes.bool,
-    isFromStepper: PropTypes.bool
+    isFromStepper: PropTypes.bool,
+    createdSchema: PropTypes.object
 };
 
 export default withStyles(styles)(LoadStep);
