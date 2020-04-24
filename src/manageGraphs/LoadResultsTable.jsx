@@ -39,12 +39,12 @@ const LoadResultsTable = ({ classes, createdSchema = {}, isShowingMissingEdges=t
             </Table>
         </TableContainer>
     );
-
 }
 
 LoadResultsTable.propTypes = {
     classes: PropTypes.object.isRequired,
-    createdSchema: PropTypes.object
+    createdSchema: PropTypes.object,
+    isShowingMissingEdges: PropTypes.bool
 };
 
 export default withStyles(styles)(LoadResultsTable);

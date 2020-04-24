@@ -58,7 +58,7 @@ const styles = {
     marginLeft16: {
         marginLeft: 16
     },
-    json: {        
+    json: {
         padding: 8,
         overflowX: "auto",
         overflowY: "auto",
