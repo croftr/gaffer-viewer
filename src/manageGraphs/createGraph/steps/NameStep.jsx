@@ -29,8 +29,13 @@ const styles = {
         marginLeft: 16
     },
     errorIcon: {
-        color: "red", 
-        marginLeft: 16
+        color: "red",
+        marginLeft: 16,
+        marginRight: 4
+    },
+    messageIconWrapper: {
+        display: "flex",
+        alignItems: "center"
     }
 }
 
@@ -44,19 +49,31 @@ const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatu
             <div className={classes.inputWrapper}  >
 
                 <TextField
-                    required
-                    placeholder="myGraph"
-                    id="schema-name"
-                    label="Schema name"
+                    required                    
+                    id="graph-name"
+                    label="Graph name"
                     value={schemaName}
                     onChange={onChangeSchemaName}
                     className={classes.textField}
                 />
 
-                <div className={classes.validationResults}>
+                <div className={classes.validationResults}>          
+
                     <Button variant="contained" disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
-                    {nameValidationStatus === "valid" && schemaName && <ValidIcon className={classes.validIcon} />}
-                    {nameValidationStatus === "invalid" && <InvalidIcon className={classes.errorIcon} />}
+
+                    {nameValidationStatus.message !== "unknown" && nameValidationStatus.isValid && schemaName && (
+                        <span className={classes.messageIconWrapper}>
+                            <ValidIcon className={classes.validIcon} />                      
+                        </span>
+                    )}
+
+                    {nameValidationStatus.message !== "unknown" && !nameValidationStatus.isValid && schemaName && (
+                        <span className={classes.messageIconWrapper}>
+                            <InvalidIcon className={classes.errorIcon} />
+                            <Typography>{nameValidationStatus.message}</Typography>
+                        </span>
+                    )}
+
                 </div>
 
             </div>
@@ -69,7 +86,7 @@ NameStep.propTypes = {
     classes: PropTypes.object.isRequired,
     onChangeSchemaName: PropTypes.func,
     schemaName: PropTypes.string,
-    nameValidationStatus: PropTypes.string,
+    nameValidationStatus: PropTypes.object,
     onValidateSchemaName: PropTypes.func,
 };
 

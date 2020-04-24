@@ -51,7 +51,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [schemaName, setSchemaName] = useState();
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
-    const [nameValidationStatus, setNameValidationStatus] = useState('unknown');
+    const [nameValidationStatus, setNameValidationStatus] = useState({ isValid: true, message: 'unknown' });
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [auths, setAuths] = useState([]);
@@ -147,14 +147,14 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const onValidateSchemaName = async (name) => {
 
         if (!name || name.length < 1) {
-            setNameValidationStatus("invalid");
+            setNameValidationStatus({ isValid: false, message: 'You must choose a name' });
             return;
         }
 
         let result = /^[a-zA-Z0-9_]*$/.test(name);
 
         if (!result) {
-            setNameValidationStatus("invalid");
+            setNameValidationStatus({ isValid: false, message: 'Invalid format for graph name' });
         } else {
             const currentNames = await execute(
                 {
@@ -165,9 +165,9 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
             result = currentNames.includes(name);
 
             if (result) {
-                setNameValidationStatus("invalid");
+                setNameValidationStatus({ isValid: false, message: 'This graph name already exists' });
             } else {
-                setNameValidationStatus("valid");
+                setNameValidationStatus({ isValid: true, message: 'valid' });
                 setConfirmedSchemaName(name)
             }
         }
@@ -178,7 +178,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         let disabled = true;
 
         if (activeStep === 0) {
-            if (nameValidationStatus === "valid") {
+            if (nameValidationStatus.message !== "unknown" && nameValidationStatus.isValid) {
                 disabled = false;
             }
         } else if (activeStep === 1) {
@@ -208,7 +208,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         setFile(undefined);
         setConfirmedSchemaName(undefined);
         setAuths([])
-        setNameValidationStatus("unknown")
+        setNameValidationStatus({ isValid: true, message: 'unknown' })
         setFilename("")
         setAuthsRadioValue("justMe")
         setFileUploadMessage("")
@@ -228,7 +228,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         setCreatedSchema({});
         setFile(undefined);
         setFilename("")
-        setNameValidationStatus("unknown")
+        setNameValidationStatus({ isValid: true, message: 'unknown' })
         setFileUploadMessage("")
         setUploadInProgress(false);
 
