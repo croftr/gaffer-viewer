@@ -1,6 +1,3 @@
-import { CircularProgress } from "@material-ui/core";
-
-import React from 'react';
 import bus1 from "../images/bus1.png";
 import bus2 from "../images/bus2.png";
 import busCompany from "../images/busCompany.png";
@@ -43,9 +40,6 @@ export const changeLayout = (visData) => {
         width: '100%',
         locale: 'en',
         clickToUse: false,
-        interaction: {
-            navigationButtons: false,
-        },
         layout: {
             improvedLayout: true,
             clusterThreshold: 150
@@ -94,6 +88,7 @@ const mapVisNode = (node) => {
             break;
         case "hen":
             image = hen;
+            break;
         case "big_bus":
             image = bus2;
             break;
@@ -257,10 +252,6 @@ export const convertVis = (data) => {
                 cardinality = cardinalityGroup["com.clearspring.analytics.stream.cardinality.HyperLogLogPlus"]?.hyperLogLogPlus?.cardinality;
             }
 
-            const totalPoints = entity.properties?.totalPoints || 0;
-            const juryPoints = entity.properties?.juryPoints;
-            const telePoints = entity.properties?.telePoints;
-
             //cardinality Degrees
             if (cardinality) {
 
@@ -292,9 +283,6 @@ var options = {
     width: '100%',
     locale: 'en',
     clickToUse: false,    
-    interaction: {
-        navigationButtons: false,
-    },
     layout: {
         improvedLayout: true,
         clusterThreshold: 150

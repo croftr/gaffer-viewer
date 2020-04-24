@@ -86,7 +86,10 @@ NameStep.propTypes = {
     classes: PropTypes.object.isRequired,
     onChangeSchemaName: PropTypes.func,
     schemaName: PropTypes.string,
-    nameValidationStatus: PropTypes.object,
+    nameValidationStatus: PropTypes.shape({
+        isValid: PropTypes.bool,        
+        message: PropTypes.string
+    }),
     onValidateSchemaName: PropTypes.func,
 };
 

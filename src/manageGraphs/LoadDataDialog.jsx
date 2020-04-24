@@ -57,7 +57,7 @@ const styles = {
 const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
     const [file, setFile] = useState();
-    const [createdSchema, setCreatedSchema] = useState('');
+    const [createdSchema, setCreatedSchema] = useState({});
 
     const [filename, setFilename] = useState('');
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
@@ -65,7 +65,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
     const [uploadInProgress, setUploadInProgress] = useState(false);
 
     const close = () => {
-        setCreatedSchema('');
+        setCreatedSchema({});
         setFile('');
         setFilename('');
         setSchemaLoadFailed(false);
@@ -143,7 +143,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                         id="csvExpandPanelHeader"
                     >
                         <span className={classes.csvText}>
-                            <img src={csvLogo} height="32" className={classes.csvLogo} />
+                            <img src={csvLogo} height="32" className={classes.csvLogo} alt="csv" />
                             <Typography paragraph>Supported CSV formats</Typography>
                         </span>
                     </ExpansionPanelSummary>

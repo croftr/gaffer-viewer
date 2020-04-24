@@ -119,7 +119,6 @@ export default function AppNavBar() {
 
         setNavItem(index);
         if (index === 0 ){
-            console.log("goooo");
             loadSchemas();                        
         }
         else if (index === 1 && !schema) {            

@@ -45,10 +45,10 @@ const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const [file, setFile] = useState();
-    const [createdSchema, setCreatedSchema] = useState('');
+    const [createdSchema, setCreatedSchema] = useState({});
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
-    const [schemaName, setSchemaName] = useState();
+    const [schemaName, setSchemaName] = useState('');
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
     const [nameValidationStatus, setNameValidationStatus] = useState({ isValid: true, message: 'unknown' });
@@ -260,7 +260,10 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                     <div className={classes.stepperContent}>
 
                         {activeStep !== steps.length && (
-                            <StepperHeader activeStep={activeStep} confirmedSchemaName={confirmedSchemaName} />
+                            <StepperHeader 
+                                activeStep={activeStep} 
+                                confirmedSchemaName={confirmedSchemaName} 
+                            />
                         )}
 
                         {activeStep === 0 && (

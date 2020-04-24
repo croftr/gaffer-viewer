@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import { Paper, Button, Tab, Tabs, TextField, Typography } from '@material-ui/core';
 import JSONPretty from 'react-json-pretty';
 import { convertRaw } from "./queries/raw.js"
-import { convertVis, changeLayout } from "./visGraph/visGraph.js"
+import { convertVis } from "./visGraph/visGraph.js"
 import { getEdgeColor } from "./utils/schamUtils"
 import VisGraph from "./visGraph/VisGraphViewer.jsx"
 

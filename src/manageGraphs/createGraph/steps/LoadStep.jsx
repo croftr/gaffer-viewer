@@ -123,11 +123,12 @@ const LoadStep = ({
                     </div>
                 </div>
 
-                <LoadResultsTable 
-                    createdSchema={createdSchema} 
-                    isShowingMissingEdges={false} 
-                />
-
+                {Object.keys(createdSchema).length > 0 &&
+                    <LoadResultsTable
+                        createdSchema={createdSchema}
+                        isShowingMissingEdges={false}
+                    />
+                }
             </div>
 
         </div>
