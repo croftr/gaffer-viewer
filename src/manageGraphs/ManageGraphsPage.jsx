@@ -30,7 +30,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import SecureIcon from '@material-ui/icons/Security';
 
 import SecurityStep from "./createGraph/steps/SecurityStep"
-
+import GraphSummary from "./GraphSummary";
 import LoadDataDialog from "./LoadDataDialog";
 
 import JSONPretty from 'react-json-pretty';
@@ -146,6 +146,10 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
     const [selectedGraph, setSelectedGraph] = useState();
     const [confirmDeleteText, setConfirmDeleteText] = useState("");
 
+
+    const [graphCreationStats, setGraphCreationStats] = useState({});
+    const [graphStatusStats, setGraphStatusStats] = useState({});
+
     const [auths, setAuths] = useState([]);
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
 
@@ -189,6 +193,9 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
         console.log("response ", response);
 
+        setGraphCreationStats(response[0]);
+        setGraphStatusStats(response[1]);
+
     }
 
     return (
@@ -230,14 +237,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
                         <Typography variant="h6">{selectedGraph}</Typography>
 
-                        <PieChart
-                            style={{ height: 200 }}
-                            data={[
-                                { title: 'One', value: 10, color: '#E38627' },
-                                { title: 'Two', value: 15, color: '#C13C37' },
-                                { title: 'Three', value: 20, color: '#6A2135' },
-                            ]}
-                        />;
+                        {graphCreationStats.properties && <GraphSummary creationStats={graphCreationStats} statusStats={graphStatusStats} />}
 
                         <div className={classes.manageGraphsHeader}>
 
