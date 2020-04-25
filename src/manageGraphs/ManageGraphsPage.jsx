@@ -34,6 +34,9 @@ import SecurityStep from "./createGraph/steps/SecurityStep"
 import LoadDataDialog from "./LoadDataDialog";
 
 import JSONPretty from 'react-json-pretty';
+import PieChart from 'react-minimal-pie-chart';
+
+import { execute } from "../actions/GafferActions"
 
 const styles = {
     paper: {
@@ -153,6 +156,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
     const loadSelectedGraph = (graph) => {
         setSelectedGraph(graph);
         loadGraph(graph);
+        getGraphStats(graph)
     }
 
     const deleteGraph = (selectedGraph) => {
@@ -164,6 +168,27 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
     const openDeleteGraph = (selectedGraph) => {
         setIsDeleteGraphOpen(true);
         setGraphToDelete(selectedGraph)
+    }
+
+    const getGraphStats = async (graph) => {
+
+        const response = await execute(
+            {
+                class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
+                options: {
+                    "gaffer.federatedstore.operation.graphIds": graph
+                },
+                view: {
+                    entities: {
+                        graphCreation: {},
+                        graphStatus: {}
+                    }
+                }
+            }
+        );
+
+        console.log("response ", response);
+
     }
 
     return (
@@ -204,6 +229,15 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                     <div id="graphToManage" className={classes.graphToManage}>
 
                         <Typography variant="h6">{selectedGraph}</Typography>
+
+                        <PieChart
+                            style={{ height: 200 }}
+                            data={[
+                                { title: 'One', value: 10, color: '#E38627' },
+                                { title: 'Two', value: 15, color: '#C13C37' },
+                                { title: 'Three', value: 20, color: '#6A2135' },
+                            ]}
+                        />;
 
                         <div className={classes.manageGraphsHeader}>
 

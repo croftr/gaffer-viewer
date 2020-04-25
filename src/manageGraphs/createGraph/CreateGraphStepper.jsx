@@ -45,10 +45,11 @@ const steps = ['Name it', 'Secure it', 'Upload data', "Review & Confirm"];
 const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
     const [file, setFile] = useState();
-    const [createdSchema, setCreatedSchema] = useState({});
+    const [createdSchema, setCreatedSchema] = useState({});    
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [schemaName, setSchemaName] = useState('');
+    const [graphDescription, setGraphDescription] = useState('');
     const [confirmedSchemaName, setConfirmedSchemaName] = useState();
     const [filename, setFilename] = useState('');
     const [nameValidationStatus, setNameValidationStatus] = useState({ isValid: true, message: 'unknown' });
@@ -129,7 +130,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
             } else {
                 graphAuths = auths.join(",")
             }
-            const res = await fetchUploadGraph(formData, schemaName, graphAuths);
+            const res = await fetchUploadGraph(formData, schemaName, graphAuths, graphDescription);
 
             if (res) {
                 setCreatedSchema(res);
@@ -274,6 +275,8 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 nameValidationStatus={nameValidationStatus}
                                 onValidateSchemaName={onValidateSchemaName}
                                 confirmedSchemaName={confirmedSchemaName}
+                                graphDescription={graphDescription}
+                                onChangegraphDescription={setGraphDescription}
                             />
                         )}
 

@@ -39,7 +39,7 @@ const styles = {
     }
 }
 
-const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName }) => {
+const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatus, onValidateSchemaName, graphDescription, onChangegraphDescription }) => {
 
     return (
         <div id="chooseSchemaName" className={classes.chooseSchemaName}>
@@ -49,7 +49,7 @@ const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatu
             <div className={classes.inputWrapper}  >
 
                 <TextField
-                    required                    
+                    required
                     id="graph-name"
                     label="Graph name"
                     value={schemaName}
@@ -57,13 +57,13 @@ const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatu
                     className={classes.textField}
                 />
 
-                <div className={classes.validationResults}>          
+                <div className={classes.validationResults}>
 
                     <Button variant="contained" disabled={!schemaName} onClick={() => onValidateSchemaName(schemaName)}>Check Name</Button>
 
                     {nameValidationStatus.message !== "unknown" && nameValidationStatus.isValid && schemaName && (
                         <span className={classes.messageIconWrapper}>
-                            <ValidIcon className={classes.validIcon} />                      
+                            <ValidIcon className={classes.validIcon} />
                         </span>
                     )}
 
@@ -78,6 +78,14 @@ const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatu
 
             </div>
 
+            <TextField                
+                id="graph-description"
+                label="Graph description"                
+                value={graphDescription}
+                onChange={e => onChangegraphDescription(e.target.value)}
+                className={classes.textField}
+            />
+
         </div>
     )
 }
@@ -87,10 +95,12 @@ NameStep.propTypes = {
     onChangeSchemaName: PropTypes.func,
     schemaName: PropTypes.string,
     nameValidationStatus: PropTypes.shape({
-        isValid: PropTypes.bool,        
+        isValid: PropTypes.bool,
         message: PropTypes.string
     }),
     onValidateSchemaName: PropTypes.func,
+    graphDescription: PropTypes.string, 
+    onChangegraphDescription: PropTypes.func
 };
 
 export default withStyles(styles)(NameStep);

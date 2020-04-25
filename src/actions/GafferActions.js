@@ -46,9 +46,9 @@ export const fetchShortestPath = async (node1, node2) => {
 
 }
 
-export const fetchUploadGraph = async (data, schemaName, auths) => {
+export const fetchUploadGraph = async (data, schemaName, auths, graphDescription) => {
     
-    let response = await fetch(`http://localhost:8080/rest/loadCsv?name=${schemaName}&auths=${auths}`, {
+    let response = await fetch(`http://localhost:8080/rest/loadCsv?name=${schemaName}&auths=${auths}&desc=${graphDescription}`, {
         method: "POST",        
         body: data
     });
@@ -67,3 +67,4 @@ export const fetchUploadDataGraph = async (data, schemaName) => {
     return response.json();
     
 }
+
