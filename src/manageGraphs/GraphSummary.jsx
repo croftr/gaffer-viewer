@@ -24,9 +24,12 @@ import PieChart from 'react-minimal-pie-chart';
 
 const styles = {
     graphSummary: {
-        display: "flex"
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between"
     },
     textSummary: {
+        // marginRight: 16
 
     },
     chartSummay: {
@@ -82,21 +85,11 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
             <div className={classes.textSummary}>
 
                 <div id="graphCreatedStats">
-                    <div>{creationStats.properties.description}</div>
-                    <div>{creationStats.properties.createdBy}</div>
-                    <div>{creationStats.properties.createdDate["java.util.Date"]}</div>
+                    <Typography>{creationStats.properties.description}</Typography>
+                    <Typography>{creationStats.properties.createdBy}</Typography>
+                    <Typography>{creationStats.properties.createdDate["java.util.Date"]}</Typography>
                 </div>
-
-                {statusStats.properties &&
-                    Object.keys(statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"]).map(key => {
-                        return (
-                            <div id="graphStatusStats" key={key}>
-                                {key}
-                            </div>
-                        )
-                    })
-                }
-
+               
             </div>
 
             <div className={classes.chartSummay}>
@@ -109,9 +102,9 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
 
                             {Object.keys(statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"]).map( (key, index) => {
                                     return (
-                                        <span key={key} style={{ display: "flex", alignItems: "center" }}>
-                                            <div style={{ width: 50, height: 50, border: "1px solid", background: colors[index]}}></div>
-                                            <Typography>{`${key}: ${statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}`}</Typography>
+                                        <span key={key} style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+                                            <div style={{ width: 15, height: 15, borderRadius: 5, marginRight: 4, background: colors[index]}}></div>
+                                            <Typography variant="caption">{`${key}: ${statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}`}</Typography>
                                         </span>
                                     )
                                         
