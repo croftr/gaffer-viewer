@@ -131,10 +131,10 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
                                             </td>
 
                                             <td>
-                                                <Typography variant="caption">{`${key}:`}</Typography>
+                                                <Typography variant="caption">{key}</Typography>
                                             </td>
                                             <td>
-                                                <Typography variant="caption">{`${statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}`}</Typography>
+                                                <Typography variant="caption">{statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}</Typography>
                                             </td>
                                         </tr>
                                     )
