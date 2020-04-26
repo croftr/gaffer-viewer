@@ -8,9 +8,10 @@ import {
 
 import PieChart from 'react-minimal-pie-chart';
 
-import PersonIcon from '@material-ui/icons/Person';
+import PersonIcon from '@material-ui/icons/PersonOutline';
 import DateIcon from '@material-ui/icons/CalendarToday';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
+import EdgeIcon from '@material-ui/icons/ShowChartOutlined';
 
 const styles = {
     graphSummary: {
@@ -23,7 +24,6 @@ const styles = {
     },
     chartSummay: {
         flex: 1,
-        justifyContent: "flex-end"
     },
     iconTextWrapper: {
         display: "flex",
@@ -32,6 +32,11 @@ const styles = {
     },
     icon: {
         marginRight: 8
+    },
+    pieHeader: {
+        display: "flex",
+        justifyContent: "flex-end",
+        marginRight: 100
     }
 }
 
@@ -99,7 +104,7 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
                         <Typography>{new Date(creationStats.properties.createdDate["java.util.Date"]).toDateString()}</Typography>Z
                     </span>
 
-                    <span className={classes.iconTextWrapper}>                        
+                    <span className={classes.iconTextWrapper}>
                         <Tooltip title="description">
                             <InfoIcon className={classes.icon} color="action" />
                         </Tooltip>
@@ -112,6 +117,11 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
             </div>
 
             <div className={classes.chartSummay}>
+
+                <span className={classes.pieHeader}>
+                    <EdgeIcon className={classes.icon} color="action" />
+                    <Typography >Edge Groups</Typography>
+                </span>
 
                 {statusStats.properties && (
 
