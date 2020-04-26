@@ -34,13 +34,11 @@ import GraphSummary from "./GraphSummary";
 import LoadDataDialog from "./LoadDataDialog";
 
 import JSONPretty from 'react-json-pretty';
-import PieChart from 'react-minimal-pie-chart';
 
 import { execute } from "../actions/GafferActions"
 
 const styles = {
-    paper: {
-        height: "100%",
+    paper: {        
         padding: 16,
         display: "flex"
     },
@@ -236,6 +234,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                     <div id="graphToManage" className={classes.graphToManage}>
 
                         <Typography variant="h6">{selectedGraph}</Typography>
+                        {/* <Typography>{graphCreationStats?.properties?.description}</Typography> */}
 
                         {graphCreationStats.properties && <GraphSummary creationStats={graphCreationStats} statusStats={graphStatusStats} />}
 

@@ -1,39 +1,37 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import {
-    Paper,
-    Button,
-    TextField,
-    Typography,
-    IconButton,
-    Avatar,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar
+    Typography, Tooltip,
 } from '@material-ui/core';
 
 import PieChart from 'react-minimal-pie-chart';
 
-
+import PersonIcon from '@material-ui/icons/Person';
+import DateIcon from '@material-ui/icons/CalendarToday';
+import InfoIcon from '@material-ui/icons/Info';
 
 const styles = {
     graphSummary: {
         display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        marginBottom: 16
     },
     textSummary: {
-        // marginRight: 16
-
+        flex: 1
     },
     chartSummay: {
-
+        flex: 1,
+        justifyContent: "flex-end"
+    },
+    iconTextWrapper: {
+        display: "flex",
+        alignItems: "flex-start",
+        marginTop: 8
+    },
+    icon: {
+        marginRight: 8
     }
 }
 
@@ -46,37 +44,36 @@ const colors = [
 
 export const GraphSummary = ({ classes, creationStats, statusStats }) => {
 
+    const [selected, setSelected] = useState(undefined);
+    const [hovered, setHovered] = useState(undefined);
+
+    const lineWidth = 60;
+
     const edgeData = (edgeStats) => {
 
         console.log("check ", edgeStats);
 
 
-        // if (!edgeStats || !edgeStats.edgeGroupCounts || !edgeStats.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"]) {
-        //     return [];
-        // }
-
-        const edges = edgeStats.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"];
+        const edges = edgeStats?.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"];
         const data = Object.keys(edges).map((key, index) => {
-            return {
-                title: key,
-                value: edges[key],
-                color: colors[index]
+
+
+            if (hovered === index) {
+                return {
+                    title: key,
+                    value: edges[key],
+                    color: "grey"
+                }
+            } else {
+                return {
+                    title: key,
+                    value: edges[key],
+                    color: colors[index]
+                }
             }
+
         })
-
-        console.log("created ", data);
-
         return data;
-
-        // return (
-        //     [
-        //         { title: 'One', value: 10, color: '#E38627' },
-        //         { title: 'Two', value: 15, color: '#C13C37' },
-        //         { title: 'Three', value: 20, color: '#6A2135' },
-        //     ]
-        // )
-
-
     }
 
     return (
@@ -85,68 +82,111 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
             <div className={classes.textSummary}>
 
                 <div id="graphCreatedStats">
-                    <Typography>{creationStats.properties.description}</Typography>
-                    <Typography>{creationStats.properties.createdBy}</Typography>
-                    <Typography>{creationStats.properties.createdDate["java.util.Date"]}</Typography>
+
+                    <span className={classes.iconTextWrapper}>
+                        <Tooltip title="Creaetd by">
+                            <PersonIcon className={classes.icon} color="action" />
+                        </Tooltip>
+
+                        <Typography>{creationStats.properties.createdBy}</Typography>
+                    </span>
+
+                    <span className={classes.iconTextWrapper}>
+                        <Tooltip title="Creaetd on">
+                            <DateIcon className={classes.icon} color="action" />
+                        </Tooltip>
+
+                        <Typography>{new Date(creationStats.properties.createdDate["java.util.Date"]).toDateString()}</Typography>Z
+                    </span>
+
+                    <span className={classes.iconTextWrapper}>                        
+                        <Tooltip title="description">
+                            <InfoIcon className={classes.icon} color="action" />
+                        </Tooltip>
+                        <Typography >{creationStats.properties.description}</Typography>
+                    </span>
+
+
                 </div>
-               
+
             </div>
 
             <div className={classes.chartSummay}>
 
                 {statusStats.properties && (
 
-                    <div style={{display: "flex"}}>
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
 
-                        <div>
-
-                            {Object.keys(statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"]).map( (key, index) => {
+                        <table>
+                            <tbody>
+                                {Object.keys(statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"]).map((key, index) => {
                                     return (
-                                        <span key={key} style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-                                            <div style={{ width: 15, height: 15, borderRadius: 5, marginRight: 4, background: colors[index]}}></div>
-                                            <Typography variant="caption">{`${key}: ${statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}`}</Typography>
-                                        </span>
+                                        <tr>
+                                            <td>
+                                                <div style={{ width: 15, height: 15, borderRadius: 5, marginRight: 4, background: colors[index], cursor: "pointer" }}
+                                                    onClick={() => {
+                                                        setSelected(index === selected ? undefined : index);
+                                                        setHovered(index === selected ? undefined : index);
+                                                    }} />
+                                            </td>
+
+                                            <td>
+                                                <Typography variant="caption">{`${key}:`}</Typography>
+                                            </td>
+                                            <td>
+                                                <Typography variant="caption">{`${statusStats.properties.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"][key]}`}</Typography>
+                                            </td>
+                                        </tr>
                                     )
-                                        
-                                })
-                            }
-
-
-                        </div>
+                                })}
+                            </tbody>
+                        </table>
 
                         <PieChart
-                            cx={50}
-                            cy={50}
-                            label={false}
-                            labelPosition={50}
-                            lengthAngle={360}
-                            lineWidth={25}
-                            paddingAngle={0}
-                            radius={50}
-                            rounded
-                            startAngle={0}
-                            viewBoxSize={[
-                                100,
-                                100
-                            ]}
-                            animate
-                            animationDuration={500}
-                            animationEasing="ease-out"
-                            style={{ height: 200 }}
+                            style={{
+                                fontFamily:
+                                    '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
+                                fontSize: '8px',
+                            }}
                             data={edgeData(statusStats.properties)}
+                            radius={40}
+                            lineWidth={60}
+                            segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
+                            segmentsShift={(_, index) => (index === selected ? 10 : 1)}
+                            animate
+                            label={({ data, dataIndex }) =>
+                                Math.round(data[dataIndex].percentage) + '%'
+                            }
+                            labelPosition={100 - lineWidth / 2}
+                            labelStyle={{
+                                fill: '#fff',
+                                opacity: 0.75,
+                                pointerEvents: 'none',
+                                dominantBaseline: 'central', //@TODO remove if when #149 gets implemented
+                            }}
+                            onClick={(_, __, index) => {
+                                setSelected(index === selected ? undefined : index);
+                            }}
+                            onMouseOver={(_, __, index) => {
+                                setHovered(index);
+                            }}
+                            onMouseOut={() => {
+                                setHovered(undefined);
+                            }}
                         />
 
                     </div>
 
 
-                )}
+                )
+                }
 
 
-            </div>
+            </div >
 
 
 
-        </div>
+        </div >
 
     )
 }
