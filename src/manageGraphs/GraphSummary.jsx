@@ -56,12 +56,9 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
 
     const edgeData = (edgeStats) => {
 
-        console.log("check ", edgeStats);
-
-
         const edges = edgeStats?.edgeGroupCounts["uk.gov.gchq.gaffer.types.FreqMap"];
+        
         const data = Object.keys(edges).map((key, index) => {
-
 
             if (hovered === index) {
                 return {
