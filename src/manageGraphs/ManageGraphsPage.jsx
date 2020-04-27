@@ -40,7 +40,7 @@ import { execute } from "../actions/GafferActions"
 const styles = {
     paper: {        
         padding: 16,
-        display: "flex"
+        display: "flex",      
     },
     graphsList: {
         height: "calc(100vh - 130px)",

@@ -13,10 +13,12 @@ import DateIcon from '@material-ui/icons/CalendarToday';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import EdgeIcon from '@material-ui/icons/ShowChartOutlined';
 
+import { edgeColour } from "./utils/edgeColours"
+
 const styles = {
     graphSummary: {
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-between",        
         marginBottom: 16
     },
     textSummary: {
@@ -70,7 +72,7 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
                 return {
                     title: key,
                     value: edges[key],
-                    color: colors[index]
+                    color: edgeColour(key, index)
                 }
             }
 
@@ -130,7 +132,7 @@ export const GraphSummary = ({ classes, creationStats, statusStats }) => {
                                     return (
                                         <tr>
                                             <td>
-                                                <div style={{ width: 15, height: 15, borderRadius: 5, marginRight: 4, background: colors[index], cursor: "pointer" }}
+                                                <div style={{ width: 15, height: 15, borderRadius: 5, marginRight: 4, background: edgeColour(key, index), cursor: "pointer" }}
                                                     onClick={() => {
                                                         setSelected(index === selected ? undefined : index);
                                                         setHovered(index === selected ? undefined : index);
