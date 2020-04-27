@@ -81,6 +81,8 @@ const NameStep = ({ classes, onChangeSchemaName, schemaName, nameValidationStatu
             <TextField                
                 id="graph-description"
                 label="Graph description"                
+                multiline
+                rowsMax={4}
                 value={graphDescription}
                 onChange={e => onChangegraphDescription(e.target.value)}
                 className={classes.textField}
