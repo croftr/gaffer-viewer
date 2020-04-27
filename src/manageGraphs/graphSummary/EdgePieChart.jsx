@@ -83,6 +83,7 @@ export const EdgePieChart = ({ classes, statusStats }) => {
                             fontFamily:
                                 '"Nunito Sans", -apple-system, Helvetica, Arial, sans-serif',
                             fontSize: '8px',
+                            maxHeight: 300
                         }}
                         data={edgeData(statusStats.properties)}
                         radius={40}
