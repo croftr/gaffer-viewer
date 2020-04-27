@@ -26,12 +26,13 @@ const categoryColours = {
 export const edgeColour = (type, index) => {
 
     let category;
+    const desc = type.toLowerCase();
 
-    if (type.toLowerCase().includes("alternative")) {
+    if (desc.includes("alternative") || desc.includes("aka") || desc.includes("alias")) {
         category = categoryColours["alternative"];
-    } else if (type.toLowerCase().startsWith("comm")) {
+    } else if (desc.startsWith("comm")) {
         category = categoryColours["communication"];
-    } else if (type.toLowerCase().startsWith("seen")) {
+    } else if (desc.startsWith("seen")) {
         category =categoryColours["index"];
     }
     
