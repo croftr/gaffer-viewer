@@ -3,6 +3,18 @@ const colors = [
     '#E38627',
     '#C13C37',
     '#6A2135',
+    "DarkCyan",
+    "DarkBlue",
+    "DarkGoldenRod",
+    "LightCoral",
+    "LightSeaGreen",
+    "LightSalmon",
+    "Olive",
+    "PaleGreen",
+    "Tomato",
+    "YellowGreen",
+    "red",
+    "MediumPurple"
 ]
 
 const categoryColours = {
