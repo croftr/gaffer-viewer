@@ -30,7 +30,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import SecureIcon from '@material-ui/icons/Security';
 
 import SecurityStep from "./createGraph/steps/SecurityStep"
-import GraphSummary from "./GraphSummary";
+import GraphSummary from "./graphSummary/GraphSummary";
 import LoadDataDialog from "./LoadDataDialog";
 
 import JSONPretty from 'react-json-pretty';
@@ -38,9 +38,10 @@ import JSONPretty from 'react-json-pretty';
 import { execute } from "../actions/GafferActions"
 
 const styles = {
-    paper: {        
+    paper: {
         padding: 16,
-        display: "flex",      
+        display: "flex",
+        minHeight: "100%"
     },
     graphsList: {
         height: "calc(100vh - 130px)",
@@ -234,9 +235,13 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                     <div id="graphToManage" className={classes.graphToManage}>
 
                         <Typography variant="h6">{selectedGraph}</Typography>
-                        {/* <Typography>{graphCreationStats?.properties?.description}</Typography> */}
 
-                        {graphCreationStats.properties && <GraphSummary creationStats={graphCreationStats} statusStats={graphStatusStats} />}
+                        {graphCreationStats.properties && (
+                            <GraphSummary 
+                                creationStats={graphCreationStats} 
+                                statusStats={graphStatusStats} 
+                            />
+                        )}
 
                         <div className={classes.manageGraphsHeader}>
 
