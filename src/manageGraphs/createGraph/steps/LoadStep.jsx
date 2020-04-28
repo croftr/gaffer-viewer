@@ -1,7 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { Typography, Input, Button, CircularProgress } from '@material-ui/core';
+import { 
+    Typography, 
+    Input, 
+    Button, 
+    CircularProgress 
+} from '@material-ui/core';
+
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 
