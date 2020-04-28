@@ -1,48 +1,29 @@
 import { execute } from "../actions/GafferActions"
 
-export const convertRaw = async (edgeType) => {
+export const convertRaw = async (edgeType, graph) => {
+
+    console.log("check ", graph);
+    
 
     const payload = {
         class: "uk.gov.gchq.gaffer.operation.OperationChain",
-        operations: [{
-            class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements"
-        }, {
-            class: "uk.gov.gchq.gaffer.operation.impl.Limit",
-            resultLimit: 10000,
-            truncate: true
-        }]
+        operations: [
+            {
+                class: "uk.gov.gchq.gaffer.operation.impl.get.GetAllElements",
+            },
+            {
+                class: "uk.gov.gchq.gaffer.operation.impl.Limit",
+                resultLimit: 10000,
+                truncate: true
+            }]
     }
 
-    // const payload = {
-    //     "class": "uk.gov.gchq.gaffer.operation.impl.get.GetElements",
-    //     "input": [
-    //       {
-    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
-    //         "type": "country",      
-    //         "value": "Austria"
-    //       },
-    //       {
-    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
-    //         "type": "country",      
-    //         "value": "Russia"
-    //       },
-    //       {
-    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
-    //         "type": "country",      
-    //         "value": "Thailand"
-    //       },
-    //       {
-    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
-    //         "type": "country",      
-    //         "value": "Norway"
-    //       },                    
-    //       {
-    //         "class": "uk.gov.gchq.gaffer.types.TypeSubTypeValue",
-    //         "type": "country",      
-    //         "value": "United Kingdom1"
-    //       },   
-    //     ]
-    //   }
+    if (graph) {
+        payload.operations[0].options =
+        {
+            "gaffer.federatedstore.operation.graphIds": graph
+        }
+    }
 
     if (edgeType) {
         payload.operations[0].view = {

@@ -185,7 +185,7 @@ export default function AppNavBar() {
 
             <main className={classes.content}>
                 {navItem === 0 && <Graphs graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} />}
-                {navItem === 1 && <Data edgeTypes={edgeTypes} />}
+                {navItem === 1 && <Data edgeTypes={edgeTypes} graphId={selectedSchemaName} />}
                 {navItem === 2 && <Queries />}
                 {navItem === 3 && <ManageGraphsPage graphs={graphs} loadGraph={loadGraph} schema={schema} onDeleteGraph={onDeleteGraph} loadSchemas={loadSchemas} />}
             </main>

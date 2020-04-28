@@ -19,7 +19,7 @@ const views = [
     "Payload",
 ]
 
-export default function Data({ edgeTypes }) {
+export default function Data({ edgeTypes, graphId }) {
 
     const [data, setData, graphData, setGraphData] = usePayloadData([])
     const [payload, setPayload] = React.useState({});
@@ -37,7 +37,7 @@ export default function Data({ edgeTypes }) {
     }
 
     const getData = async (edgeType) => {
-        const { rawData, payload } = await convertRaw(edgeType);
+        const { rawData, payload } = await convertRaw(edgeType, graphId);
         setData(rawData);
         setPayload(payload);
 
@@ -76,7 +76,7 @@ export default function Data({ edgeTypes }) {
 
     return (
         <Paper id="data" style={{ padding: 8 }}>
-
+    
             <Tabs value={tabPage} onChange={handleTabChange} aria-label="simple tabs example">
                 {views.map(view => <Tab label={view} key={view} />)}
             </Tabs>
