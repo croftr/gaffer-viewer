@@ -63,7 +63,7 @@ const SecurityStep = ({ classes, onChangeAuths, auths, setAuthsRadioValue, auths
     return (
         <div className={classes.securityStep}>
 
-            <FormControl component="fieldset">
+            <FormControl component="fieldset">                
                 <RadioGroup
                     aria-label="security"
                     name="security"

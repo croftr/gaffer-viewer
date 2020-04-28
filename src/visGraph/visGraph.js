@@ -151,9 +151,6 @@ const mapVisNode = (node) => {
 
 const mapVisEdge = (edge) => {
 
-    console.log("edge ", edge);
-    
-
     const source = edge.source["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
     const dest = edge.destination["uk.gov.gchq.gaffer.types.TypeSubTypeValue"];
 
@@ -192,9 +189,6 @@ const createGraph = (visData, options) => {
 
     // add event listeners
     network.on("select", function (params) {
-
-        console.log("selected ", params.nodes);
-
 
         const selectedNodeIds = params.nodes;
 

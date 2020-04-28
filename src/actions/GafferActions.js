@@ -46,9 +46,9 @@ export const fetchShortestPath = async (node1, node2) => {
 
 }
 
-export const fetchUploadGraph = async (data, schemaName, auths, graphDescription) => {
+export const fetchUploadGraph = async (data, schemaName, auths, graphDescription, delimiterType) => {
     
-    let response = await fetch(`http://localhost:8080/rest/loadCsv?name=${schemaName}&auths=${auths}&desc=${graphDescription}`, {
+    let response = await fetch(`http://localhost:8080/rest/loadCsv?name=${schemaName}&auths=${auths}&del=${delimiterType}&desc=${graphDescription}`, {
         method: "POST",        
         body: data
     });
@@ -57,9 +57,9 @@ export const fetchUploadGraph = async (data, schemaName, auths, graphDescription
     
 }
 
-export const fetchUploadDataGraph = async (data, schemaName) => {
+export const fetchUploadDataGraph = async (data, schemaName, delimiterType) => {
     
-    let response = await fetch(`http://localhost:8080/rest/loadData?name=${schemaName}`, {
+    let response = await fetch(`http://localhost:8080/rest/loadData?name=${schemaName}&del=${delimiterType}`, {
         method: "POST",        
         body: data
     });

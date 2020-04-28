@@ -62,10 +62,18 @@ export const DETAILED_COLUMNS = {
     },
 }
 
-export const validateCsvFile = (data, fileName) => {
+export const validateFile = (data, fileName, delimiterType) => {
 
     console.log("validate file ", fileName);
-    
+
+    let delimter = ",";
+
+    if (delimiterType === "space") {
+        delimter = "";
+    } else if (delimiterType === "tab") {
+        delimter = "\t";
+    }
+
     let validationResponse = "No data";
     
     if (data) {
@@ -73,11 +81,11 @@ export const validateCsvFile = (data, fileName) => {
         const firstLine = data.substring(0, data.indexOf("\n"));
         
         if (firstLine) {
-            const columnCount = firstLine.split(",").length;        
+            const columnCount = firstLine.split(delimter).length;        
             if (columnCount === SIMPLE_COLUMN_COUNT) {
-                validationResponse = "Uploading 2 coulum CSV file";
+                validationResponse = `Uploading 2 coulum ${delimiterType} file`;
             } else if (columnCount === DETAIL_COLUMN_COUNT) {
-                validationResponse = "Uploading 9 coulum CSV file";
+                validationResponse = `Uploading 9 coulum ${delimiterType} file`;
             } else {
                 validationResponse =`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`;
             }

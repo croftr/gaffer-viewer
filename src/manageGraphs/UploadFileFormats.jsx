@@ -6,9 +6,9 @@ import { Tab, Tabs, Typography } from '@material-ui/core';
 import ColumnTable from "./createGraph/introduction/ColumnTable";
 import simpleCsv from "./images/simpleCsv.jpg";
 import detailCsv from "./images/detailCsv.jpg";
-import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "./utils/validateCsv"
+import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "./utils/validateUploadFile"
 
-const csvFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
+const fileFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
 const csvDescriptions = [
     "The detailed upload format allows control node and edge types as well as edge weights",
     "The detailed upload format allows control node and edge types as well as edge weights",
@@ -47,7 +47,7 @@ const styles = {
     },
 }
 
-export const CsvFormats = ({ classes, }) => {
+export const UploadFileFormats = ({ classes }) => {
 
     const [tabPage, setTabPage] = useState(0);
     const [csvFormatText, setCsvFormatText] = useState(csvDescriptions[0]);
@@ -58,7 +58,7 @@ export const CsvFormats = ({ classes, }) => {
     }
 
     return (
-        <div id="csvFormats">
+        <div id="fileFormats">
 
             <Typography paragraph>{csvFormatText}</Typography>
 
@@ -67,7 +67,7 @@ export const CsvFormats = ({ classes, }) => {
                 value={tabPage}
                 onChange={(event, value) => changeTabPage(value)}
                 aria-label="csvFormat">
-                {csvFormats.map(view => <Tab label={view} key={view} />)}
+                {fileFormats.map(view => <Tab label={view} key={view} />)}
             </Tabs>
 
             <div className={classes.tabContentWrapper}>
@@ -95,8 +95,8 @@ export const CsvFormats = ({ classes, }) => {
     )
 }
 
-CsvFormats.propTypes = {
+UploadFileFormats.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CsvFormats);
+export default withStyles(styles)(UploadFileFormats);

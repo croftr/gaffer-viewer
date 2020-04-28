@@ -18,7 +18,7 @@ import FinishedStep from "./steps/FinishedStep";
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
 import CloseIcon from "@material-ui/icons/Close"
-import { validateCsvFile } from "../utils/validateCsv";
+import { validateFile } from "../utils/validateUploadFile";
 
 const styles = {
     stepperContent: {
@@ -58,7 +58,8 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [auths, setAuths] = useState([]);
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
     const [uploadInProgress, setUploadInProgress] = useState(false);
-
+    const [delimiterType, setDelimiterType] = useState("comma");
+    
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
     }
@@ -104,7 +105,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const validationResponmse = validateCsvFile(e.target.result, "filename");
+            const validationResponmse = validateFile(e.target.result, "filename", delimiterType);
             setFileUploadMessage(validationResponmse);
         };
 
@@ -130,7 +131,8 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
             } else {
                 graphAuths = auths.join(",")
             }
-            const res = await fetchUploadGraph(formData, schemaName, graphAuths, graphDescription);
+            
+            const res = await fetchUploadGraph(formData, schemaName, graphAuths, graphDescription, delimiterType);
 
             if (res) {
                 setCreatedSchema(res);
@@ -303,7 +305,9 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 fileUploadMessage={fileUploadMessage}
                                 onResetUpload={onResetUpload}
                                 isUploadInProgress={uploadInProgress}
-                                createdSchema={createdSchema}
+                                createdSchema={createdSchema}                                
+                                setDelimiterType={setDelimiterType}
+                                delimiterType={delimiterType}
                             />
                         )}
 

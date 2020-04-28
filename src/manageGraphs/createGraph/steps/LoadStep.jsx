@@ -1,11 +1,16 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { 
-    Typography, 
-    Input, 
-    Button, 
-    CircularProgress 
+import {
+    Typography,
+    Input,
+    Button,
+    CircularProgress,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    FormControl,
+    FormLabel
 } from '@material-ui/core';
 
 import ValidIcon from '@material-ui/icons/CheckCircle';
@@ -24,7 +29,8 @@ const styles = {
     buttonArea: {
         display: "flex",
         alignItems: "center",
-        marginBottom: 16
+        marginBottom: 16,
+        marginTop:8
     },
     buttonTextArea: {
         display: "flex",
@@ -46,7 +52,9 @@ const LoadStep = ({
     fileUploadMessage,
     isUploadInProgress,
     isFromStepper = true,
-    createdSchema
+    createdSchema,
+    delimiterType,
+    setDelimiterType
 }) => {
 
     return (
@@ -54,6 +62,20 @@ const LoadStep = ({
             {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
 
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Delimter type</FormLabel>
+                    <RadioGroup
+                        aria-label="delimterType"
+                        name="Delimter Type"
+                        value={delimiterType}
+                        onChange={(e) => setDelimiterType(e.target.value)}
+                    >
+                        <FormControlLabel value="comma" control={<Radio />} label="Comma" />
+                        <FormControlLabel value="space" control={<Radio />} label="Space" />
+                        <FormControlLabel value="tab" control={<Radio />} label="Tab" />
+                    </RadioGroup>
+                </FormControl>
 
                 <div className={classes.buttonArea}>
                     <Button
@@ -158,7 +180,9 @@ LoadStep.propTypes = {
     schemaLoadFailed: PropTypes.bool,
     isUploadInProgress: PropTypes.bool,
     isFromStepper: PropTypes.bool,
-    createdSchema: PropTypes.object
+    createdSchema: PropTypes.object,
+    delimiterType: PropTypes.string,
+    setDelimiterType: PropTypes.func
 };
 
 export default withStyles(styles)(LoadStep);

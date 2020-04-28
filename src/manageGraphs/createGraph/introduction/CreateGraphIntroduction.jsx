@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Typography, Dialog, IconButton, DialogTitle, DialogContent } from '@material-ui/core';
 
 import CreateGraphStepper from "../CreateGraphStepper";
-import CsvFormats from "../../CsvFormats";
+import UploadFileFormats from "../../UploadFileFormats";
 
 import CloseIcon from "@material-ui/icons/Close"
 
@@ -36,7 +36,7 @@ const styles = {
         height: 500
     },
     tabContentWrapper: {
-        paddingTop: 16        
+        paddingTop: 16
     },
     button: {
         width: 250,
@@ -51,7 +51,7 @@ const styles = {
  */
 const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
 
-    const [isStarted, setisStarted] = useState(false);    
+    const [isStarted, setisStarted] = useState(false);
     const [isHelpPageOpen, setIsHelpPageOpen] = useState(false);
 
     return (
@@ -60,11 +60,11 @@ const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
                 <div id="intoductionContent" className={classes.marginTop16}>
 
                     <Typography>
-                        You can use this to create a graph and load data into it by uploading a CSV file
+                        You can use this to create a graph and load data into it by uploading a delimted file
                     </Typography>
-                    
+
                     <Typography paragraph>
-                        Various CSV formats are accepted. 
+                        Various formats and delimters are accepted.
                     </Typography>
 
                     <Typography paragraph>
@@ -72,26 +72,26 @@ const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
                     </Typography>
 
                     <div className={classes.buttonsWrapper}>
-                        <Button 
+                        <Button
                             className={classes.button}
-                            variant="contained" 
-                            color="primary" 
+                            variant="contained"
+                            color="primary"
                             onClick={() => setisStarted(true)}>
-                                OK LETS GET STARTED
+                            OK LETS GET STARTED
                         </Button>
 
-                        <Button 
+                        <Button
                             className={classes.button}
-                            variant="contained" 
+                            variant="contained"
                             onClick={() => setIsHelpPageOpen(true)}>
-                                REVIEW CSV FORMATS
+                            FILE FORMATS
                         </Button>
 
-                        <Button 
-                            className={classes.button}                            
-                            color="secondary"                             
+                        <Button
+                            className={classes.button}
+                            color="secondary"
                             onClick={onCloseDialog}>
-                                BACK TO MANAGE GRAPHS
+                            BACK TO MANAGE GRAPHS
                         </Button>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
 
                 <div className={classes.helpHeader}>
                     <DialogTitle>
-                        CSV formats
+                        File formats
                     </DialogTitle>
                     <IconButton onClick={() => setIsHelpPageOpen(false)}>
                         <CloseIcon />
@@ -111,8 +111,7 @@ const CreateGraphIntroduction = ({ classes, onCloseDialog, loadSchemas }) => {
                 </div>
 
                 <DialogContent dividers={true} className={classes.dialogContent}>
-
-                <CsvFormats />
+                    <UploadFileFormats />
                 </DialogContent>
             </Dialog>
 

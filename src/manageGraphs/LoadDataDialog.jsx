@@ -17,14 +17,13 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseIcon from '@material-ui/icons/Close';
 
-import CsvFormats from "./CsvFormats";
+import UploadFileFormats from "./UploadFileFormats";
 import LoadStep from "./createGraph/steps/LoadStep"
-import { validateCsvFile } from "./utils/validateCsv";
+import { validateFile } from "./utils/validateUploadFile";
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
 import MissingEdgeList from "./MissingEdgeList";
 
-import csvLogo from "./images/csv4.png"
 
 const styles = {
     loadDataHeader: {
@@ -51,7 +50,7 @@ const styles = {
     },
     expansionPanel: {
         marginBottom: 16
-    },    
+    },
 }
 
 const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
@@ -63,6 +62,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
     const [schemaLoadFailed, setSchemaLoadFailed] = useState(false);
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [uploadInProgress, setUploadInProgress] = useState(false);
+    const [delimiterType, setDelimiterType] = useState("comma");
 
     const close = () => {
         setCreatedSchema({});
@@ -84,7 +84,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const validationResponmse = validateCsvFile(e.target.result, "fileName");
+            const validationResponmse = validateFile(e.target.result, "fileName", delimiterType);
             setFileUploadMessage(validationResponmse);
         };
 
@@ -103,7 +103,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         try {
 
-            const res = await fetchUploadDataGraph(formData, schemaName);
+            const res = await fetchUploadDataGraph(formData, schemaName, delimiterType);
 
             if (res) {
                 setCreatedSchema(res);
@@ -142,13 +142,10 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                         aria-controls="csv-content"
                         id="csvExpandPanelHeader"
                     >
-                        <span className={classes.csvText}>
-                            <img src={csvLogo} height="32" className={classes.csvLogo} alt="csv" />
-                            <Typography paragraph>Supported CSV formats</Typography>
-                        </span>
+                        <Typography>Supported File formats</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.panelDetails}>
-                        <CsvFormats />
+                        <UploadFileFormats />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
 
@@ -165,9 +162,11 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     fileUploadMessage={fileUploadMessage}
                     isUploadInProgress={uploadInProgress}
                     createdSchema={createdSchema}
+                    delimiterType={delimiterType}
+                    setDelimiterType={setDelimiterType}
                 />
-                
-                <MissingEdgeList createdSchema={createdSchema} /> 
+
+                <MissingEdgeList createdSchema={createdSchema} />
 
             </DialogContent>
         </Dialog >
