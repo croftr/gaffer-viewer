@@ -58,7 +58,7 @@ const MenuProps = {
     },
 };
 
-const SecurityStep = ({ classes, onChangeAuths, auths, setAuthsRadioValue, authsRadioValue, isStepper }) => {
+const SecurityStep = ({ classes, onChangeAuths, auths, setAuthsRadioValue, authsRadioValue, isStepper, onApplyAuths }) => {
 
     return (
         <div className={classes.securityStep}>
@@ -109,7 +109,12 @@ const SecurityStep = ({ classes, onChangeAuths, auths, setAuthsRadioValue, auths
             )}
 
             {!isStepper && (
-                 <Button color="primary" variant="contained" className={classes.applyButton}>
+                 <Button 
+                    color="primary" 
+                    variant="contained" 
+                    className={classes.applyButton}
+                    onClick={onApplyAuths}
+                >
                      Apply
                  </Button>
             )}
@@ -125,7 +130,9 @@ SecurityStep.propTypes = {
     auths: PropTypes.array,
     setAuthsRadioValue: PropTypes.func,
     authsRadioValue: PropTypes.string,
-    isStepper: PropTypes.bool
+    isStepper: PropTypes.bool,
+    //only passed in from manage graphs page when access roles for existing graph as changed 
+    onApplyAuths: PropTypes.func
 };
 
 export default withStyles(styles)(SecurityStep);

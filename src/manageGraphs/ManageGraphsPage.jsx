@@ -173,6 +173,28 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
         setGraphToDelete(selectedGraph)
     }
 
+    const changeAccess = async () => {
+        
+        let graphAuths = (authsRadioValue === "everyone" || authsRadioValue === "justMe") ? null : auths;
+
+        const payload =   {
+            class: "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphAccess",
+            graphId: selectedGraph,
+            graphAuths,
+            isPublic: Boolean(authsRadioValue === "public"),
+            disabledByDefault: false,
+            options: null,
+            // ownerUserId: "0"
+        }
+
+        console.log("payload ", payload);
+
+        const response = await execute(payload);
+
+        console.log("response ", response);
+        
+    }
+
     const getGraphStats = async (graph) => {
 
         const response = await execute(
@@ -237,9 +259,9 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         <Typography variant="h6">{selectedGraph}</Typography>
 
                         {graphCreationStats.properties && (
-                            <GraphSummary 
-                                creationStats={graphCreationStats} 
-                                statusStats={graphStatusStats} 
+                            <GraphSummary
+                                creationStats={graphCreationStats}
+                                statusStats={graphStatusStats}
                             />
                         )}
 
@@ -353,6 +375,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                         authsRadioValue={authsRadioValue}
                         setAuthsRadioValue={setAuthsRadioValue}
                         isStepper={false}
+                        onApplyAuths={changeAccess}
                     />
                 </DialogContent>
             </Dialog>
