@@ -82,10 +82,9 @@ export const validateFile = (data, fileName, delimiterType) => {
         
         if (firstLine) {
             const columnCount = firstLine.split(delimter).length;        
-            if (columnCount === SIMPLE_COLUMN_COUNT) {
-                validationResponse = `Uploading 2 coulum ${delimiterType} file`;
-            } else if (columnCount === DETAIL_COLUMN_COUNT) {
-                validationResponse = `Uploading 9 coulum ${delimiterType} file`;
+            
+            if (columnCount === SIMPLE_COLUMN_COUNT || columnCount === DETAIL_COLUMN_COUNT) {
+                validationResponse = `Uploading ${columnCount} coulum ${delimiterType} delimited file`;            
             } else {
                 validationResponse =`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`;
             }
