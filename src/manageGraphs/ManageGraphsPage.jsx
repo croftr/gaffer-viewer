@@ -68,7 +68,7 @@ const styles = {
         height: "calc(100vh - 180px)"
     },
     actionButton: {
-        position: "absolute",
+        position: "fixed",
         bottom: 48,
         right: 48
     },
@@ -181,10 +181,10 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             class: "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphAccess",
             graphId: selectedGraph,
             graphAuths,
-            isPublic: Boolean(authsRadioValue === "public"),
+            isPublic: Boolean(authsRadioValue === "everyone"),
             disabledByDefault: false,
             options: null,
-            // ownerUserId: "0"
+            ownerUserId: "0"
         }
 
         console.log("payload ", payload);
