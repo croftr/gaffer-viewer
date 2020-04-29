@@ -146,20 +146,14 @@ const LoadStep = ({
                                 </tr>
                             </thead>
                             <tbody>
-                                {topLines.map( (row, index) => {
+                                {topLines.map((row, index) => {
 
                                     const delimiter = lookupDelimiter(delimiterType);
                                     const cells = row.split(delimiter);
-
                                     return (
-                                        cells.map((cell, index) => (
-                                            <tr key={`row-${index}`}>
-                                                <td>{cell}</td>
-                                            </tr>
-                                        )
-
-                                        )
-
+                                        <tr key={`row-${index}`}>
+                                             {  cells.map(cell => ( <td key={cell}>{cell}</td> ))  }
+                                        </tr>
                                     )
                                 })}
 

@@ -112,8 +112,9 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                 
             if (data) {
                 const topArray = data.split("\n");
-                const topLineCount = topArray.length > 4 ? 5 : topArray.length;
-                setTopLines(topArray.splice(0,topLineCount));
+                const topLineCount = topArray.length > 3 ? 4 : topArray.length;
+                //remove the first line in cases it is column headers
+                setTopLines(topArray.splice(1,topLineCount));
                 setColumnCount(validationResponmse.columnCount);
             }
                          
