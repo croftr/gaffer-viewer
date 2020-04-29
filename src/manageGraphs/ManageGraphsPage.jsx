@@ -175,8 +175,18 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
 
     const changeAccess = async () => {
         
-        let graphAuths = (authsRadioValue === "everyone" || authsRadioValue === "justMe") ? null : auths;
+        const userId = "Rob"
 
+        let graphAuths;
+        
+        if (authsRadioValue === "everyone") {
+            graphAuths = null;   
+        } else if (authsRadioValue === "justMe" ) {
+            graphAuths = [userId];  //TODO pull user id out of user object here    
+        } else {
+            graphAuths = auths;
+        }
+         
         const payload =   {
             class: "uk.gov.gchq.gaffer.federatedstore.operation.ChangeGraphAccess",
             graphId: selectedGraph,
@@ -184,11 +194,9 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
             isPublic: Boolean(authsRadioValue === "everyone"),
             disabledByDefault: false,
             options: null,
-            ownerUserId: "0"
+            ownerUserId: userId
         }
-
-        console.log("payload ", payload);
-
+        
         const response = await execute(payload);
 
         console.log("response ", response);
