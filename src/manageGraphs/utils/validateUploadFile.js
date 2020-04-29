@@ -62,19 +62,25 @@ export const DETAILED_COLUMNS = {
     },
 }
 
+export const lookupDelimiter = (delimterDescription) => {
+
+    switch (delimterDescription) {
+        case "space" : 
+            return " ";
+        case "tab" :
+            return "\t";
+        default:
+            return ","
+    }
+}
+
 export const validateFile = (data, fileName, delimiterType) => {
 
     console.log("validate file ", fileName);
 
-    let delimter = ",";
+    let delimter = lookupDelimiter(delimiterType);
 
-    if (delimiterType === "space") {
-        delimter = "";
-    } else if (delimiterType === "tab") {
-        delimter = "\t";
-    }
-
-    let validationResponse = "No data";
+    let validationResponse = { message: "No data", columnCount: 0 };
     
     if (data) {
         
@@ -84,9 +90,10 @@ export const validateFile = (data, fileName, delimiterType) => {
             const columnCount = firstLine.split(delimter).length;        
             
             if (columnCount === SIMPLE_COLUMN_COUNT || columnCount === DETAIL_COLUMN_COUNT) {
-                validationResponse = `Uploading ${columnCount} coulum ${delimiterType} delimited file`;            
+                validationResponse.message = `Uploading ${columnCount} coulum ${delimiterType} delimited file`;    
+                validationResponse.columnCount = columnCount;
             } else {
-                validationResponse =`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`;
+                validationResponse.message =`Invalid file format. Exepecting ${SIMPLE_COLUMN_COUNT} or ${DETAIL_COLUMN_COUNT} columns`;
             }
         }        
     }

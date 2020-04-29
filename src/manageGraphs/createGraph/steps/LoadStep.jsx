@@ -15,8 +15,9 @@ import {
 
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
-
 import LoadResultsTable from "../../LoadResultsTable";
+
+import { lookupDelimiter } from "../../utils/validateUploadFile";
 
 const styles = {
     button: {
@@ -30,7 +31,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         marginBottom: 16,
-        marginTop:8
+        marginTop: 8
     },
     buttonTextArea: {
         display: "flex",
@@ -54,7 +55,9 @@ const LoadStep = ({
     isFromStepper = true,
     createdSchema,
     delimiterType,
-    setDelimiterType
+    setDelimiterType,
+    topLines = [],
+    columnCount
 }) => {
 
     return (
@@ -114,6 +117,56 @@ const LoadStep = ({
                             )}
                         </div>}
                 </div>
+
+                {fileUploadMessage && topLines.length > 0 && !fileUploadMessage.startsWith("Invalid") && (
+                    <div id="uploadPreviewTable">
+                        <table>
+                            <thead>
+                                <tr>
+                                    {columnCount === 2 && (
+                                        <React.Fragment>
+                                            <th>From Node</th>
+                                            <th>To Node</th>
+                                        </React.Fragment>
+                                    )}
+                                    {columnCount === 9 && (
+                                        <React.Fragment>
+                                            <th>From Type</th>
+                                            <th>From SubType</th>
+                                            <th>From Value</th>
+                                            <th>Edge Type</th>
+                                            <th>Directed</th>
+                                            <th>Edge Weight</th>
+                                            <th>To Type</th>
+                                            <th>To SubType</th>
+                                            <th>To Value</th>
+                                        </React.Fragment>
+                                    )}
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {topLines.map( (row, index) => {
+
+                                    const delimiter = lookupDelimiter(delimiterType);
+                                    const cells = row.split(delimiter);
+
+                                    return (
+                                        cells.map((cell, index) => (
+                                            <tr key={`row-${index}`}>
+                                                <td>{cell}</td>
+                                            </tr>
+                                        )
+
+                                        )
+
+                                    )
+                                })}
+
+                            </tbody>
+                        </table>
+                    </div>
+                )}
 
                 <div className={classes.buttonArea}>
                     <Button
@@ -182,7 +235,9 @@ LoadStep.propTypes = {
     isFromStepper: PropTypes.bool,
     createdSchema: PropTypes.object,
     delimiterType: PropTypes.string,
-    setDelimiterType: PropTypes.func
+    setDelimiterType: PropTypes.func,
+    topLines: PropTypes.array,
+    columnCount: PropTypes.number
 };
 
 export default withStyles(styles)(LoadStep);

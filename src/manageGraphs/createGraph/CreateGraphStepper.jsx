@@ -59,6 +59,8 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
     const [authsRadioValue, setAuthsRadioValue] = useState('justMe');
     const [uploadInProgress, setUploadInProgress] = useState(false);
     const [delimiterType, setDelimiterType] = useState("comma");
+    const [topLines, setTopLines] = useState([]);
+    const [columnCount, setColumnCount] = useState(undefined);
     
     const onChangeSchemaName = (e) => {
         setSchemaName(e.target.value);
@@ -105,8 +107,17 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const validationResponmse = validateFile(e.target.result, "filename", delimiterType);
-            setFileUploadMessage(validationResponmse);
+            const data = e.target.result;
+            const validationResponmse = validateFile(data, "filename", delimiterType);
+                
+            if (data) {
+                const topArray = data.split("\n");
+                const topLineCount = topArray.length > 4 ? 5 : topArray.length;
+                setTopLines(topArray.splice(0,topLineCount));
+                setColumnCount(validationResponmse.columnCount);
+            }
+                         
+            setFileUploadMessage(validationResponmse.message);
         };
 
         reader.readAsText(e.target.files[0]);
@@ -313,6 +324,8 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 createdSchema={createdSchema}                                
                                 setDelimiterType={onChangeDelimer}
                                 delimiterType={delimiterType}
+                                topLines={topLines}
+                                columnCount={columnCount}
                             />
                         )}
 
