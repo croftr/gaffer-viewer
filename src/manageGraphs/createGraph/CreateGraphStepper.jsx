@@ -245,12 +245,6 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                 graphId: `${schemaName}`
             }
         );
-
-    }
-
-    const onChangeDelimer = (value) => {
-        onResetUpload();
-        setDelimiterType(value);
     }
 
     return (
@@ -314,7 +308,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 onResetUpload={onResetUpload}
                                 isUploadInProgress={uploadInProgress}
                                 createdSchema={createdSchema}                                
-                                setDelimiterType={onChangeDelimer}
+                                setDelimiterType={setDelimiterType}
                                 delimiterType={delimiterType}
                                 topLines={topLines}
                                 columnCount={columnCount}
