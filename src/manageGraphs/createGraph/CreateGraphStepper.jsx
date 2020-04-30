@@ -238,6 +238,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         setNameValidationStatus({ isValid: true, message: 'unknown' })
         setFileUploadMessage("")
         setUploadInProgress(false);
+        setTopLines([]);
 
         execute(
             {
