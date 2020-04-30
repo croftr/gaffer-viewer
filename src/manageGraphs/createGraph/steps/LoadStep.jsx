@@ -90,9 +90,21 @@ const LoadStep = ({
                         value={delimiterType}
                         onChange={(e) => setDelimiterType(e.target.value)}
                     >
-                        <FormControlLabel value="comma" control={<Radio disabled={isLoadSuccess} />} label="Comma" />
-                        <FormControlLabel value="space" control={<Radio disabled={isLoadSuccess} />} label="Space" />
-                        <FormControlLabel value="tab" control={<Radio disabled={isLoadSuccess} />} label="Tab" />
+                        <FormControlLabel 
+                            value="comma" 
+                            control={<Radio disabled={isLoadSuccess} />} 
+                            label="Comma" 
+                        />
+                        <FormControlLabel 
+                            value="space" 
+                            control={<Radio disabled={isLoadSuccess} />} 
+                            label="Space" 
+                        />
+                        <FormControlLabel 
+                            value="tab" 
+                            control={<Radio disabled={isLoadSuccess} />} 
+                            label="Tab" 
+                        />
                     </RadioGroup>
                 </FormControl>
 
@@ -189,7 +201,6 @@ const LoadStep = ({
                     />
                 }
             </div>
-
         </div>
     )
 }
