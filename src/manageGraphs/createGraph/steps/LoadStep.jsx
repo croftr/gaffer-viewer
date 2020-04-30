@@ -76,8 +76,8 @@ const LoadStep = ({
 }) => {
 
     return (
-        <div>
 
+        <>
             {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
 
             <div className={classes.inputArea}>
@@ -201,7 +201,7 @@ const LoadStep = ({
                     />
                 }
             </div>
-        </div>
+        </>
     )
 }
 

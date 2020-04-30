@@ -174,4 +174,3 @@ export const processExistingFile = (delimterType, topLines) => {
     return result;
 
 }
-
