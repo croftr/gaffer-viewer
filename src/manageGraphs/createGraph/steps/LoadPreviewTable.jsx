@@ -56,7 +56,7 @@ const LoadPreviewTable = ({
     return (
 
         <div id="loadPreviewTable">
-            <Typography>Preview</Typography>
+            <Typography>Preview with {delimiterType} delimter</Typography>
             <table>
                 <thead>
                     <tr>
