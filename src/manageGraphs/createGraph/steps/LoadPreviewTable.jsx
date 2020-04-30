@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, StylesProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { lookupDelimiter } from "../../utils/validateUploadFile";
 import { Typography } from '@material-ui/core';

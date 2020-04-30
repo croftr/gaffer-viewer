@@ -20,8 +20,6 @@ import InvalidIcon from '@material-ui/icons/Clear';
 import LoadPreviewTable from "./LoadPreviewTable";
 import LoadResultsTable from "../../LoadResultsTable";
 
-import { lookupDelimiter } from "../../utils/validateUploadFile";
-
 const styles = {
     button: {
         width: 200,
