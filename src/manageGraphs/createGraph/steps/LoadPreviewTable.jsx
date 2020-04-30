@@ -64,7 +64,7 @@ const LoadPreviewTable = ({
                             <React.Fragment>
                                 {Object.keys(SIMPLE_COLUMNS).map(key => (
                                     <th key={key} className={classes.headerCell}>{key}</th>
-                                ))}                                
+                                ))}
                             </React.Fragment>
                         )}
                         {columnCount === 9 && ( //todo loop
@@ -83,7 +83,14 @@ const LoadPreviewTable = ({
                         const cells = row.split(delimiter);
                         return (
                             <tr key={`row-${index}`}>
-                                {cells.map((cell, cellIndex) => (<td className={classes.cell} key={`cell-${cell}-${index}-${cellIndex}`}>{cell}</td>))}
+                                {cells.map((cell, cellIndex) => (
+                                    <td
+                                        className={classes.cell}
+                                        key={`cell-${cell}-${index}-${cellIndex}`}
+                                    >
+                                        {cell}
+                                    </td>
+                                ))}
                             </tr>
                         )
                     })}
