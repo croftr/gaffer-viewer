@@ -3,7 +3,7 @@ import { validateFile } from "./validateUploadFile";
 export const readFile = (e, delimter) => {
 
     const result = {}
-    
+    var reader = new FileReader();
 
     // read csv file as text 
     reader.onload = (e) => {
@@ -29,7 +29,7 @@ export const readFile = (e, delimter) => {
 
     };
 
-    
+    reader.readAsText(e.target.files[0]);
 
     return result;
 
