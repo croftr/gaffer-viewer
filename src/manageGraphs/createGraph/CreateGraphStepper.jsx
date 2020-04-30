@@ -108,17 +108,17 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         // read csv file as text 
         reader.onload = (e) => {
             const data = e.target.result;
-            const validationResponmse = validateFile(data, "filename", delimiterType);
+            const validationResponse = validateFile(data, "filename", delimiterType);
                 
             if (data) {
                 const topArray = data.split("\n");
                 const topLineCount = topArray.length > 3 ? 4 : topArray.length;
                 //remove the first line in cases it is column headers
                 setTopLines(topArray.splice(1,topLineCount));
-                setColumnCount(validationResponmse.columnCount);
+                setColumnCount(validationResponse.columnCount);
             }
                          
-            setFileUploadMessage(validationResponmse.message);
+            setFileUploadMessage(validationResponse.message);
         };
 
         reader.readAsText(e.target.files[0]);

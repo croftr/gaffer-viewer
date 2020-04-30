@@ -13,9 +13,9 @@ const styles = {
         overflowY: "auto" 
     },
     tableWrapper: {
-        maxHeight: 300,
+        maxHeight: 280,
         overflowY: "auto"
-    }
+    },
 }
 
 export const Legend = ({ classes, statusStats, selected, setSelected, setHovered }) => {

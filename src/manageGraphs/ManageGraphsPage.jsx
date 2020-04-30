@@ -49,7 +49,7 @@ const styles = {
         width: 320,
         marginRight: 8,
     },
-    manageGraphsHeader: {
+    manageGraphButtons: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -273,7 +273,7 @@ export const ManageGraphsPage = ({ classes, graphs, loadGraph, schema, onDeleteG
                             />
                         )}
 
-                        <div className={classes.manageGraphsHeader}>
+                        <div className={classes.manageGraphButtons}>
 
                             <div className={classes.buttonWrapper}>
 

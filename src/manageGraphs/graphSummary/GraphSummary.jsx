@@ -17,7 +17,9 @@ const styles = {
     graphSummary: {
         display: "flex",
         justifyContent: "space-between",
-        marginBottom: 16
+        marginBottom: 16,
+        maxHeight: 300,
+        minHeight: 300,        
     },
     textSummary: {
         flex: 1

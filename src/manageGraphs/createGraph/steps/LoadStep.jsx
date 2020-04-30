@@ -13,8 +13,11 @@ import {
     FormLabel
 } from '@material-ui/core';
 
+
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
+
+import LoadPreviewTable from "./LoadPreviewTable";
 import LoadResultsTable from "../../LoadResultsTable";
 
 import { lookupDelimiter } from "../../utils/validateUploadFile";
@@ -37,7 +40,18 @@ const styles = {
         display: "flex",
         alignItems: "center",
         marginLeft: 16
-    }
+    },
+    cell: {
+        border: "1px solid lightGrey",
+        padding: 4
+    },
+    headerCell: {
+        border: "1px solid lightGrey",
+        color: "black",
+        background: "lightGrey",
+        fontWeight: "normal",
+        padding: 4
+    },
 }
 
 const LoadStep = ({
@@ -62,6 +76,7 @@ const LoadStep = ({
 
     return (
         <div>
+
             {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
 
             <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
@@ -119,47 +134,11 @@ const LoadStep = ({
                 </div>
 
                 {fileUploadMessage && topLines.length > 0 && !fileUploadMessage.startsWith("Invalid") && (
-                    <div id="uploadPreviewTable">
-                        <table>
-                            <thead>
-                                <tr>
-                                    {columnCount === 2 && (
-                                        <React.Fragment>
-                                            <th>From Node</th>
-                                            <th>To Node</th>
-                                        </React.Fragment>
-                                    )}
-                                    {columnCount === 9 && (
-                                        <React.Fragment>
-                                            <th>From Type</th>
-                                            <th>From SubType</th>
-                                            <th>From Value</th>
-                                            <th>Edge Type</th>
-                                            <th>Directed</th>
-                                            <th>Edge Weight</th>
-                                            <th>To Type</th>
-                                            <th>To SubType</th>
-                                            <th>To Value</th>
-                                        </React.Fragment>
-                                    )}
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {topLines.map((row, index) => {
-
-                                    const delimiter = lookupDelimiter(delimiterType);
-                                    const cells = row.split(delimiter);
-                                    return (
-                                        <tr key={`row-${index}`}>
-                                             {  cells.map(cell => ( <td key={cell}>{cell}</td> ))  }
-                                        </tr>
-                                    )
-                                })}
-
-                            </tbody>
-                        </table>
-                    </div>
+                    <LoadPreviewTable
+                        delimiterType={delimiterType}
+                        topLines={topLines}
+                        columnCount={columnCount}
+                    />
                 )}
 
                 <div className={classes.buttonArea}>

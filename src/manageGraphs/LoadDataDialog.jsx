@@ -63,6 +63,8 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
     const [fileUploadMessage, setFileUploadMessage] = useState("");
     const [uploadInProgress, setUploadInProgress] = useState(false);
     const [delimiterType, setDelimiterType] = useState("comma");
+    const [topLines, setTopLines] = useState([]);
+    const [columnCount, setColumnCount] = useState(undefined);
 
     const close = () => {
         setCreatedSchema({});
@@ -84,8 +86,20 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const validationResponmse = validateFile(e.target.result, "fileName", delimiterType);
-            setFileUploadMessage(validationResponmse);
+
+            const data = e.target.result;
+            const validationResponse = validateFile(data, "filename", delimiterType);
+
+            if (data) {
+                const topArray = data.split("\n");
+                const topLineCount = topArray.length > 3 ? 4 : topArray.length;
+                //remove the first line in cases it is column headers
+                setTopLines(topArray.splice(1, topLineCount));
+                setColumnCount(validationResponse.columnCount);
+            }
+
+            setFileUploadMessage(validationResponse.message);
+
         };
 
         reader.readAsText(e.target.files[0]);
@@ -164,6 +178,8 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     createdSchema={createdSchema}
                     delimiterType={delimiterType}
                     setDelimiterType={setDelimiterType}
+                    topLines={topLines}
+                    columnCount={columnCount}
                 />
 
                 <MissingEdgeList createdSchema={createdSchema} />
