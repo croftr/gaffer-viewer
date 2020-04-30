@@ -34,7 +34,7 @@ const FinishedStep = ({ classes, schemaName, onCloseDialog }) => {
 
   return (
     <div>
-      <Typography color="primary" variant="h4" paragraph>
+      <Typography color="primary" variant="h5" paragraph>
         Graph {schemaName} has been successfully created!
       </Typography>
 

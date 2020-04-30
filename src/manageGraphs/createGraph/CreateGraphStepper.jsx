@@ -18,7 +18,7 @@ import FinishedStep from "./steps/FinishedStep";
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
 import CloseIcon from "@material-ui/icons/Close"
-import { validateFile } from "../utils/validateUploadFile";
+import { processFile } from "../utils/fileUtils"
 
 const styles = {
     stepperContent: {
@@ -107,19 +107,10 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-                        
-            const data = e.target.result;
-            const validationResponse = validateFile(data, "filename", delimiterType);
-                
-            if (data) {
-                const topArray = data.split("\n");
-                const topLineCount = topArray.length > 3 ? 4 : topArray.length;
-                //remove the first line in cases it is column headers
-                setTopLines(topArray.splice(1,topLineCount));
-                setColumnCount(validationResponse.columnCount);
-            }
-                         
-            setFileUploadMessage(validationResponse.message);
+            const loadResult = processFile(e, delimiterType);
+            setTopLines(loadResult.topLines);
+            setColumnCount(loadResult.columnCount);                                    
+            setFileUploadMessage(loadResult.message);
         };
 
         reader.readAsText(e.target.files[0]);

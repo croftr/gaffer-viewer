@@ -1,35 +1,35 @@
 import { validateFile } from "./validateUploadFile";
 
-export const readFile = (e, delimter) => {
+/**
+ * Read data a text from file uploaded.  
+ * Also validate it and return a preview of the top few lines to be displayed
+ * 
+ * @param {Object} e - DOM Event 
+ * @param {string} delimter - used to define columns in files
+ */
+export const processFile = (e, delimter) => {
 
     const result = {}
-    var reader = new FileReader();
 
-    // read csv file as text 
-    reader.onload = (e) => {
+    const data = e.target.result;
+    const validationResponse = validateFile(data, "filename", delimter);
 
-        const data = e.target.result;
-        const validationResponse = validateFile(data, "filename", delimter);
+    if (data) {
+        
+        const topArray = data.split("\n");
 
-        if (data) {
-                            
-            const topArray = data.split("\n");
-            
-            const topLineCount = topArray.length > 5 ? 5 : topArray.length;
-            //ignore the first line in cases it is column headers
-            const previewLines = topArray.splice(1, topLineCount);
+        //take top 5 lines for the preview unless the file has less than 5 lines
+        const topLineCount = topArray.length > 5 ? 5 : topArray.length;
 
-            
-            result.topLines = previewLines;
-            result.columnCount = validationResponse.columnCount;
-                            
-        }
+        //ignore the first line in cases it is column headers
+        const previewLines = topArray.splice(1, topLineCount);
 
-        result.fileUploadMessage = validationResponse.message;
+        result.topLines = previewLines;
+        result.columnCount = validationResponse.columnCount;
 
-    };
+    }
 
-    reader.readAsText(e.target.files[0]);
+    result.message = validationResponse.message;
 
     return result;
 

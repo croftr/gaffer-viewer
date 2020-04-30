@@ -19,12 +19,11 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import UploadFileFormats from "./UploadFileFormats";
 import LoadStep from "./createGraph/steps/LoadStep"
-import { validateFile } from "./utils/validateUploadFile";
 import { fetchUploadDataGraph } from "../actions/GafferActions"
 
 import MissingEdgeList from "./MissingEdgeList";
 
-import { readFile } from "./utils/fileUtils"
+import { processFile } from "./utils/fileUtils"
 
 const styles = {
     loadDataHeader: {
@@ -82,33 +81,15 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
-
-        // const readFileResponse = readFile(e);
-
+        
         var reader = new FileReader();
 
-        // read csv file as text 
+        // read file as text 
         reader.onload = (e) => {
-
-            const data = e.target.result;
-            const validationResponse = validateFile(data, "filename", delimiterType);
-
-            if (data) {
-                                
-                const topArray = data.split("\n");
-                
-                const topLineCount = topArray.length > 5 ? 5 : topArray.length;
-                //ignore the first line in cases it is column headers
-                const previewLines = topArray.splice(1, topLineCount);
-
-                
-                setTopLines(previewLines);
-                setColumnCount(validationResponse.columnCount);
-                                
-            }
-
-            setFileUploadMessage(validationResponse.message);
-
+            const loadResult = processFile(e, delimiterType);
+            setTopLines(loadResult.topLines);
+            setColumnCount(loadResult.columnCount);                                    
+            setFileUploadMessage(loadResult.message);
         };
 
         reader.readAsText(e.target.files[0]);
