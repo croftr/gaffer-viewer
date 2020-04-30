@@ -107,6 +107,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
+                        
             const data = e.target.result;
             const validationResponse = validateFile(data, "filename", delimiterType);
                 

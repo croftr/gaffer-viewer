@@ -24,6 +24,7 @@ import { fetchUploadDataGraph } from "../actions/GafferActions"
 
 import MissingEdgeList from "./MissingEdgeList";
 
+import { readFile } from "./utils/fileUtils"
 
 const styles = {
     loadDataHeader: {
@@ -82,6 +83,8 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
 
+        // const readFileResponse = readFile(e);
+
         var reader = new FileReader();
 
         // read csv file as text 
@@ -91,11 +94,17 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
             const validationResponse = validateFile(data, "filename", delimiterType);
 
             if (data) {
+                                
                 const topArray = data.split("\n");
-                const topLineCount = topArray.length > 3 ? 4 : topArray.length;
-                //remove the first line in cases it is column headers
-                setTopLines(topArray.splice(1, topLineCount));
+                
+                const topLineCount = topArray.length > 5 ? 5 : topArray.length;
+                //ignore the first line in cases it is column headers
+                const previewLines = topArray.splice(1, topLineCount);
+
+                
+                setTopLines(previewLines);
                 setColumnCount(validationResponse.columnCount);
+                                
             }
 
             setFileUploadMessage(validationResponse.message);
@@ -111,8 +120,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
         setUploadInProgress(true);
         setSchemaLoadFailed(false);
 
-        const formData = new FormData();
-
+        const formData = new FormData();        
         formData.append('file', file);
 
         try {

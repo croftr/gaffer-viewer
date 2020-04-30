@@ -87,7 +87,7 @@ const LoadPreviewTable = ({
                         const cells = row.split(delimiter);
                         return (
                             <tr key={`row-${index}`}>
-                                {cells.map(cell => (<td className={classes.cell} key={cell}>{cell}</td>))}
+                                {cells.map( (cell, cellIndex) => (<td className={classes.cell} key={`cell-${cell}-${index}-${cellIndex}`}>{cell}</td>))}
                             </tr>
                         )
                     })}
