@@ -123,7 +123,6 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         setSchemaLoadFailed(false);
 
         const formData = new FormData();
-
         formData.append('file', file);
 
         try {

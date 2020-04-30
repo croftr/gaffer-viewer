@@ -136,7 +136,9 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
             </div>
             <DialogContent dividers className={classes.dialog}>
                 <Typography className={classes.loadSubText}>
-                    You can load data into you existing graph here.  You can only add edge groups that already exist.  To add new edge groups you will first need to modify your existing Schema.
+                    You can load data into you existing graph here.  
+                    You can only add edge groups that already exist.  
+                    To add new edge groups you will first need to modify your existing Schema.
                 </Typography>
 
                 <ExpansionPanel className={classes.expansionPanel}>

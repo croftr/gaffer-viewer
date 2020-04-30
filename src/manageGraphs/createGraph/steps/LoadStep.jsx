@@ -13,7 +13,6 @@ import {
     FormLabel
 } from '@material-ui/core';
 
-
 import ValidIcon from '@material-ui/icons/CheckCircle';
 import InvalidIcon from '@material-ui/icons/Clear';
 
@@ -21,6 +20,10 @@ import LoadPreviewTable from "./LoadPreviewTable";
 import LoadResultsTable from "../../LoadResultsTable";
 
 const styles = {
+    inputArea: {
+        display: "flex",
+        flexDirection: "column"
+    },
     button: {
         width: 200,
         overflow: "hidden",
@@ -77,7 +80,7 @@ const LoadStep = ({
 
             {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
 
-            <div className='inputArea' style={{ display: "flex", flexDirection: "column" }}>
+            <div className={classes.inputArea}>
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Delimter type</FormLabel>
@@ -87,9 +90,9 @@ const LoadStep = ({
                         value={delimiterType}
                         onChange={(e) => setDelimiterType(e.target.value)}
                     >
-                        <FormControlLabel value="comma" control={<Radio />} label="Comma" />
-                        <FormControlLabel value="space" control={<Radio />} label="Space" />
-                        <FormControlLabel value="tab" control={<Radio />} label="Tab" />
+                        <FormControlLabel value="comma" control={<Radio disabled={isLoadSuccess} />} label="Comma" />
+                        <FormControlLabel value="space" control={<Radio disabled={isLoadSuccess} />} label="Space" />
+                        <FormControlLabel value="tab" control={<Radio disabled={isLoadSuccess} />} label="Tab" />
                     </RadioGroup>
                 </FormControl>
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { lookupDelimiter } from "../../utils/validateUploadFile";
 import { Typography } from '@material-ui/core';
 
+import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateUploadFile"
+
 const styles = {
     button: {
         width: 200,
@@ -38,15 +40,15 @@ const styles = {
         position: "relative",
         top: -10,
         height: 20,
-        width: "90%",        
+        width: "90%",
         background: "#ffffff9e",
 
     }
 }
 
 const LoadPreviewTable = ({
-    classes,    
-    delimiterType,    
+    classes,
+    delimiterType,
     topLines = [],
     columnCount
 }) => {
@@ -60,24 +62,18 @@ const LoadPreviewTable = ({
                     <tr>
                         {columnCount === 2 && (
                             <React.Fragment>
-                                <th className={classes.headerCell}>From Node</th>
-                                <th className={classes.headerCell}>To Node</th>
+                                {Object.keys(SIMPLE_COLUMNS).map(key => (
+                                    <th key={key} className={classes.headerCell}>{key}</th>
+                                ))}                                
                             </React.Fragment>
                         )}
                         {columnCount === 9 && ( //todo loop
                             <React.Fragment>
-                                <th className={classes.headerCell}>From Type</th>
-                                <th className={classes.headerCell}>From SubType</th>
-                                <th className={classes.headerCell}>From Value</th>
-                                <th className={classes.headerCell}>Edge Type</th>
-                                <th className={classes.headerCell}>Directed</th>
-                                <th className={classes.headerCell}>Edge Weight</th>
-                                <th className={classes.headerCell}>To Type</th>
-                                <th className={classes.headerCell}>To SubType</th>
-                                <th className={classes.headerCell}>To Value</th>
+                                {Object.keys(DETAILED_COLUMNS).map(key => (
+                                    <th key={key} className={classes.headerCell}>{key}</th>
+                                ))}
                             </React.Fragment>
                         )}
-
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +83,7 @@ const LoadPreviewTable = ({
                         const cells = row.split(delimiter);
                         return (
                             <tr key={`row-${index}`}>
-                                {cells.map( (cell, cellIndex) => (<td className={classes.cell} key={`cell-${cell}-${index}-${cellIndex}`}>{cell}</td>))}
+                                {cells.map((cell, cellIndex) => (<td className={classes.cell} key={`cell-${cell}-${index}-${cellIndex}`}>{cell}</td>))}
                             </tr>
                         )
                     })}
