@@ -7,7 +7,7 @@ import { validateFile } from "./validateUploadFile";
  * @param {Object} e - DOM Event 
  * @param {string} delimter - used to define columns in files
  */
-export const processFile = (e, delimter) => {
+export const processNewFile = (e, delimter) => {
 
     const result = {}
 
@@ -34,3 +34,31 @@ export const processFile = (e, delimter) => {
     return result;
 
 }
+
+/**
+ * If a file has already been uploaded but we are just changing the delimter type then re-process
+ * 
+ * @param {string} delimterType the new delimter file to split file columns with 
+ * @param {array} topLines - the current array of preview lines to be processed against the new delimiter
+ */
+export const processExistingFile = (delimterType, topLines) => {
+
+    const result = {}
+    
+    //convert back to original format when read in of string with new lines 
+    const data = topLines.join("\n");
+    
+    const validationResponse = validateFile(data, "filename", delimterType);
+
+    if (data) {        
+        const topArray = data.split("\n");
+        result.topLines = topArray;
+        result.columnCount = validationResponse.columnCount;
+    }
+
+    result.message = validationResponse.message;
+
+    return result;
+
+}
+

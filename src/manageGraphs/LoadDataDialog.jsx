@@ -23,7 +23,7 @@ import { fetchUploadDataGraph } from "../actions/GafferActions"
 
 import MissingEdgeList from "./MissingEdgeList";
 
-import { processFile } from "./utils/fileUtils"
+import { processNewFile, processExistingFile } from "./utils/fileUtils"
 
 const styles = {
     loadDataHeader: {
@@ -81,14 +81,14 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
 
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
-        
+
         var reader = new FileReader();
 
         // read file as text 
         reader.onload = (e) => {
-            const loadResult = processFile(e, delimiterType);
+            const loadResult = processNewFile(e, delimiterType);
             setTopLines(loadResult.topLines);
-            setColumnCount(loadResult.columnCount);                                    
+            setColumnCount(loadResult.columnCount);
             setFileUploadMessage(loadResult.message);
         };
 
@@ -101,7 +101,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
         setUploadInProgress(true);
         setSchemaLoadFailed(false);
 
-        const formData = new FormData();        
+        const formData = new FormData();
         formData.append('file', file);
 
         try {
@@ -125,6 +125,18 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
         }
     };
 
+    const onChangeDelimter = (value) => {
+                                
+        if (topLines && topLines.length > 0) {
+            const loadResult = processExistingFile(value, topLines);            
+            setTopLines(loadResult.topLines);
+            setColumnCount(loadResult.columnCount);
+            setFileUploadMessage(loadResult.message);
+        }
+
+        setDelimiterType(value);
+    }
+
     return (
         <Dialog aria-labelledby="loadDataDialog" open={isLoadOpen} maxWidth={false}>
             <div className={classes.loadDataHeader}>
@@ -136,8 +148,8 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
             </div>
             <DialogContent dividers className={classes.dialog}>
                 <Typography className={classes.loadSubText}>
-                    You can load data into you existing graph here.  
-                    You can only add edge groups that already exist.  
+                    You can load data into you existing graph here.
+                    You can only add edge groups that already exist.
                     To add new edge groups you will first need to modify your existing Schema.
                 </Typography>
 
@@ -168,7 +180,7 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
                     isUploadInProgress={uploadInProgress}
                     createdSchema={createdSchema}
                     delimiterType={delimiterType}
-                    setDelimiterType={setDelimiterType}
+                    setDelimiterType={onChangeDelimter}
                     topLines={topLines}
                     columnCount={columnCount}
                 />

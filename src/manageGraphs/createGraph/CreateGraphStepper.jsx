@@ -18,7 +18,7 @@ import FinishedStep from "./steps/FinishedStep";
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
 import CloseIcon from "@material-ui/icons/Close"
-import { processFile } from "../utils/fileUtils"
+import { processNewFile, processExistingFile } from "../utils/fileUtils"
 
 const styles = {
     stepperContent: {
@@ -107,7 +107,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
 
         // read csv file as text 
         reader.onload = (e) => {
-            const loadResult = processFile(e, delimiterType);
+            const loadResult = processNewFile(e, delimiterType);
             setTopLines(loadResult.topLines);
             setColumnCount(loadResult.columnCount);                                    
             setFileUploadMessage(loadResult.message);
@@ -247,6 +247,18 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
         );
     }
 
+    const onChangeDelimter = (value) => {
+                                
+        if (topLines && topLines.length > 0) {
+            const loadResult = processExistingFile(value, topLines);            
+            setTopLines(loadResult.topLines);
+            setColumnCount(loadResult.columnCount);
+            setFileUploadMessage(loadResult.message);
+        }
+
+        setDelimiterType(value);
+    }
+
     return (
 
         <div >
@@ -308,7 +320,7 @@ const CreateGraphStepper = ({ classes, onCloseDialog, loadSchemas }) => {
                                 onResetUpload={onResetUpload}
                                 isUploadInProgress={uploadInProgress}
                                 createdSchema={createdSchema}                                
-                                setDelimiterType={setDelimiterType}
+                                setDelimiterType={onChangeDelimter}
                                 delimiterType={delimiterType}
                                 topLines={topLines}
                                 columnCount={columnCount}
