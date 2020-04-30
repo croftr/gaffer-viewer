@@ -18,7 +18,7 @@ import FinishedStep from "./steps/FinishedStep";
 import BackIcon from "@material-ui/icons/NavigateBefore"
 import NextIcon from "@material-ui/icons/NavigateNext"
 import CloseIcon from "@material-ui/icons/Close"
-import { processNewFile, processExistingFile } from "../utils/fileUtils"
+import { processNewFile, processExistingFile } from "../utils/uploadFileUtils"
 
 const styles = {
     stepperContent: {

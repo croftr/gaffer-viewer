@@ -23,7 +23,7 @@ import { fetchUploadDataGraph } from "../actions/GafferActions"
 
 import MissingEdgeList from "./MissingEdgeList";
 
-import { processNewFile, processExistingFile } from "./utils/fileUtils"
+import { processNewFile, processExistingFile } from "./utils/uploadFileUtils"
 
 const styles = {
     loadDataHeader: {

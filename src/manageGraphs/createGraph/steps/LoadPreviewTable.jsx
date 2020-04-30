@@ -1,10 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { lookupDelimiter } from "../../utils/validateUploadFile";
+import { lookupDelimiter } from "../../utils/uploadFileUtils";
 import { Typography } from '@material-ui/core';
 
-import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/validateUploadFile"
+import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "../../utils/uploadFileUtils"
 
 const styles = {
     button: {

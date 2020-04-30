@@ -6,9 +6,10 @@ import { Tab, Tabs, Typography } from '@material-ui/core';
 import ColumnTable from "./createGraph/introduction/ColumnTable";
 import simpleCsv from "./images/simpleCsv.jpg";
 import detailCsv from "./images/detailCsv.jpg";
-import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "./utils/validateUploadFile"
+import { DETAILED_COLUMNS, SIMPLE_COLUMNS } from "./utils/uploadFileUtils"
 
 const fileFormats = ["Detaied Columns", "Detaied Example", "Simple Columns", "Simple Example"]
+
 const csvDescriptions = [
     "The detailed upload format allows control node and edge types as well as edge weights",
     "The detailed upload format allows control node and edge types as well as edge weights",
