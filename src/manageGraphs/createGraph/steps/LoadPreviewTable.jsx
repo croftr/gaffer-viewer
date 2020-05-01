@@ -36,14 +36,6 @@ const styles = {
         fontWeight: "normal",
         padding: 4
     },
-    fader: {
-        position: "relative",
-        top: -10,
-        height: 20,
-        width: "90%",
-        background: "#ffffff9e",
-
-    }
 }
 
 const LoadPreviewTable = ({
@@ -96,8 +88,7 @@ const LoadPreviewTable = ({
                     })}
 
                 </tbody>
-            </table>
-            <div className={classes.fader}></div>
+            </table>            
         </div>
     )
 }
