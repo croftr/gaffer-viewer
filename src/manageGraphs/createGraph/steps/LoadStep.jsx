@@ -53,6 +53,20 @@ const styles = {
         fontWeight: "normal",
         padding: 4
     },
+    hide: {
+        display: "none"    
+    },
+    validIcon: {
+        color: "green", 
+        marginRight: 8
+    },
+    invalidIcon: {
+        color: "red",
+        marginRight: 8
+    },
+    marginRight:{
+        marginRight: 8
+    }
 }
 
 const LoadStep = ({
@@ -118,11 +132,10 @@ const LoadStep = ({
                         {filename || "Select CSV file"}
                         <Input
                             type='file'
-                            className='custom-file-input'
+                            className={classes.hide}
                             id='customFile'
                             onChange={onSelectFile}
                             label={filename}
-                            style={{ display: "none" }}
                             accept=".csv"
                         />
                     </Button>
@@ -131,7 +144,7 @@ const LoadStep = ({
                         <div className={classes.buttonTextArea}>
                             {!fileUploadMessage.startsWith("Invalid") && (
                                 <React.Fragment>
-                                    <ValidIcon style={{ color: "green", marginRight: 8 }} />
+                                    <ValidIcon className={classes.validIcon} />
                                     <Typography>{fileUploadMessage}</Typography>
                                 </React.Fragment>
 
@@ -139,7 +152,7 @@ const LoadStep = ({
 
                             {fileUploadMessage.startsWith("Invalid") && (
                                 <React.Fragment>
-                                    <InvalidIcon style={{ color: "red", marginRight: 8 }} />
+                                    <InvalidIcon className={classes.invalidIcon} />
                                     <Typography>{fileUploadMessage}</Typography>
                                 </React.Fragment>
                             )}
@@ -170,7 +183,7 @@ const LoadStep = ({
 
                         {isLoadSuccess && (
                             <React.Fragment>
-                                <ValidIcon style={{ color: "green", marginRight: 8 }} />
+                                <ValidIcon className={classes.validIcon} />
                                 {isFromStepper && <Typography>Success your graph has been created and {elemetsLoaded} edges have been loaded</Typography>}
                                 {!isFromStepper && <Typography>Successfully added {elemetsLoaded} edges to {schemaName}</Typography>}
                             </React.Fragment>
@@ -178,7 +191,7 @@ const LoadStep = ({
 
                         {schemaLoadFailed && (
                             <React.Fragment>
-                                <InvalidIcon style={{ color: "red", marginRight: 8 }} />
+                                <InvalidIcon className={classes.invalidIcon} />
                                 {isFromStepper && <Typography>Schema creation failed</Typography>}
                                 {!isFromStepper && <Typography>No edges loaded</Typography>}
                             </React.Fragment>
@@ -186,7 +199,7 @@ const LoadStep = ({
 
                         {isUploadInProgress && !isLoadSuccess && !schemaLoadFailed && (
                             <span style={{ display: "flex", alignItems: "center" }}>
-                                <CircularProgress size={24} style={{ marginRight: 8 }} />
+                                <CircularProgress size={24} className={classes.marginRight} />
                                 <Typography>Creating your graph</Typography>
                             </span>
                         )}
