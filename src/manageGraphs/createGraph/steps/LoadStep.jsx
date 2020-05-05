@@ -54,17 +54,17 @@ const styles = {
         padding: 4
     },
     hide: {
-        display: "none"    
+        display: "none"
     },
     validIcon: {
-        color: "green", 
+        color: "green",
         marginRight: 8
     },
     invalidIcon: {
         color: "red",
         marginRight: 8
     },
-    marginRight:{
+    marginRight: {
         marginRight: 8
     }
 }
@@ -92,32 +92,40 @@ const LoadStep = ({
     return (
 
         <>
-            {isFromStepper && <Typography variant="h6" paragraph>Load data into {schemaName}</Typography>}
+            {isFromStepper && (
+                <Typography variant="h6" paragraph>
+                    Load data into {schemaName}
+                </Typography>
+            )}
 
             <div className={classes.inputArea}>
 
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Delimter type</FormLabel>
+                    
+                    <FormLabel component="legend">
+                        Delimter type
+                    </FormLabel>
+
                     <RadioGroup
                         aria-label="delimterType"
                         name="Delimter Type"
                         value={delimiterType}
                         onChange={(e) => setDelimiterType(e.target.value)}
                     >
-                        <FormControlLabel 
-                            value="comma" 
-                            control={<Radio disabled={isLoadSuccess} />} 
-                            label="Comma" 
+                        <FormControlLabel
+                            value="comma"
+                            control={<Radio disabled={isLoadSuccess} />}
+                            label="Comma"
                         />
-                        <FormControlLabel 
-                            value="space" 
-                            control={<Radio disabled={isLoadSuccess} />} 
-                            label="Space" 
+                        <FormControlLabel
+                            value="space"
+                            control={<Radio disabled={isLoadSuccess} />}
+                            label="Space"
                         />
-                        <FormControlLabel 
-                            value="tab" 
-                            control={<Radio disabled={isLoadSuccess} />} 
-                            label="Tab" 
+                        <FormControlLabel
+                            value="tab"
+                            control={<Radio disabled={isLoadSuccess} />}
+                            label="Tab"
                         />
                     </RadioGroup>
                 </FormControl>
@@ -147,7 +155,6 @@ const LoadStep = ({
                                     <ValidIcon className={classes.validIcon} />
                                     <Typography>{fileUploadMessage}</Typography>
                                 </React.Fragment>
-
                             )}
 
                             {fileUploadMessage.startsWith("Invalid") && (

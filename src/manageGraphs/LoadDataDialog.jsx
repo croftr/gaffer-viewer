@@ -126,9 +126,9 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
     };
 
     const onChangeDelimter = (value) => {
-                                
+
         if (topLines && topLines.length > 0) {
-            const loadResult = processExistingFile(value, topLines);            
+            const loadResult = processExistingFile(value, topLines);
             setTopLines(loadResult.topLines);
             setColumnCount(loadResult.columnCount);
             setFileUploadMessage(loadResult.message);
@@ -140,7 +140,9 @@ const LoadDataDialog = ({ classes, schemaName, isLoadOpen, setIsLoadOpen }) => {
     return (
         <Dialog aria-labelledby="loadDataDialog" open={isLoadOpen} maxWidth={false}>
             <div className={classes.loadDataHeader}>
-                <DialogTitle id="loaddataTitle">Load Data into {schemaName}</DialogTitle>
+                <DialogTitle id="loaddataTitle">
+                    Load Data into {schemaName}
+                </DialogTitle>
 
                 <IconButton onClick={close}>
                     <CloseIcon />
