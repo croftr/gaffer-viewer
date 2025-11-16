@@ -14,7 +14,7 @@
     "react-file-reader": "^1.1.4",
     "react-json-pretty": "^2.2.0",
     "react-minimal-pie-chart": "^7.3.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "vis-network": "^7.4.0"
   },
   "scripts": {
@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-react": "^7.19.0"
   }
 }
